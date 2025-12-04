@@ -1,0 +1,250 @@
+{
+    "audio": {
+        "default_file_extension": "wav"
+    },
+    "features": {
+        "enable_dedicated_layout_switching": 1,
+        "enable_feature_state_audio": 1,
+        "enable_layout_switching_audio": 1,
+        "enable_sequential_layout_switching": 0,
+        "enable_typing_audio": 1,
+        "enable_windows_api_layout_switching": 1
+    },
+    "hotkeys": {
+        "context_remap": {
+            "exe": {
+                "Fallout4": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_layout_switching_audio_for_automatic_layout_change": 0,
+                    "enable_typing_audio": 0,
+                    "key_bindings": {
+                        "button_1": {
+                            "delay_between": 30,
+                            "key": 1
+                        },
+                        "button_10": {
+                            "delay_between": 30,
+                            "key": 0
+                        },
+                        "button_11": {
+                            "delay_between": 30,
+                            "key": "m"
+                        },
+                        "button_12": {
+                            "delay_between": 30,
+                            "key": "k"
+                        },
+                        "button_2": {
+                            "delay_between": 30,
+                            "key": 2
+                        },
+                        "button_3": {
+                            "delay_between": 30,
+                            "key": 3
+                        },
+                        "button_4": {
+                            "delay_between": 30,
+                            "key": 4
+                        },
+                        "button_5": {
+                            "delay_between": 30,
+                            "key": 5
+                        },
+                        "button_6": {
+                            "delay_between": 30,
+                            "key": 6
+                        },
+                        "button_7": {
+                            "delay_between": 30,
+                            "key": 7
+                        },
+                        "button_8": {
+                            "delay_between": 30,
+                            "key": 8
+                        },
+                        "button_9": {
+                            "delay_between": 30,
+                            "key": 9
+                        },
+                        "dpi+": {
+                            "delay_between": 30,
+                            "key": "j"
+                        },
+                        "dpi-": {
+                            "delay_between": 30,
+                            "key": "i"
+                        }
+                    },
+                    "layout": "en-US"
+                },
+                "default": {
+                    "enable_layout_switching_audio": "default",
+                    "enable_typing_audio": "default",
+                    "key_bindings": {
+                        "button_1": {
+                            "key": "c",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "button_10": {
+                            "key": "w",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "button_11": "Volume_Down",
+                        "button_12": "Volume_Up",
+                        "button_2": {
+                            "key": "v",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "button_3": [
+                            {
+                                "key": "Ctrl Down"
+                            },
+                            {
+                                "key": "a"
+                            },
+                            {
+                                "key": "v"
+                            },
+                            {
+                                "key": "Ctrl Up"
+                            }
+                        ],
+                        "button_4": {
+                            "key": "r",
+                            "modifiers": "Ctrl"
+                        },
+                        "button_5": {
+                            "key": "1",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "button_6": {
+                            "key": "3",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "button_7": {
+                            "key": "v",
+                            "modifiers": "LWin"
+                        },
+                        "button_8": {
+                            "key": "s",
+                            "modifiers": "Ctrl"
+                        },
+                        "button_9": {
+                            "key": "l",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "ctrl_;": {
+                            "allow_native_function": 0,
+                            "key": "z",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_a": {
+                            "allow_native_function": 0,
+                            "key": "a",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_b": {
+                            "allow_native_function": 0,
+                            "key": "n",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_d": {
+                            "allow_native_function": 0,
+                            "key": "h",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_f": {
+                            "allow_native_function": 0,
+                            "key": "y",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_j": {
+                            "allow_native_function": 0,
+                            "key": "c",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_k": {
+                            "allow_native_function": 0,
+                            "key": "v",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_o": {
+                            "allow_native_function": 0,
+                            "key": "s",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_shift_k": {
+                            "allow_native_function": 0,
+                            "key": "v",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "ctrl_shift_o": {
+                            "allow_native_function": 0,
+                            "key": "s",
+                            "modifiers": ["Ctrl", "Shift"]
+                        },
+                        "ctrl_shift_q": {
+                            "allow_native_function": 0,
+                            "key": "x",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "ctrl_u": {
+                            "allow_native_function": 0,
+                            "key": "f",
+                            "modifiers": ["Ctrl"]
+                        },
+                        "dpi+": "Browser_Forward",
+                        "dpi-": "Browser_Back"
+                    },
+                    "layout": "en-DVORAK"
+                }
+            },
+            "input_bindings": {
+                "button_1": "F13",
+                "button_10": "F22",
+                "button_11": "F23",
+                "button_12": "F24",
+                "button_2": "F14",
+                "button_3": "F15",
+                "button_4": "F16",
+                "button_5": "F17",
+                "button_6": "F18",
+                "button_7": "F19",
+                "button_8": "F20",
+                "button_9": "F21",
+                "ctrl_;": "^SC02C",
+                "ctrl_a": "^SC01E",
+                "ctrl_b": "^SC031",
+                "ctrl_d": "^SC023",
+                "ctrl_f": "^SC015",
+                "ctrl_j": "^SC02E",
+                "ctrl_k": "^SC02F",
+                "ctrl_o": "^SC01F",
+                "ctrl_shift_k": "^+SC02F",
+                "ctrl_shift_o": "^+SC01F",
+                "ctrl_shift_q": "^+SC02D",
+                "ctrl_u": "^SC021",
+                "dpi+": "^F13",
+                "dpi-": "^F14"
+            }
+        },
+        "dedicated_layout_hotkeys": ["^+F8", "^+F9", "^+F10", "^+F11"],
+        "display_current_layout_id": "^!+sc017",
+        "set_primary_layout": "ScrollLock",
+        "set_secondary_layout": "Pause",
+        "toggle_dedicated_layout_switching": "^!+sc01A",
+        "toggle_feature_state_audio": "^!+sc033",
+        "toggle_layout_switching_audio": "^!+sc035",
+        "toggle_sequential_layout_switching": "^!+sc01B",
+        "toggle_typing_audio": "^!+sc034",
+        "toggle_windows_api_layout_switching": "^!+sc019"
+    },
+    "layouts": {
+        "all_layouts_ordered": ["en-DVORAK", "en-US", "es-ES", "de-DE"],
+        "fallback_layout_switching_exes": ["x360ce", "RazerAppEngine"],
+        "layout_ids": ["-268303351", "67699721", "67767306", "67568647"],
+        "layout_switching_delay": 30,
+        "primary_layout": "en-DVORAK",
+        "secondary_layouts": ["en-US", "es-ES", "de-DE"]
+    }
+}
