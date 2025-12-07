@@ -88,7 +88,10 @@ send_one_command(exe_key_binding) {
 
     if (IsObject(exe_key_binding)) {
         key := config_get(["key"], exe_key_binding)
+        wait := config_get(["wait"], exe_key_binding)
+        wait_final := n(wait) ? wait : 0
         key_wait := config_get(["key_wait"], exe_key_binding)
+        key_wait_final := n(key_wait) ? key_wait : 0
         modifiers := config_get(["modifiers"], exe_key_binding)
         modifier_keys_final := is_arr(modifiers) ? modifiers : [modifiers]
         delay_before := config_get(["delay_before"], exe_key_binding)
@@ -105,14 +108,19 @@ send_one_command(exe_key_binding) {
                 Sleep(delay_between_final)
             }
 
-            Send("{" key " down}")
-            Sleep(delay_between_final)
-            Send("{" key " up}")
+            if (wait_final || key_wait_final) {
+                Send("{" key " down}")
+                key_wait_f(wait_final, key_wait_final)
+                Send("{" key " up}")
+            } else {
+                Send("{" key " down}")
+                Sleep(delay_between_final)
+                Send("{" key " up}")
+            }
 
             if (modifier_keys_exist) {
                 Sleep(delay_between_final)
                 send_modifier_keys(modifier_keys_final, "up")
-
             }
         }
     } else {
@@ -161,8 +169,14 @@ send_macro(exe_key_binding) {
 send_macro_item(macro_item) {
     key := config_get(["key"], macro_item)
     delay := config_get(["delay"], macro_item)
+    wait := config_get(["wait"], macro_item)
+    wait_final := n(wait) ? wait : 0
+    key_wait := config_get(["key_wait"], macro_item)
+    key_wait_final := n(key_wait) ? key_wait : 0
 
-    if (n(key)) {
+    if (wait_final || key_wait_final) {
+        key_wait_f(wait_final, key_wait_final)
+    } if (n(key)) {
         Send("{" key "}")
     } else if (n(delay)) {
         Sleep(delay)
@@ -178,5 +192,11 @@ send_modifier_keys(modifiers, state) {
 release_key(key) {
     if (!GetKeyState(key)) {
         Send("{blind}{" key " up}")
+    }
+}
+
+key_wait_f(wait, key_wait) {
+    if (wait || key_wait) {
+        KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
     }
 }
