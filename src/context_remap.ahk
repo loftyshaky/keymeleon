@@ -132,25 +132,34 @@ send_one_command(exe_key_binding) {
 send_macro(exe_key_binding) {
     macro_items_inner := config_get(["macro"], exe_key_binding)
     macro_items_final := []
+    repeat_count := config_get(["repeat_count"], exe_key_binding)
 
-    for (i, macro_item in (n(macro_items_inner) ? macro_items_inner : exe_key_binding)) {
-        repeatable_macro := config_get(["macro"], macro_item)
-        repeat_count := config_get(["repeat_count"], macro_item)
+    if (repeat_count && n(macro_items_inner)) {
+        Loop repeat_count {
+            for (i, macro_item_2 in macro_items_inner) {
+                macro_items_final.push(macro_item_2)
+            }
+        }
+    } else {
+        for (i, macro_item in (n(macro_items_inner) ? macro_items_inner : exe_key_binding)) {
+            repeatable_macro := config_get(["macro"], macro_item)
+            repeatable_macro_repeat_count := config_get(["repeat_count"], macro_item)
 
-        if (n(repeatable_macro)) {
-            if (n(repeat_count)) {
-                Loop repeat_count {
+            if (n(repeatable_macro)) {
+                if (n(repeatable_macro_repeat_count)) {
+                    Loop repeatable_macro_repeat_count {
+                        for (i, macro_item_2 in repeatable_macro) {
+                            macro_items_final.push(macro_item_2)
+                        }
+                    }
+                } else {
                     for (i, macro_item_2 in repeatable_macro) {
                         macro_items_final.push(macro_item_2)
                     }
                 }
             } else {
-                for (i, macro_item_2 in repeatable_macro) {
-                    macro_items_final.push(macro_item_2)
-                }
+                macro_items_final.push(macro_item)
             }
-        } else {
-            macro_items_final.push(macro_item)
         }
     }
 
