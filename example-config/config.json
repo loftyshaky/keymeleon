@@ -3,6 +3,7 @@
         "default_file_extension": "wav"
     },
     "features": {
+        "enable_all_bindings": 1,
         "enable_dedicated_layout_switching": 1,
         "enable_feature_state_audio": 1,
         "enable_layout_switching_audio": 1,
@@ -284,11 +285,12 @@
         "display_current_layout_id": "^!+sc017",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
+        "toggle_all_bindings": "^!+sc035",
         "toggle_dedicated_layout_switching": "^!+sc01A",
-        "toggle_feature_state_audio": "^!+sc033",
-        "toggle_layout_switching_audio": "^!+sc035",
+        "toggle_feature_state_audio": "^!+sc032",
+        "toggle_layout_switching_audio": "^!+sc034",
         "toggle_sequential_layout_switching": "^!+sc01B",
-        "toggle_typing_audio": "^!+sc034",
+        "toggle_typing_audio": "^!+sc033",
         "toggle_windows_api_layout_switching": "^!+sc019"
     },
     "layouts": {
