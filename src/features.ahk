@@ -25,6 +25,10 @@ toggle_feature(feature_name) {
         bind_unbind_layout_dedicated_layout_switching_keys()
     }
 
+    if (feature_name = "enable_all_bindings") {
+        bind_unbind_context_hotkeys()
+    }
+
     play_feature_state_audio(config["features"][feature_name], force_play)
     set_tray_icon()
 }

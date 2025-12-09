@@ -2,11 +2,13 @@ bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_nati
     Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(input_binding_i, found_exe_hotkey), keys_are_enabled)
 }
 
-bind_context_hotkeys(*) {
+bind_unbind_context_hotkeys(*) {
     input_bindings := config_get(["hotkeys", "context_remap", "input_bindings"])
 
     if (n(input_bindings) && IsObject(input_bindings)) {
         for (input_binding_i, input_binding in input_bindings) {
+            enable_all_bindings := config_get(["features", "enable_all_bindings"])
+
             input_binding_is_obj := IsObject(input_binding)
             key := config_get(["key"], input_binding)
             macro := config_get(["macro"], input_binding)
@@ -26,13 +28,16 @@ bind_context_hotkeys(*) {
             allow_native_function := exe_key_binding_is_obj ? allow_native_function_obj_bool : 1
 
             bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "Off", false)
-            bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On", found_exe_hotkey)
+
+            if (enable_all_bindings) {
+                bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On", found_exe_hotkey)
+            }
         }
     }
 }
 
 watch_any_window_activation_and_rebind_conditional_hotkeys() {
-    watch_any_window_activation(bind_context_hotkeys)
+    watch_any_window_activation(bind_unbind_context_hotkeys)
 }
 
 run_hotkey(input_binding_i, found_exe_hotkey) {

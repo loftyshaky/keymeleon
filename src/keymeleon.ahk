@@ -24,7 +24,7 @@ set_up_user_dir()
 #Include %A_ScriptDir%\log.ahk
 
 bind_play_audio_on_key_press()
-bind_context_hotkeys()
+bind_unbind_context_hotkeys()
 watch_any_window_activation_and_rebind_conditional_hotkeys()
 set_tray_icon()
 generate_all_layouts_in_switch_order_arr()
@@ -39,3 +39,4 @@ bind_hotkey_to_function(["hotkeys", "toggle_dedicated_layout_switching"], (*) =>
 bind_hotkey_to_function(["hotkeys", "toggle_layout_switching_audio"], (*) => toggle_feature("enable_layout_switching_audio"))
 bind_hotkey_to_function(["hotkeys", "toggle_typing_audio"], (*) => toggle_feature("enable_typing_audio"))
 bind_hotkey_to_function(["hotkeys", "toggle_feature_state_audio"], (*) => toggle_feature("enable_feature_state_audio"))
+bind_hotkey_to_function(["hotkeys", "toggle_all_bindings"], (*) => toggle_feature("enable_all_bindings"))
