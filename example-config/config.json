@@ -19,59 +19,59 @@
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "button_1": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 1
                         },
                         "button_10": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 0
                         },
                         "button_11": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": "m"
                         },
                         "button_12": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": "k"
                         },
                         "button_2": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 2
                         },
                         "button_3": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 3
                         },
                         "button_4": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 4
                         },
                         "button_5": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 5
                         },
                         "button_6": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 6
                         },
                         "button_7": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 7
                         },
                         "button_8": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 8
                         },
                         "button_9": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": 9
                         },
                         "dpi+": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": "j"
                         },
                         "dpi-": {
-                            "delay_between": 30,
+                            "wait": 1,
                             "key": "i"
                         }
                     },

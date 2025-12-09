@@ -650,6 +650,67 @@ If a remapped key still doesn't work, try setting `ignore_modifiers` to `1`. Thi
 
 Use this setting alongside or instead of `allow_native_function` when troubleshooting unresponsive hotkeys.
 
+### Wait until key release
+
+The `wait` property enables key hold functionality by making Keymeleon wait for you to release the physical key before sending the key `Up` event to the target application. This is essential for actions that require holding a key, such as "hold to reload" mechanics or context-sensitive actions that differ between short taps and long presses.
+
+#### Example: Reload with hold-to-holster functionality
+
+In Fallout 4, the `R` key has dual functionality:
+
+Short tap: Reload weapon
+
+Long press: Holster weapon
+
+To properly bind this to `F2`, we need the script to wait for key release:
+
+```json
+{
+    "hotkeys": {
+        "context_remap": {
+            "exe": {
+                "Fallout4": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_typing_audio": 0,
+                    "key_bindings": {
+                        "f2": {
+                            "allow_native_function": 0,
+                            "key": "r",
+                            "wait": 1
+                        },
+                        "f3_sc": {
+                            "allow_native_function": 0,
+                            "key": "r",
+                            "key_wait": "f3"
+                        }
+                    },
+                    "layout": "en-US"
+                },
+                "default": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_typing_audio": 1,
+                    "key_bindings": {
+                        "f2": "a"
+                    },
+                    "layout": "en-DVORAK"
+                }
+            },
+            "input_bindings": {
+                "f2": "F2",
+                "f3_sc": "SC03D"
+            }
+        }
+    }
+} 
+```
+
+#### How it works
+
+Standard key names (like `F2`): When you set `"wait": 1`, Keymeleon automatically tracks when you release `F2` and only sends the `"r Up"` event after your physical key release.
+
+Scan codes (like `SC03D` for `F3`): Keymeleon cannot automatically detect which physical key corresponds to a scan code. You must explicitly specify `"key_wait": "f3"` to tell the script which physical key to monitor for release.
+
 ### Key binding properties
 
 | Property                | Type         | Description                                                                                                                                                                                                                                                                          | Default |
@@ -657,9 +718,12 @@ Use this setting alongside or instead of `allow_native_function` when troublesho
 | `key`                   | `String`     | The key or keystroke to execute when the binding is triggered.                                                                                                                                                                                                               | -       |
 | `delay_before`                 | `Number`       | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes. | `0`     |
 | `delay_between`                 | `Number`       | The delay in milliseconds between individual key presses within the executed action. While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `0`     |
+| `wait`                 | `Number`       | Wait for physical key release before sending the `"Up"` event. | `0`     |
+| `key_wait`                 | `String`       | Physical key name to monitor for release. | -     |
 | `modifiers`             | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                                                                               | -       |
 | `allow_native_function` | `Number`       | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                                                                                                                                   | `1`     |
 | `ignore_modifiers`      | `Number`       | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                                                                                                                                                                                            | `0`     |
+| `repeat_count`      | `Number`       | Number of times to repeat the entire macro sequence.                                                                                                                                                                                            | `1`     |
 
 <h2 id="macros">Macros</h2>
 Keymeleon supports complex macros—sequences of keys and delays executed with a single hotkey.
@@ -760,7 +824,7 @@ This macro selects all text and pastes from clipboard:
 
 ### Macros with advanced properties
 
-To use `allow_native_function` or `ignore_modifiers` with macros, wrap your macro array in a macro object:
+To use advanced properties like `allow_native_function`, `ignore_modifiers`, `wait` and `key_wait` with macros, you need to wrap your macro array inside a macro object. This object structure also allows you to specify a `repeat_count` property to execute the macro multiple times in succession:
 
 ```json
 {
@@ -791,6 +855,101 @@ To use `allow_native_function` or `ignore_modifiers` with macros, wrap your macr
                         {
                             "key": "t"
                         }
+                    ],
+                    "repeat_count": 3
+                }
+            }
+        }
+    },
+    "input_bindings": {
+        "ctrl_shift_esc": "^+Esc"
+    }
+}
+```
+
+This configuration types "test" three times when you press `Ctrl+Shift+Esc` while preventing the Task Manager from opening.
+
+You can repeat specific portions of a macro independently using nested macro objects:
+
+```json
+{
+    "exe": {
+        "default": {
+            "key_bindings": {
+                "ctrl_shift_esc": {
+                    "allow_native_function": 0,
+                    "macro": [
+                        {
+                            "macro": [
+                                {
+                                    "key": "t"
+                                },
+                                {
+                                    "delay": 100
+                                },
+                                {
+                                    "key": "e"
+                                },
+                                {
+                                    "delay": 200
+                                },
+                                {
+                                    "key": "s"
+                                },
+                                {
+                                    "delay": 400
+                                },
+                                {
+                                    "key": "t"
+                                },
+                                {
+                                    "delay": 600
+                                },
+                                {
+                                    "key": "2"
+                                }
+                            ],
+                            "repeat_count": 2
+                        },
+                        {
+                            "macro": [
+                                {
+                                    "key": "Space"
+                                }
+                            ]
+                        },
+                        {
+                            "macro": [
+                                {
+                                    "key": "t"
+                                },
+                                {
+                                    "delay": 100
+                                },
+                                {
+                                    "key": "e"
+                                },
+                                {
+                                    "delay": 200
+                                },
+                                {
+                                    "key": "s"
+                                },
+                                {
+                                    "delay": 400
+                                },
+                                {
+                                    "key": "t"
+                                },
+                                {
+                                    "delay": 600
+                                },
+                                {
+                                    "key": "4"
+                                }
+                            ],
+                            "repeat_count": 4
+                        }
                     ]
                 }
             }
@@ -802,7 +961,7 @@ To use `allow_native_function` or `ignore_modifiers` with macros, wrap your macr
 }
 ```
 
-This configuration types "test" when you press `Ctrl+Shift+Esc` while preventing the Task Manager from opening.
+This configuration types "test2" twice, adds a space, then types "test4" four times.
 
 <h2 id="mouse_button_support">Mouse button support</h2>
 Keymeleon allows you to bind extra mouse buttons by mapping them through your mouse software first, then configuring them in Keymeleon.
@@ -901,7 +1060,7 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
 }
 ```
 
-### How it works:
+### How it works
 
 In Fallout 4: Mouse buttons 1-10 trigger numeric keys 1-0 with a 30ms delay.
 
@@ -1155,12 +1314,26 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 
 ### `[custom binding name]` object (within `key_bindings`)
 
-| Property                | Type         | Description                                                                 | Default |
-| :--------------------- | :----------- | :-------------------------------------------------------------------------- | :------ |
-| `key`                  | `String`     | The key or keystroke to execute when the binding is triggered.                                   | -       |
-| `delay_before`         | `Number`     | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes. | `0`                          | `0`     |
-| `delay_between`        | `Number`     | The delay in milliseconds between individual key presses within the executed action. While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press.                | `0`     |
-| `modifiers`            | `Array/String` | Modifier keys to hold.                                                    | -       |
-| `allow_native_function`| `Number`     | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                   | `1`     |
-| `ignore_modifiers`     | `Number`     | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                          | `0`     |
-| `macro`                | `Array`      | Sequence of keys and delays for complex macros.                            | -       |
+| Property                | Type         | Description                                                                                                                                                                                                                  | Example | Default |
+| :--------------------- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :------ |
+| `key`                  | `String`     | The key or keystroke to execute when the binding is triggered.                                                                                                                                                               | `"a"` | -       |
+| `delay_before`         | `Number`     | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes.                                                                                                  | `30` | `0`     |
+| `delay_between`        | `Number`     | The delay in milliseconds between individual key presses within the executed action. While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `30` | `0`     |
+| `wait`                 | `Number`     | Wait for physical key release before sending the `"Up"`.                                                                                                                                                                     | `1` | `0`     |
+| `key_wait`             | `String`     | Physical key name to monitor for release.                                                                                                                                                                                    | `"f3"` | -       |
+| `modifiers`            | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                       | `["Ctrl", "Shift"]` | -       |
+| `allow_native_function`| `Number`     | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                                                                         | `0` | `1`     |
+| `ignore_modifiers`     | `Number`     | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                                                                                                                                    | `1` | `0`     |
+| `macro`                | `Array`      | Sequence of keys and delays for complex macros.                                                                                                                                                                              | `[{"key": "a"}, {"delay": 50}, {"key": "b"}]` | -       |
+| `repeat_count`         | `Number`     | Number of times to repeat the entire macro sequence.                                                                                                                                                                         | `3` | `1`     |
+
+### Macro item
+
+| Property       | Type     | Description                                                                                           | Example | Default |
+| :------------- | :------- | :---------------------------------------------------------------------------------------------------- | :------ | :------ |
+| `key`          | `String` | The key to press in this step of the macro sequence.                                                  | `"t"` | -       |
+| `delay`        | `Number` | Delay in milliseconds before executing the next item in the macro sequence.                           | `100` | `0`     |
+| `wait`         | `Number` | Wait for physical key release before sending the `"Up"`.                                              | `1` | `0`     |
+| `key_wait`     | `String` | Physical key name to monitor for release.                                                             | `"f2"` | -       |
+| `macro`        | `Array`  | Creates a nested macro that can be executed as a single unit, optionally with its own `repeat_count`. | `[{"key": "a"}, {"delay": 50}, {"key": "b"}]` | -       |
+| `repeat_count` | `Number` | Number of times to repeat the macro sequence.       | `3` | `1`     |
