@@ -1,3 +1,4 @@
+last_switched_layout := ""
 layout_change_step := 0
 switching_layout_with_dedicated_hotkey := false
 last_exe := ""
@@ -16,6 +17,7 @@ generate_all_layouts_in_switch_order_arr() {
 
 
 switch_layout(new_layout, is_automatic_layout_switching) {
+    global last_switched_layout
     global switching_layout_with_dedicated_hotkey
 
     enable_sequential_layout_switching := config_get(["features", "enable_sequential_layout_switching"])
@@ -42,6 +44,12 @@ switch_layout(new_layout, is_automatic_layout_switching) {
             set_layout_using_windows_api(new_layout, is_automatic_layout_switching)
         } else {
             set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching)
+        }
+
+        last_switched_layout := new_layout
+
+        if (!is_automatic_layout_switching) {
+            bind_unbind_context_hotkeys(last_switched_layout)
         }
     }
 }
@@ -299,7 +307,7 @@ get_next_current_secondary_layout_i() {
     }
 }
 
-switch_layout_on_exe_change(w_param, l_param, *) {
+switch_layout_on_exe_change() {
     global switching_layout_with_dedicated_hotkey
     global last_exe
     global last_exe_was_present_in_conditional_exe_list
@@ -328,6 +336,13 @@ switch_layout_on_exe_change(w_param, l_param, *) {
     }
 }
 
-bind_switch_layout_on_exe_change() {
-    watch_any_window_activation(switch_layout_on_exe_change)
+on_exe_change() {
+    watch_any_window_activation(exe_change_handler)
+}
+
+exe_change_handler(*) {
+    global last_switched_layout
+
+    switch_layout_on_exe_change()
+    bind_unbind_context_hotkeys(last_switched_layout)
 }

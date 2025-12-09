@@ -14,6 +14,7 @@
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "binding_disabled_layouts": ["en-DVORAK", "es-ES", "de-DE"],
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 0,
                     "enable_typing_audio": 0,

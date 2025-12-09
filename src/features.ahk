@@ -26,7 +26,7 @@ toggle_feature(feature_name) {
     }
 
     if (feature_name = "enable_all_bindings") {
-        bind_unbind_context_hotkeys()
+        bind_unbind_context_hotkeys('none')
     }
 
     play_feature_state_audio(config["features"][feature_name], force_play)

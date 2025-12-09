@@ -23,14 +23,15 @@ set_up_user_dir()
 #Include %A_ScriptDir%\layouts.ahk
 #Include %A_ScriptDir%\log.ahk
 
+last_switched_layout := get_current_layout()
+
 bind_play_audio_on_key_press()
-bind_unbind_context_hotkeys()
-watch_any_window_activation_and_rebind_conditional_hotkeys()
 set_tray_icon()
 generate_all_layouts_in_switch_order_arr()
 bind_unbind_layout_layout_switching_keys()
 bind_unbind_layout_dedicated_layout_switching_keys()
-bind_switch_layout_on_exe_change()
+on_exe_change()
+bind_unbind_context_hotkeys('none')
 
 bind_hotkey_to_function(["hotkeys", "display_current_layout_id"], (*) => display_current_layout_id())
 bind_hotkey_to_function(["hotkeys", "toggle_windows_api_layout_switching"], (*) => toggle_feature("enable_windows_api_layout_switching"))

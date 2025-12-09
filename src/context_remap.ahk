@@ -2,7 +2,13 @@ bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_nati
     Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(input_binding_i, found_exe_hotkey), keys_are_enabled)
 }
 
-bind_unbind_context_hotkeys(*) {
+bind_unbind_context_hotkeys(current_layout := 'none') {
+    if (current_layout == 'none') {
+        current_layout := get_current_layout()
+    }
+
+log(current_layout)
+
     input_bindings := config_get(["hotkeys", "context_remap", "input_bindings"])
 
     if (n(input_bindings) && IsObject(input_bindings)) {
@@ -19,6 +25,8 @@ bind_unbind_context_hotkeys(*) {
             found_exe_hotkey := n(config_get([input_binding_i], exe_key_bindings))
             exe_key_binding := config_get([input_binding_i], exe_key_bindings)
             exe_key_binding_is_obj := IsObject(exe_key_binding)
+            binding_disabled_layouts_val := get_exe_config_val("binding_disabled_layouts", false)
+            binding_disabled_layouts_arr := is_arr(binding_disabled_layouts_val) ? binding_disabled_layouts_val : []
 
             ignore_modifiers_obj_val := config_get(["ignore_modifiers"], exe_key_binding)
             ignore_modifiers_obj_bool := ignore_modifiers_obj_val = "" ? 0 : ignore_modifiers_obj_val
@@ -27,17 +35,15 @@ bind_unbind_context_hotkeys(*) {
             ignore_modifiers := exe_key_binding_is_obj ? ignore_modifiers_obj_bool : 0
             allow_native_function := exe_key_binding_is_obj ? allow_native_function_obj_bool : 1
 
+            current_layout_is_in_binding_disabled_layouts := find_i_in_array(current_layout, binding_disabled_layouts_arr)
+
             bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "Off", false)
 
-            if (enable_all_bindings) {
+            if (enable_all_bindings && !current_layout_is_in_binding_disabled_layouts) {
                 bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On", found_exe_hotkey)
             }
         }
     }
-}
-
-watch_any_window_activation_and_rebind_conditional_hotkeys() {
-    watch_any_window_activation(bind_unbind_context_hotkeys)
 }
 
 run_hotkey(input_binding_i, found_exe_hotkey) {
