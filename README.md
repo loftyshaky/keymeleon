@@ -493,6 +493,7 @@ You can add any app - just use its executable filename without the `.exe` extens
 | `enable_typing_audio`                                       | `Number` | Enable typing sounds in this context.                                                                                                           | `default` |
 | `enable_layout_switching_audio_for_automatic_layout_change` | `Number` | Play sounds for automatic layout changes when entering or leaving this context. Not available for `default` context.                                          | `1`       |
 | `automatic_exe_windows_api_layout_switching_delay`          | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay. | `0`       |
+| `binding_disabled_layouts`          | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | -       |
 
 <h2 id="context_key_remapping">Context key remapping</h2>
 Keymeleon enables context-sensitive key remapping, allowing you to bind keys to perform different actions depending on which app has focus.
@@ -1283,10 +1284,10 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 
 ### `context_remap` object (within `hotkeys`)
 
-| Setting           | Type     | Description                                                                 | Example | Default |
-| :---------------- | :------- | :-------------------------------------------------------------------------- | :------ | :------ |
-| `exe`             | `Object` | Application-specific configurations. Contains executable names as keys.     | -       | -       |
-| `input_bindings`  | `Object` | Physical keys to remap, with custom names as keys and hotkeys as values. | -       | -       |
+| Setting           | Type     | Description                                                                 | Default |
+| :---------------- | :------- | :-------------------------------------------------------------------------- | :------ |
+| `exe`             | `Object` | Application-specific configurations. Contains executable names as keys.     | -       |
+| `input_bindings`  | `Object` | Physical keys to remap, with custom names as keys and hotkeys as values. | -       |
 
 ### `exe` object (within `context_remap`)
 
@@ -1297,14 +1298,15 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 
 ### `[app exe name]` (within `exe` objects)
 
-| Setting                                                    | Type   | Description                                                                 | Default   |
-| :--------------------------------------------------------- | :----- | :-------------------------------------------------------------------------- | :-------- |
-| `layout`                                                   | `String` | Layout to use in this context (from `all_layouts_ordered`).                 | -         |
-| `enable_layout_switching_audio`                            | `Number` | Play layout switching sounds for manual changes when you're in this context.            | `default` |
-| `enable_typing_audio`                                      | `Number` | Enable typing sounds in this context.                                       | `default` |
-| `enable_layout_switching_audio_for_automatic_layout_change`| `Number` | Play sounds for automatic layout changes when entering or leaving this context. Not available for `default` context. | `1`       |
-| `automatic_exe_windows_api_layout_switching_delay`         | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay.                    | `0`       |
-| `key_bindings`                                             | `Object` | Key remappings specific to this application context.                        | -         |
+| Setting                                                    | Type   | Description                                                                                                                                     | Example | Default   |
+| :--------------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :-------- |
+| `layout`                                                   | `String` | Layout to use in this context (from `all_layouts_ordered`).                                                                                     | `"en-US"` | -         |
+| `enable_layout_switching_audio`                            | `Number` | Play layout switching sounds for manual changes when you're in this context.                                                                       | `1` | `default` |
+| `enable_typing_audio`                                      | `Number` | Enable typing sounds in this context.                                                                                                           | `1` | `default` |
+| `enable_layout_switching_audio_for_automatic_layout_change`| `Number` | Play sounds for automatic layout changes when entering or leaving this context. Not available for `default` context.                                          | `0` | `1`       |
+| `automatic_exe_windows_api_layout_switching_delay`         | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay. | `1000` | `0`       |
+| `key_bindings`                                 | `Object` | Key remappings specific to this application context. | `{"f2": "a"}` | -         |
+| `binding_disabled_layouts`                                 | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
 
 ### `input_bindings` object (within `context_remap`)
 
