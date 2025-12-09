@@ -125,6 +125,7 @@ Here's a comprehensive configuration example:
         "default_file_extension": "wav"
     },
     "features": {
+        "enable_all_bindings": 1,
         "enable_dedicated_layout_switching": 1,
         "enable_feature_state_audio": 1,
         "enable_layout_switching_audio": 1,
@@ -137,11 +138,12 @@ Here's a comprehensive configuration example:
         "display_current_layout_id": "^!+sc017",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
+        "toggle_all_bindings": "^!+sc035",
         "toggle_dedicated_layout_switching": "^!+sc01A",
-        "toggle_feature_state_audio": "^!+sc033",
-        "toggle_layout_switching_audio": "^!+sc035",
+        "toggle_feature_state_audio": "^!+sc032",
+        "toggle_layout_switching_audio": "^!+sc034",
         "toggle_sequential_layout_switching": "^!+sc01B",
-        "toggle_typing_audio": "^!+sc034",
+        "toggle_typing_audio": "^!+sc033",
         "toggle_windows_api_layout_switching": "^!+sc019"
     },
     "layouts": {
@@ -421,9 +423,10 @@ The `features` object controls which Keymeleon functions are active. Use `1` to 
 | `enable_dedicated_layout_switching`   | Enable dedicated hotkeys for direct layout switching (e.g., `Ctrl+Shift+F8` for `en-DVORAK`, `Ctrl+Shift+F9` for `en-US`). |
 | `enable_sequential_layout_switching`  | Enable cycling between primary and secondary layouts using sequential switching.                                           |
 | `enable_windows_api_layout_switching` | Use instant Windows API layout switching instead of `Win+Space` simulation.                                                |
-| `enable_layout_switching_audio`       | Play unique sounds when switching between layouts.                                                                         |
 | `enable_feature_state_audio`          | Play sounds when enabling or disabling features via hotkeys.                                                               |
+| `enable_layout_switching_audio`       | Play unique sounds when switching between layouts.                                                                         |
 | `enable_typing_audio`                 | Play unique typing sounds for different keyboard layouts.                                                                  |
+| `enable_all_bindings`                 | Enable all custom key bindings.                                                                  |
 
 ### Default Hotkey Reference
 
@@ -433,9 +436,10 @@ The `features` object controls which Keymeleon functions are active. Use `1` to 
 | `toggle_dedicated_layout_switching`   | `Ctrl+Shift+Alt+[` |
 | `toggle_sequential_layout_switching`  | `Ctrl+Shift+Alt+]` |
 | `toggle_windows_api_layout_switching` | `Ctrl+Shift+Alt+P` |
+| `toggle_feature_state_audio`          | `Ctrl+Shift+Alt+M` |
 | `toggle_layout_switching_audio`       | `Ctrl+Shift+Alt+.` |
-| `toggle_feature_state_audio`          | `Ctrl+Shift+Alt+/` |
 | `toggle_typing_audio`                 | `Ctrl+Shift+Alt+,` |
+| `toggle_all_bindings`                 | `Ctrl+Shift+Alt+/` |
 
 Note: All hotkeys are customizable in the `hotkeys` object of your configuration.
 
@@ -1258,9 +1262,10 @@ The configuration maps physical key positions (using scan codes) to their corres
 | `toggle_dedicated_layout_switching` | `String` | Hotkey to toggle dedicated layout switching feature. | `"^!+sc01A"` (`Ctrl+Shift+Alt+[`) | - |
 | `toggle_sequential_layout_switching` | `String` | Hotkey to toggle sequential layout switching. | `"^!+sc01B"` (`Ctrl+Shift+Alt+]`) | - |
 | `toggle_windows_api_layout_switching` | `String` | Hotkey to toggle Windows API layout switching. | `"^!+sc019"` (`Ctrl+Shift+Alt+P`) | - |
-| `toggle_feature_state_audio` | `String` | Hotkey to toggle feature state audio. | `"^!+sc033"` (`Ctrl+Shift+Alt+?`) | - |
-| `toggle_layout_switching_audio` | `String` | Hotkey to toggle layout switching audio. | `"^!+sc035"` (`Ctrl+Shift+Alt+>`) | - |
-| `toggle_typing_audio` | `String` | Hotkey to toggle typing audio. | `"^!+sc034"` (`Ctrl+Shift+Alt+<`) | - |
+| `toggle_feature_state_audio` | `String` | Hotkey to toggle feature state audio. | `"^!+sc032"` (`Ctrl+Shift+Alt+M`) | - |
+| `toggle_layout_switching_audio` | `String` | Hotkey to toggle layout switching audio. | `"^!+sc034"` (`Ctrl+Shift+Alt+.`) | - |
+| `toggle_typing_audio` | `String` | Hotkey to toggle typing audio. | `"^!+sc033"` (`Ctrl+Shift+Alt+,`) | - |
+| `enable_all_bindings` | `String` | Hotkey to toggle all custom key bindings. | `"^!+sc035"` (`Ctrl+Shift+Alt+/`) | - |
 
 ### `features` object
 
@@ -1271,9 +1276,10 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `enable_dedicated_layout_switching`   | `Number` | Enable dedicated hotkeys for direct layout switching. (e.g., `Ctrl+Shift+F8` for `en-DVORAK`, `Ctrl+Shift+F9` for `en-US`). | `1`     |
 | `enable_sequential_layout_switching`  | `Number` | Enable cycling between primary and secondary layouts using sequential switching. | `1`     |
 | `enable_windows_api_layout_switching` | `Number` | Use instant Windows API layout switching instead of `Win+Space` simulation. | `1`     |
-| `enable_layout_switching_audio`       | `Number` | Play unique sounds when switching between layouts.                          | `1`     |
 | `enable_feature_state_audio`          | `Number` | Play sounds when enabling or disabling features via hotkeys.                | `1`     |
+| `enable_layout_switching_audio`       | `Number` | Play unique sounds when switching between layouts.                          | `1`     |
 | `enable_typing_audio`                 | `Number` | Play unique typing sounds for different keyboard layouts.                   | `1`     |
+| `enable_all_bindings`                 | `Number` | Enable all custom key bindings.                   | `1`     |
 
 ### `context_remap` object (within `hotkeys`)
 
