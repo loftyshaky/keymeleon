@@ -993,44 +993,72 @@ Keymeleon позволяет использовать дополнительны
                 "enable_typing_audio": 0,
                 "key_bindings": {
                     "button_1": {
-                        "delay_between": 30,
-                        "key": 1
+                        "key": 1,
+                        "wait": 1
                     },
                     "button_10": {
-                        "delay_between": 30,
-                        "key": 0
+                        "key": 0,
+                        "wait": 1
+                    },
+                    "button_1_alt": {
+                        "key": "k",
+                        "wait": 1
                     },
                     "button_2": {
-                        "delay_between": 30,
-                        "key": 2
+                        "key": 2,
+                        "wait": 1
+                    },
+                    "button_2_alt": {
+                        "key": "i",
+                        "wait": 1
                     },
                     "button_3": {
-                        "delay_between": 30,
-                        "key": 3
+                        "key": 3,
+                        "wait": 1
+                    },
+                    "button_3_alt": {
+                        "key": "j",
+                        "wait": 1
                     },
                     "button_4": {
-                        "delay_between": 30,
-                        "key": 4
+                        "key": 4,
+                        "wait": 1
+                    },
+                    "button_4_alt": {
+                        "key": "m",
+                        "wait": 1
                     },
                     "button_5": {
-                        "delay_between": 30,
-                        "key": 5
+                        "key": 5,
+                        "wait": 1
+                    },
+                    "button_5_alt": {
+                        "key": "o",
+                        "wait": 1
                     },
                     "button_6": {
-                        "delay_between": 30,
-                        "key": 6
+                        "key": 6,
+                        "wait": 1
                     },
                     "button_7": {
-                        "delay_between": 30,
-                        "key": 7
+                        "key": 7,
+                        "wait": 1
                     },
                     "button_8": {
-                        "delay_between": 30,
-                        "key": 8
+                        "key": 8,
+                        "wait": 1
                     },
                     "button_9": {
-                        "delay_between": 30,
-                        "key": 9
+                        "key": 9,
+                        "wait": 1
+                    },
+                    "dpi+": {
+                        "key": "F9",
+                        "wait": 1
+                    },
+                    "dpi-": {
+                        "key": "F5",
+                        "wait": 1
                     }
                 },
                 "layout": "en-US"
@@ -1054,14 +1082,23 @@ Keymeleon позволяет использовать дополнительны
         "input_bindings": {
             "button_1": "F13",
             "button_10": "F22",
+            "button_11": "F23",
+            "button_12": "F24",
+            "button_1_alt": "!F13",
             "button_2": "F14",
+            "button_2_alt": "!F14",
             "button_3": "F15",
+            "button_3_alt": "!F15",
             "button_4": "F16",
+            "button_4_alt": "!F16",
             "button_5": "F17",
+            "button_5_alt": "!F17",
             "button_6": "F18",
             "button_7": "F19",
             "button_8": "F20",
-            "button_9": "F21"
+            "button_9": "F21",
+            "dpi+": "^F13",
+            "dpi-": "^F14"
         }
     }
 }
@@ -1069,7 +1106,7 @@ Keymeleon позволяет использовать дополнительны
 
 ### Принцип работы
 
-В Fallout 4: Кнопки мыши 1-10 активируют цифровые клавиши 1-0 с задержкой 30мс.
+В Fallout 4: Кнопки мыши 1-10 активируют меню избранного с цифровыми клавишами (`1`-`0`). Клавиша `Alt` в сочетании с кнопками 1-5 открывает различные внутриигровые меню (Pip-Boy). Кнопки DPI используются для быстрой загрузки (`F9`) и быстрого сохранения (`F5`).
 
 На рабочем столе: Кнопки мыши 1-2 активируют `Ctrl+C` и `Ctrl+V` соответственно.
 

@@ -40,20 +40,40 @@
                             "key": "k",
                             "wait": 1
                         },
+                        "button_1_alt": {
+                            "key": "k",
+                            "wait": 1
+                        },
                         "button_2": {
                             "key": 2,
+                            "wait": 1
+                        },
+                        "button_2_alt": {
+                            "key": "i",
                             "wait": 1
                         },
                         "button_3": {
                             "key": 3,
                             "wait": 1
                         },
+                        "button_3_alt": {
+                            "key": "j",
+                            "wait": 1
+                        },
                         "button_4": {
                             "key": 4,
                             "wait": 1
                         },
+                        "button_4_alt": {
+                            "key": "m",
+                            "wait": 1
+                        },
                         "button_5": {
                             "key": 5,
+                            "wait": 1
+                        },
+                        "button_5_alt": {
+                            "key": "o",
                             "wait": 1
                         },
                         "button_6": {
@@ -73,11 +93,11 @@
                             "wait": 1
                         },
                         "dpi+": {
-                            "key": "j",
+                            "key": "F9",
                             "wait": 1
                         },
                         "dpi-": {
-                            "key": "i",
+                            "key": "F5",
                             "wait": 1
                         }
                     },
@@ -250,16 +270,28 @@
             "input_bindings": {
                 "button_1": "F13",
                 "button_10": "F22",
+                "button_10_alt": "!F22",
                 "button_11": "F23",
+                "button_11_alt": "!F23",
                 "button_12": "F24",
+                "button_12_alt": "!F24",
+                "button_1_alt": "!F13",
                 "button_2": "F14",
+                "button_2_alt": "!F14",
                 "button_3": "F15",
+                "button_3_alt": "!F15",
                 "button_4": "F16",
+                "button_4_alt": "!F16",
                 "button_5": "F17",
+                "button_5_alt": "!F17",
                 "button_6": "F18",
+                "button_6_alt": "!F18",
                 "button_7": "F19",
+                "button_7_alt": "!F19",
                 "button_8": "F20",
+                "button_8_alt": "!F20",
                 "button_9": "F21",
+                "button_9_alt": "!F21",
                 "ctrl_;": "^SC02C",
                 "ctrl_a": "^SC01E",
                 "ctrl_b": "^SC031",
