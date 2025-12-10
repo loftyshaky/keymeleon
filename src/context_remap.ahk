@@ -7,8 +7,6 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
         current_layout := get_current_layout()
     }
 
-log(current_layout)
-
     input_bindings := config_get(["hotkeys", "context_remap", "input_bindings"])
 
     if (n(input_bindings) && IsObject(input_bindings)) {
