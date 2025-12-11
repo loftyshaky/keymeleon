@@ -253,11 +253,15 @@ get_current_layout_id() {
         return input_locale_id
 
     } catch {
-        ; Fallback: get layout for active window if control method fails
-        thread_id := DllCall("GetWindowThreadProcessId", "Ptr", WinGetID("A"), "Ptr", 0)
-        input_locale_id := DllCall("GetKeyboardLayout", "UInt", thread_id, "Ptr")
+        try {
+            ; Fallback: get layout for active window if control method fails
+            thread_id := DllCall("GetWindowThreadProcessId", "Ptr", WinGetID("A"), "Ptr", 0)
+            input_locale_id := DllCall("GetKeyboardLayout", "UInt", thread_id, "Ptr")
 
-        return input_locale_id
+            return input_locale_id
+        } catch {
+            return ""
+        }
     }
 }
 
