@@ -52,7 +52,6 @@ run_hotkey(input_binding_i, found_exe_hotkey) {
         if (n(exe_key_binding)) {
             send_one_command_or_run_macro(exe_key_binding)
         }
-
     }
 }
 
