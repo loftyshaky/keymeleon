@@ -214,6 +214,6 @@ release_key(key) {
 
 key_wait_f(wait, key_wait) {
     if (wait || key_wait) {
-        KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
+       KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
     }
 }
