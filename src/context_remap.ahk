@@ -53,6 +53,8 @@ run_hotkey(input_binding_i, found_exe_hotkey) {
             send_one_command_or_run_macro(exe_key_binding)
         }
     }
+
+    release_keys()
 }
 
 get_current_exe_name() {
@@ -206,9 +208,22 @@ send_modifier_keys(modifiers, state) {
     }
 }
 
-release_key(key) {
-    if (!GetKeyState(key)) {
-        Send("{blind}{" key " up}")
+release_keys() {
+    modifiers := [
+        "LCtrl",
+        "RCtrl",
+        "LAlt",
+        "RAlt",
+        "LShift",
+        "RShift",
+        "LWin",
+        "RWin"
+    ]
+
+    for (i, modifier_key in modifiers) {
+        if (GetKeyState(modifier_key)) {
+            ControlSend("{Blind}{" modifier_key " Up}",, "A")
+        }
     }
 }
 
