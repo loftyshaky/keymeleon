@@ -1,5 +1,5 @@
 bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, keys_are_enabled, found_exe_hotkey) {
-    Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(input_binding_i, found_exe_hotkey), keys_are_enabled)
+    Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
 }
 
 bind_unbind_context_hotkeys(current_layout := 'none') {
@@ -44,17 +44,21 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
     }
 }
 
-run_hotkey(input_binding_i, found_exe_hotkey) {
+run_hotkey(input_binding, input_binding_i, found_exe_hotkey, allow_native_function) {
     if (found_exe_hotkey) {
         exe_key_bindings := get_exe_config_val("key_bindings", false)
         exe_key_binding := config_get([input_binding_i], exe_key_bindings)
 
         if (n(exe_key_binding)) {
-            send_one_command_or_run_macro(exe_key_binding)
+            if (!allow_native_function) {
+                ;SendInput("{vkE8}")
+            }
+
+            send_one_command_or_run_macro(input_binding, exe_key_binding)
         }
     }
 
-    release_keys()
+    ;release_keys()
 }
 
 get_current_exe_name() {
@@ -75,22 +79,25 @@ get_current_exe_name() {
 }
 
 
-send_one_command_or_run_macro(exe_key_binding) {
+send_one_command_or_run_macro(input_binding, exe_key_binding) {
+    input_binding_modifiers := get_input_binding_modifiers(input_binding)
+
+
     if (is_arr(exe_key_binding) || n(config_get(["macro"], exe_key_binding))) {
-        send_macro(exe_key_binding)
+        send_macro(input_binding_modifiers, exe_key_binding)
     } else {
-        send_one_command(exe_key_binding)
+        send_one_command(input_binding_modifiers, exe_key_binding)
     }
 }
 
-send_one_command(exe_key_binding) {
+send_one_command(input_binding_modifiers, exe_key_binding) {
     ;release_key("Ctrl")
     ;release_key("Shift")
     ;release_key("Alt")
     ;release_key("LWin")
     ;release_key("RWin")
 
-    ;KeyWait("Control") ; [Don't remove!] Fix stuck (held down) Ctrl key as result of: Hotkey("~" "" "^F14 Up", (*) => Send("{Browser_Back}"), "On")
+    ;KeyWait("Control")
     ;KeyWait("Shift")
     ;KeyWait("Alt")
     ;KeyWait("LWin")
@@ -108,41 +115,50 @@ send_one_command(exe_key_binding) {
         delay_before_final := n(delay_before) ? delay_before : 0
         delay_between := config_get(["delay_between"], exe_key_binding)
         delay_between_final := n(delay_between) ? delay_between : 0
+        modifiers_release_timeout := config_get(["modifiers_release_timeout"], exe_key_binding)
+        modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout : 0
         modifier_keys_exist := n(modifiers) && modifier_keys_final.Length != 0
 
         if (n(key)) {
+            release_input_binding_modifiers(input_binding_modifiers, modifiers_release_timeout_final)
             Sleep(delay_before_final)
 
             if (modifier_keys_exist) {
-                send_modifier_keys(modifier_keys_final, "down")
+                send_modifier_keys(modifier_keys_final, "down", "none")
                 Sleep(delay_between_final)
             }
 
             if (wait_final || key_wait_final) {
-                Send("{" key " down}")
+                SendInput("{" key " down}")
                 key_wait_f(wait_final, key_wait_final)
-                Send("{" key " up}")
+                SendInput("{" key " up}")
             } else {
-                Send("{" key " down}")
+                SendInput("{" key " down}")
                 Sleep(delay_between_final)
-                Send("{" key " up}")
+                SendInput("{" key " up}")
             }
 
             if (modifier_keys_exist) {
                 Sleep(delay_between_final)
-                send_modifier_keys(modifier_keys_final, "up")
+                send_modifier_keys(modifier_keys_final, "up", true)
             }
+
         }
+
     } else {
-        Send("{" exe_key_binding " down}")
-        Send("{" exe_key_binding " up}")
+        SendInput("{" exe_key_binding " down}")
+        SendInput("{" exe_key_binding " up}")
     }
 }
 
-send_macro(exe_key_binding) {
+send_macro(input_binding_modifiers, exe_key_binding) {
     macro_items_inner := config_get(["macro"], exe_key_binding)
     macro_items_final := []
     repeat_count := config_get(["repeat_count"], exe_key_binding)
+    modifiers_release_timeout := config_get(["modifiers_release_timeout"], exe_key_binding)
+    modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout : 0
+
+    release_input_binding_modifiers(input_binding_modifiers, modifiers_release_timeout_final)
 
     if (repeat_count && n(macro_items_inner)) {
         Loop repeat_count {
@@ -196,15 +212,68 @@ send_macro_item(macro_item) {
     if (wait_final || key_wait_final) {
         key_wait_f(wait_final, key_wait_final)
     } if (n(key)) {
-        Send("{" key "}")
+        SendInput("{" key "}")
     } else if (n(delay)) {
         Sleep(delay)
     }
 }
 
-send_modifier_keys(modifiers, state) {
+send_modifier_keys(modifiers, state, state_compare) {
     for (i, modifier_key in modifiers) {
-        Send("{" modifier_key " " state "}")
+        if (state_compare = 'none' || GetKeyState(modifier_key) = state_compare) {
+            SendInput("{" modifier_key " " state "}")
+        }
+    }
+}
+
+get_input_binding_modifiers(input_binding) {
+    modifier_array := []
+
+    if (InStr(input_binding, "^")) {
+        modifier_array.push("Ctrl")
+    }
+
+    if (InStr(input_binding, "!")) {
+        modifier_array.push("Alt")
+    }
+
+    if (InStr(input_binding, "+")) {
+        modifier_array.push("Shift")
+    }
+
+    if (InStr(input_binding, "#")) {
+        modifier_array.push("LWin")
+        modifier_array.push("RWin")
+    }
+
+    return modifier_array
+}
+
+get_modifier_string(modifiers) {
+    modifier_string := ""
+
+    for (i, modifier_key in modifiers) {
+        if (InStr(modifier_key, "Ctrl")) {
+            modifier_string .= "^"
+        } else if (InStr(modifier_key, "!")) {
+            modifier_string .= "!"
+        } else if (InStr(modifier_key, "+")) {
+            modifier_string .= "+"
+        } else if (InStr(modifier_key, "Win")) {
+            modifier_string .= "#"
+        }
+    }
+
+    return modifier_string
+}
+
+release_input_binding_modifiers(input_binding_modifiers, modifiers_release_timeout) {
+    for (i, input_binding_modifier in input_binding_modifiers) {
+        SendInput("{" input_binding_modifier " up}")
+    }
+
+    for (i, input_binding_modifier in input_binding_modifiers) {
+        KeyWait(input_binding_modifier, "T" (modifiers_release_timeout / 1000))
     }
 }
 
@@ -222,13 +291,13 @@ release_keys() {
 
     for (i, modifier_key in modifiers) {
         if (GetKeyState(modifier_key)) {
-            ControlSend("{Blind}{" modifier_key " Up}",, "A")
+            ControlSend("{Blind}{" modifier_key " Up}", , "A")
         }
     }
 }
 
 key_wait_f(wait, key_wait) {
     if (wait || key_wait) {
-       KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
+        KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
     }
 }
