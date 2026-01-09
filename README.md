@@ -716,6 +716,52 @@ Standard key names (like `F2`): When you set `"wait": 1`, Keymeleon automaticall
 
 Scan codes (like `SC03D` for `F3`): Keymeleon cannot automatically detect which physical key corresponds to a scan code. You must explicitly specify `"key_wait": "f3"` to tell the script which physical key to monitor for release.
 
+### Modifiers release timeout
+#### Problem Scenario
+
+When activating a hotkey that uses modifier keys (`Ctrl`, `Shift`, `Alt`), you might inadvertently trigger the wrong command if those modifiers are still physically held down.
+
+#### Example:
+
+You configure a hotkey `Ctrl+Shift+F2` to trigger `Ctrl+V` (paste formatted text).
+
+While holding `Ctrl` and `Shift` to press `F2`, Windows might register `Ctrl+Shift+V` (paste unformatted) instead of your intended `Ctrl+V`.
+
+#### Solution: modifiers_release_timeout
+
+This property instructs Keymeleon to wait for the specified milliseconds for you to release held modifier keys before executing the target command.
+
+#### How it works:
+
+1. You press the hotkey (e.g., `Ctrl+Shift+F2`).
+2. Keymeleon detects the `Ctrl` and `Shift` modifiers are still held.
+3. It waits up to the specified timeout (e.g., 1000ms) for you to release them.
+4. Once all modifiers are released OR the timeout expires, it executes `Ctrl+V`.
+
+#### Configuration Example
+
+```json
+{
+    "context_remap": {
+        "exe": {
+            "default": {
+                "key_bindings": {
+                    "ctrl_shift_f2": {
+                        "allow_native_function": 0,
+                        "key": "v",
+                        "modifiers": ["Ctrl"],
+                        "modifiers_release_timeout": 1000
+                    },
+                }
+            }
+        },
+        "input_bindings": {
+            "ctrl_shift_f2": "^+F2",
+        }
+    }
+}
+```
+
 ### Key binding properties
 
 | Property                | Type         | Description                                                                                                                                                                                                                                                                          | Default |
@@ -728,6 +774,7 @@ Scan codes (like `SC03D` for `F3`): Keymeleon cannot automatically detect which 
 | `modifiers`             | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                                                                               | -       |
 | `allow_native_function` | `Number`       | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                                                                                                                                   | `1`     |
 | `ignore_modifiers`      | `Number`       | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                                                                                                                                                                                            | `0`     |
+| `modifiers_release_timeout`      | `Number`       | Time in milliseconds that Keymeleon waits for physically held modifier keys to be released before executing the target command. If the timeout expires before modifiers are released, the command executes immediately.                                                                                                                                                                                            | `0`     |
 | `repeat_count`      | `Number`       | Number of times to repeat the entire macro sequence.                                                                                                                                                                                            | `1`     |
 
 <h2 id="macros">Macros</h2>
@@ -1369,6 +1416,7 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `modifiers`            | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                       | `["Ctrl", "Shift"]` | -       |
 | `allow_native_function`| `Number`     | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                                                                         | `0` | `1`     |
 | `ignore_modifiers`     | `Number`     | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                                                                                                                                    | `1` | `0`     |
+| `modifiers_release_timeou`     | `Number`     | Time in milliseconds that Keymeleon waits for physically held modifier keys to be released before executing the target command. If the timeout expires before modifiers are released, the command executes immediately.                                                                                                                                    | `300` | `0`     |
 | `macro`                | `Array`      | Sequence of keys and delays for complex macros.                                                                                                                                                                              | `[{"key": "a"}, {"delay": 50}, {"key": "b"}]` | -       |
 | `repeat_count`         | `Number`     | Number of times to repeat the entire macro sequence.                                                                                                                                                                         | `3` | `1`     |
 
