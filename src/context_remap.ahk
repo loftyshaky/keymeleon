@@ -115,6 +115,10 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
         delay_before_final := n(delay_before) ? delay_before : 0
         delay_between := config_get(["delay_between"], exe_key_binding)
         delay_between_final := n(delay_between) ? delay_between : 0
+        pre_key_delay := config_get(["pre_key_delay"], exe_key_binding)
+        pre_key_delay_final := n(pre_key_delay) ? pre_key_delay : 0
+        post_key_delay := config_get(["post_key_delay"], exe_key_binding)
+        post_key_delay_final := n(post_key_delay) ? post_key_delay : 0
         modifiers_release_timeout := config_get(["modifiers_release_timeout"], exe_key_binding)
         modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout : 0
         modifier_keys_exist := n(modifiers) && modifier_keys_final.Length != 0
@@ -125,7 +129,7 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
 
             if (modifier_keys_exist) {
                 send_modifier_keys(modifier_keys_final, "down", "none")
-                Sleep(delay_between_final)
+                Sleep(pre_key_delay_final)
             }
 
             if (wait_final || key_wait_final) {
@@ -139,7 +143,7 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
             }
 
             if (modifier_keys_exist) {
-                Sleep(delay_between_final)
+                Sleep(post_key_delay_final)
                 send_modifier_keys(modifier_keys_final, "up", true)
             }
 
