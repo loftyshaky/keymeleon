@@ -176,63 +176,54 @@
                             ]
                         },
                         "ctrl_;": {
-                            "allow_native_function": 0,
                             "key": "z",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_a": {
-                            "allow_native_function": 0,
                             "key": "a",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_b": {
-                            "allow_native_function": 0,
                             "key": "n",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_d": {
-                            "allow_native_function": 0,
                             "key": "h",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_f": {
-                            "allow_native_function": 0,
                             "key": "y",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_j": {
-                            "allow_native_function": 0,
                             "key": "c",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_k": {
-                            "allow_native_function": 0,
                             "key": "v",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_o": {
-                            "allow_native_function": 0,
                             "key": "s",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_shift_k": {
-                            "allow_native_function": 0,
                             "key": "v",
                             "modifiers": [
                                 "Ctrl",
@@ -240,7 +231,6 @@
                             ]
                         },
                         "ctrl_shift_o": {
-                            "allow_native_function": 0,
                             "key": "s",
                             "modifiers": [
                                 "Ctrl",
@@ -248,14 +238,12 @@
                             ]
                         },
                         "ctrl_shift_q": {
-                            "allow_native_function": 0,
                             "key": "x",
                             "modifiers": [
                                 "Ctrl"
                             ]
                         },
                         "ctrl_u": {
-                            "allow_native_function": 0,
                             "key": "f",
                             "modifiers": [
                                 "Ctrl"
