@@ -1,5 +1,7 @@
-bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, keys_are_enabled, found_exe_hotkey) {
-    Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
+bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, keys_are_enabled,
+    found_exe_hotkey) {
+    Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(
+        input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
 }
 
 bind_unbind_context_hotkeys(current_layout := 'none') {
@@ -33,12 +35,14 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
             ignore_modifiers := exe_key_binding_is_obj ? ignore_modifiers_obj_bool : 0
             allow_native_function := exe_key_binding_is_obj ? allow_native_function_obj_bool : 1
 
-            current_layout_is_in_binding_disabled_layouts := find_i_in_array(current_layout, binding_disabled_layouts_arr)
+            current_layout_is_in_binding_disabled_layouts := find_i_in_array(current_layout,
+                binding_disabled_layouts_arr)
 
             bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "Off", false)
 
             if (enable_all_bindings && !current_layout_is_in_binding_disabled_layouts) {
-                bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On", found_exe_hotkey)
+                bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On",
+                    found_exe_hotkey)
             }
         }
     }
@@ -78,10 +82,8 @@ get_current_exe_name() {
     return exe_name_final
 }
 
-
 send_one_command_or_run_macro(input_binding, exe_key_binding) {
     input_binding_modifiers := get_input_binding_modifiers(input_binding)
-
 
     if (is_arr(exe_key_binding) || n(config_get(["macro"], exe_key_binding))) {
         send_macro(input_binding_modifiers, exe_key_binding)
@@ -165,7 +167,7 @@ send_macro(input_binding_modifiers, exe_key_binding) {
     release_input_binding_modifiers(input_binding_modifiers, modifiers_release_timeout_final)
 
     if (repeat_count && n(macro_items_inner)) {
-        Loop repeat_count {
+        loop repeat_count {
             for (i, macro_item_2 in macro_items_inner) {
                 macro_items_final.push(macro_item_2)
             }
@@ -177,7 +179,7 @@ send_macro(input_binding_modifiers, exe_key_binding) {
 
             if (n(repeatable_macro)) {
                 if (n(repeatable_macro_repeat_count)) {
-                    Loop repeatable_macro_repeat_count {
+                    loop repeatable_macro_repeat_count {
                         for (i, macro_item_2 in repeatable_macro) {
                             macro_items_final.push(macro_item_2)
                         }
@@ -215,7 +217,8 @@ send_macro_item(macro_item) {
 
     if (wait_final || key_wait_final) {
         key_wait_f(wait_final, key_wait_final)
-    } if (n(key)) {
+    }
+    if (n(key)) {
         SendInput("{" key "}")
     } else if (n(delay)) {
         Sleep(delay)

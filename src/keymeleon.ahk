@@ -34,10 +34,14 @@ on_exe_change()
 bind_unbind_context_hotkeys('none')
 
 bind_hotkey_to_function(["hotkeys", "display_current_layout_id"], (*) => display_current_layout_id())
-bind_hotkey_to_function(["hotkeys", "toggle_windows_api_layout_switching"], (*) => toggle_feature("enable_windows_api_layout_switching"))
-bind_hotkey_to_function(["hotkeys", "toggle_sequential_layout_switching"], (*) => toggle_feature("enable_sequential_layout_switching"))
-bind_hotkey_to_function(["hotkeys", "toggle_dedicated_layout_switching"], (*) => toggle_feature("enable_dedicated_layout_switching"))
-bind_hotkey_to_function(["hotkeys", "toggle_layout_switching_audio"], (*) => toggle_feature("enable_layout_switching_audio"))
+bind_hotkey_to_function(["hotkeys", "toggle_windows_api_layout_switching"], (*) => toggle_feature(
+    "enable_windows_api_layout_switching"))
+bind_hotkey_to_function(["hotkeys", "toggle_sequential_layout_switching"], (*) => toggle_feature(
+    "enable_sequential_layout_switching"))
+bind_hotkey_to_function(["hotkeys", "toggle_dedicated_layout_switching"], (*) => toggle_feature(
+    "enable_dedicated_layout_switching"))
+bind_hotkey_to_function(["hotkeys", "toggle_layout_switching_audio"], (*) => toggle_feature(
+    "enable_layout_switching_audio"))
 bind_hotkey_to_function(["hotkeys", "toggle_typing_audio"], (*) => toggle_feature("enable_typing_audio"))
 bind_hotkey_to_function(["hotkeys", "toggle_feature_state_audio"], (*) => toggle_feature("enable_feature_state_audio"))
 bind_hotkey_to_function(["hotkeys", "toggle_all_bindings"], (*) => toggle_feature("enable_all_bindings"))

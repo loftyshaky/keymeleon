@@ -3,7 +3,8 @@ layout_change_step := 0
 switching_layout_with_dedicated_hotkey := false
 last_exe := ""
 last_exe_was_present_in_conditional_exe_list := false
-all_layouts_in_switch_order := n(config_get(["layouts", "secondary_layouts"])) ? config_get(["layouts", "secondary_layouts"]).clone() : false
+all_layouts_in_switch_order := n(config_get(["layouts", "secondary_layouts"])) ? config_get(["layouts",
+    "secondary_layouts"]).clone() : false
 
 generate_all_layouts_in_switch_order_arr() {
     global all_layouts_in_switch_order
@@ -15,7 +16,6 @@ generate_all_layouts_in_switch_order_arr() {
     }
 }
 
-
 switch_layout(new_layout, is_automatic_layout_switching) {
     global last_switched_layout
     global switching_layout_with_dedicated_hotkey
@@ -25,10 +25,14 @@ switch_layout(new_layout, is_automatic_layout_switching) {
     enable_windows_api_layout_switching := config_get(["features", "enable_windows_api_layout_switching"])
     fallback_layout_switching_exes := config_get(["layouts", "fallback_layout_switching_exes"])
 
-    if ((!switching_layout_with_dedicated_hotkey && n(enable_sequential_layout_switching) && enable_sequential_layout_switching) || (switching_layout_with_dedicated_hotkey && n(enable_dedicated_layout_switching) && enable_dedicated_layout_switching)) {
-        classes_of_windows_that_wont_let_you_change_layout_with_windows_api := ["Progman", "Shell_TrayWnd", "Windows.UI.Core.CoreWindow"] ; Desktop, Taskbar (when you clicked on the taskbar), Start menu
+    if ((!switching_layout_with_dedicated_hotkey && n(enable_sequential_layout_switching) &&
+    enable_sequential_layout_switching) || (switching_layout_with_dedicated_hotkey && n(
+        enable_dedicated_layout_switching) && enable_dedicated_layout_switching)) {
+        classes_of_windows_that_wont_let_you_change_layout_with_windows_api := ["Progman", "Shell_TrayWnd",
+            "Windows.UI.Core.CoreWindow"] ; Desktop, Taskbar (when you clicked on the taskbar), Start menu
         window_class := WinGetClass("A")
-        can_change_layout_with_windows_api := !find_i_in_array(window_class ? window_class : "", classes_of_windows_that_wont_let_you_change_layout_with_windows_api)
+        can_change_layout_with_windows_api := !find_i_in_array(window_class ? window_class : "",
+            classes_of_windows_that_wont_let_you_change_layout_with_windows_api)
 
         found_fallback_layout_switching_exe := false
 
@@ -37,10 +41,12 @@ switch_layout(new_layout, is_automatic_layout_switching) {
             process_name := WinGetProcessName("ahk_pid " pid)
             exe_name := StrReplace(process_name, ".exe", "")
 
-            found_fallback_layout_switching_exe := n(fallback_layout_switching_exes) && n(find_i_in_array(exe_name, fallback_layout_switching_exes))
+            found_fallback_layout_switching_exe := n(fallback_layout_switching_exes) && n(find_i_in_array(exe_name,
+                fallback_layout_switching_exes))
         }
 
-        if (n(enable_windows_api_layout_switching) && enable_windows_api_layout_switching && can_change_layout_with_windows_api && !found_fallback_layout_switching_exe) {
+        if (n(enable_windows_api_layout_switching) && enable_windows_api_layout_switching &&
+        can_change_layout_with_windows_api && !found_fallback_layout_switching_exe) {
             set_layout_using_windows_api(new_layout, is_automatic_layout_switching)
         } else {
             set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching)
@@ -128,8 +134,11 @@ set_layout_using_windows_api(new_layout, is_automatic_layout_switching) {
                 pid := WinGetPID("ahk_id " window_id)
                 process_name := WinGetProcessName("ahk_pid " pid)
                 exe_name := StrReplace(process_name, ".exe", "")
-                automatic_exe_windows_api_layout_switching_delay := config_get(["hotkeys", "context_remap", "exe", exe_name, "automatic_exe_windows_api_layout_switching_delay"])
-                automatic_exe_windows_api_layout_switching_delay_final := IsInteger(automatic_exe_windows_api_layout_switching_delay) ? automatic_exe_windows_api_layout_switching_delay : 0
+                automatic_exe_windows_api_layout_switching_delay := config_get(["hotkeys", "context_remap", "exe",
+                    exe_name, "automatic_exe_windows_api_layout_switching_delay"])
+                automatic_exe_windows_api_layout_switching_delay_final := IsInteger(
+                    automatic_exe_windows_api_layout_switching_delay) ?
+                    automatic_exe_windows_api_layout_switching_delay : 0
 
                 if (is_automatic_layout_switching && exe_name = current_exe_name) {
                     Sleep(automatic_exe_windows_api_layout_switching_delay_final)
@@ -249,7 +258,6 @@ get_current_layout_id() {
         thread_id := DllCall("GetWindowThreadProcessId", "Ptr", ctrl_id, "Ptr", 0)
         input_locale_id := DllCall("GetKeyboardLayout", "UInt", thread_id, "Ptr")
 
-
         return input_locale_id
 
     } catch {
@@ -322,7 +330,8 @@ switch_layout_on_exe_change() {
         new_exe_name := StrReplace(new_exe, ".exe", "")
         new_exe_is_present_in_conditional_exe_list := n(config_get([new_exe_name], get_exe_obj()))
 
-        if (window_class != 'Shell_TrayWnd' && new_exe_name != 'SearchHost' && new_exe != last_exe && (new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) { ; window_class != 'Shell_TrayWnd' = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar. / new_exe_name != 'SearchHost' = prevent incorrect layout change when user Win.
+        if (window_class != 'Shell_TrayWnd' && new_exe_name != 'SearchHost' && new_exe != last_exe && (
+            new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) { ; window_class != 'Shell_TrayWnd' = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar. / new_exe_name != 'SearchHost' = prevent incorrect layout change when user Win.
             last_exe_was_present_in_conditional_exe_list := false
             last_exe := new_exe
             new_layout := get_exe_config_val("layout", false)

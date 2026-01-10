@@ -53,7 +53,8 @@ get_exe_config_val(val_key, is_automatic_layout_switching) {
     found_val := false
     exe := get_exe_obj()
     exe_default := config_get(["default"], exe)
-    exe_named := is_automatic_layout_switching ? config_get([last_exe_that_tried_to_play_audio_in], exe) || config_get([exe_name], exe) : config_get([exe_name], exe)
+    exe_named := is_automatic_layout_switching ? config_get([last_exe_that_tried_to_play_audio_in], exe) || config_get([
+        exe_name], exe) : config_get([exe_name], exe)
 
     if (n(exe)) {
         set_vars(exe_obj) {

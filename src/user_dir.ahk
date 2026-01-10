@@ -24,6 +24,5 @@ set_up_user_dir() {
         FileAppend("{}", config_path)
     }
 
-
     config := load_config_json(config_path)
 }
