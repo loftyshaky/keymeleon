@@ -563,7 +563,7 @@ The `key_bindings` objects define what happens when the remapped key is pressed 
 
 Behavior: When `F2` is pressed and released in Fallout 4, wait 30 milliseconds, then simulate pressing the `E` key.
 
-Use case: The delay_between ensures reliable execution in apps that may not register instant key presses.
+The `delay_between` property introduces a pause (in milliseconds) between the simulated `key` down and up states. This delay helps ensure keystrokes are reliably registered by applications that may not process instant or near-simultaneous key events.
 
 **Default context:**
 
@@ -768,7 +768,9 @@ This property instructs Keymeleon to wait for the specified milliseconds for you
 | :---------------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
 | `key`                   | `String`     | The key or keystroke to execute when the binding is triggered.                                                                                                                                                                                                               | -       |
 | `delay_before`                 | `Number`       | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes. | `0`     |
-| `delay_between`                 | `Number`       | The delay in milliseconds between individual key presses within the executed action. While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `0`     |
+| `delay_between`                 | `Number`       | The delay in milliseconds between the simulated `key` down and up states.  While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `0`     |
+| `pre_key_delay`                 | `Number`       | The Delay in milliseconds between the `modifiers` up and `key` down states. | `0`     |
+| `post_key_delay`                 | `Number`       | The Delay in milliseconds between `key` up and  `modifiers` down states. | `0`     |
 | `wait`                 | `Number`       | Wait for physical key release before sending the `"Up"` event. | `0`     |
 | `key_wait`                 | `String`       | Physical key name to monitor for release. | -     |
 | `modifiers`             | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                                                                               | -       |
@@ -1410,7 +1412,9 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | :--------------------- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :------ |
 | `key`                  | `String`     | The key or keystroke to execute when the binding is triggered.                                                                                                                                                               | `"a"` | -       |
 | `delay_before`         | `Number`     | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes.                                                                                                  | `30` | `0`     |
-| `delay_between`        | `Number`     | The delay in milliseconds between individual key presses within the executed action. While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `30` | `0`     |
+| `delay_between`        | `Number`     | The delay in milliseconds between the simulated `key` down and up states.  While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `30` | `0`     |
+| `pre_key_delay`        | `Number`     | The Delay in milliseconds between the `modifiers` up and `key` down states. | `30` | `0`     |
+| `post_key_delay`        | `Number`     | The Delay in milliseconds between `key` up and  `modifiers` down states. | `30` | `0`     |
 | `wait`                 | `Number`     | Wait for physical key release before sending the `"Up"`.                                                                                                                                                                     | `1` | `0`     |
 | `key_wait`             | `String`     | Physical key name to monitor for release.                                                                                                                                                                                    | `"f3"` | -       |
 | `modifiers`            | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                       | `["Ctrl", "Shift"]` | -       |
