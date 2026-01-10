@@ -1,6 +1,6 @@
-bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, keys_are_enabled,
+bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, keys_are_enabled,
     found_exe_hotkey) {
-    Hotkey((allow_native_function ? "~" : "") (ignore_modifiers ? "*" : "") input_binding, (*) => run_hotkey(
+    Hotkey((allow_native_function ? "~" : "") (ignore_extra_modifiers ? "*" : "") input_binding, (*) => run_hotkey(
         input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
 }
 
@@ -28,20 +28,21 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
             binding_disabled_layouts_val := get_exe_config_val("binding_disabled_layouts", false)
             binding_disabled_layouts_arr := is_arr(binding_disabled_layouts_val) ? binding_disabled_layouts_val : []
 
-            ignore_modifiers_obj_val := config_get(["ignore_modifiers"], exe_key_binding)
-            ignore_modifiers_obj_bool := ignore_modifiers_obj_val = "" ? 0 : ignore_modifiers_obj_val
+            ignore_extra_modifiers_obj_val := config_get(["ignore_extra_modifiers"], exe_key_binding)
             allow_native_function_obj_val := config_get(["allow_native_function"], exe_key_binding)
-            allow_native_function_obj_bool := allow_native_function_obj_val = "" ? 1 : allow_native_function_obj_val
-            ignore_modifiers := exe_key_binding_is_obj ? ignore_modifiers_obj_bool : 0
-            allow_native_function := exe_key_binding_is_obj ? allow_native_function_obj_bool : 1
+            ignore_extra_modifiers_obj_bool := ignore_extra_modifiers_obj_val = "" ? 0 : ignore_extra_modifiers_obj_val
+            allow_native_function_obj_bool := allow_native_function_obj_val = "" ? 0 : allow_native_function_obj_val
+            ignore_extra_modifiers := exe_key_binding_is_obj ? ignore_extra_modifiers_obj_bool : 0
+            allow_native_function := found_exe_hotkey ? allow_native_function_obj_bool : 1
 
             current_layout_is_in_binding_disabled_layouts := find_i_in_array(current_layout,
                 binding_disabled_layouts_arr)
 
-            bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "Off", false)
+            bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, "Off",
+                false)
 
             if (enable_all_bindings && !current_layout_is_in_binding_disabled_layouts) {
-                bind_context_hotkey(input_binding_i, input_binding, ignore_modifiers, allow_native_function, "On",
+                bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, "On",
                     found_exe_hotkey)
             }
         }
