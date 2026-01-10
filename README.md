@@ -751,12 +751,12 @@ This property instructs Keymeleon to wait for the specified milliseconds for you
                         "key": "v",
                         "modifiers": ["Ctrl"],
                         "modifiers_release_timeout": 1000
-                    },
+                    }
                 }
             }
         },
         "input_bindings": {
-            "ctrl_shift_f2": "^+F2",
+            "ctrl_shift_f2": "^+F2"
         }
     }
 }
