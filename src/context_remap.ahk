@@ -112,6 +112,9 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
         wait_final := n(wait) ? wait : 0
         key_wait := config_get(["key_wait"], exe_key_binding)
         key_wait_final := n(key_wait) ? key_wait : 0
+        blind := config_get(["blind"], exe_key_binding)
+        blind_final := n(blind) ? blind : 0
+        blind_send_input := blind ? "{Blind}" : ""
         modifiers := config_get(["modifiers"], exe_key_binding)
         modifier_keys_final := is_arr(modifiers) ? modifiers : [modifiers]
         delay_before := config_get(["delay_before"], exe_key_binding)
@@ -123,11 +126,12 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
         post_key_delay := config_get(["post_key_delay"], exe_key_binding)
         post_key_delay_final := n(post_key_delay) ? post_key_delay : 0
         modifiers_release_timeout := config_get(["modifiers_release_timeout"], exe_key_binding)
-        modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout : 0
+        modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout :
+            0
         modifier_keys_exist := n(modifiers) && modifier_keys_final.Length != 0
-
         if (n(key)) {
-            release_input_binding_modifiers(input_binding_modifiers, modifiers_release_timeout_final)
+            release_input_binding_modifiers(input_binding_modifiers,
+                modifiers_release_timeout_final)
             Sleep(delay_before_final)
 
             if (modifier_keys_exist) {
@@ -136,13 +140,13 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
             }
 
             if (wait_final || key_wait_final) {
-                SendInput("{" key " down}")
+                SendInput(blind_send_input "{" key " down}")
                 key_wait_f(wait_final, key_wait_final)
-                SendInput("{" key " up}")
+                SendInput(blind_send_input "{" key " up}")
             } else {
-                SendInput("{" key " down}")
+                SendInput(blind_send_input "{" key " down}")
                 Sleep(delay_between_final)
-                SendInput("{" key " up}")
+                SendInput(blind_send_input "{" key " up}")
             }
 
             if (modifier_keys_exist) {
@@ -151,10 +155,10 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
             }
 
         }
-
-    } else {
-        SendInput("{" exe_key_binding " down}")
-        SendInput("{" exe_key_binding " up}")
+    }
+    else {
+        SendInput(blind_send_input "{" exe_key_binding " down}")
+        SendInput(blind_send_input "{" exe_key_binding " up}")
     }
 }
 
