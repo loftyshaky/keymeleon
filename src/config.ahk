@@ -41,6 +41,16 @@ config_get(keys, accessed := "") {
     return accessed_end_val ? accessed : features_fallback_val
 }
 
+config_write(config) {
+    global config_path
+
+    config_json := jxon_dump(config, indent := 4)
+
+    file := FileOpen(config_path, "w")
+    file.write(config_json)
+    file.close()
+}
+
 get_exe_obj() {
     return config_get(["hotkeys", "context_remap", "exe"])
 }
