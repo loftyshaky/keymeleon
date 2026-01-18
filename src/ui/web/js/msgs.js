@@ -7,7 +7,7 @@ window.chrome.webview.addEventListener('message', (e) => {
     }
 });
 
-send_msg = (msg) => {
+export const send_msg = (msg) => {
     if (window.chrome && window.chrome.webview) {
         window.chrome.webview.postMessage(JSON.stringify(msg));
     }
