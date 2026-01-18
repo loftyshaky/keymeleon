@@ -1,0 +1,9 @@
+.btn {
+    display: block;
+    text-align: left;
+    border: 0;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    padding: 4px 10px;
+}

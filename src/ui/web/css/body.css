@@ -1,0 +1,14 @@
+* {
+    font-size: 14px;
+    font-family: Candara, sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    margin: 0;
+}

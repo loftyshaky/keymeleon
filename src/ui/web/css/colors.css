@@ -1,0 +1,21 @@
+* {
+    color: #212121;
+}
+
+body,
+.btn {
+    background-color: white;
+}
+
+.btn.current {
+    color: white;
+}
+
+.sections,
+.sections .btn {
+    background-color: #efe8ff;
+}
+
+.sections .btn.current {
+    background-color: #9a70ff;
+}
