@@ -1,20 +1,34 @@
 import * as x from './x.js';
 
-export const create_section_btn = ({ cls, label }) => {
+export const create_section_btn = ({ name }) => {
     const el = x.create(
         'button',
-        `btn ${cls} ${cls === 'hotkeys' ? 'current' : ''}`
+        `btn ${name} ${name === 'hotkeys' ? 'current' : ''}`
     );
-    el.textContent = n(label) ? label : convert_cls_to_label({ cls });
+    el.textContent = x.convert_cls_to_label({ cls: name });
 
-    x.append(s('.sections'), el);
+    x.append(s('.section_btns'), el);
 };
 
-const convert_cls_to_label = ({ cls }) => {
-    const underscores_replaced_with_spaces = cls.replace('_', ' ');
-    const first_letter_uppercase =
-        underscores_replaced_with_spaces.charAt(0).toUpperCase() +
-        underscores_replaced_with_spaces.slice(1);
+export const create_checkbox = ({
+    name,
+    parent_section,
+    config_val_accessor,
+}) => {
+    const value = x.get_nested_val(config_val_accessor, config);
 
-    return first_letter_uppercase;
+    const input_item = x.create('div', `input_item checkbox ${name}`);
+    x.append(parent_section, input_item);
+
+    const checkbox = x.create('input', '');
+    checkbox.type = 'checkbox';
+    checkbox.id = name;
+    checkbox.name = name;
+    checkbox.checked = value;
+    x.append(input_item, checkbox);
+
+    const label = x.create('label', 'input_label');
+    label.for = name;
+    label.textContent = x.convert_cls_to_label({ cls: name });
+    x.append(input_item, label);
 };

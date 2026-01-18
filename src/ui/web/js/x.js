@@ -60,3 +60,16 @@ export const append = (parent, child) => {
     }
 };
 // < dom manipulation
+
+export const convert_cls_to_label = ({ cls }) => {
+    const underscores_replaced_with_spaces = cls.replace(/_/g, ' ');
+    const first_letter_uppercase =
+        underscores_replaced_with_spaces.charAt(0).toUpperCase() +
+        underscores_replaced_with_spaces.slice(1);
+
+    return first_letter_uppercase;
+};
+
+export const get_nested_val = (val_accessor, obj) => {
+    return val_accessor.reduce((current_obj, key) => current_obj?.[key], obj);
+};

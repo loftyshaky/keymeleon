@@ -11,11 +11,11 @@ body,
     color: white;
 }
 
-.sections,
-.sections .btn {
+.section_btns,
+.section_btns .btn {
     background-color: #efe8ff;
 }
 
-.sections .btn.current {
+.section_btns .btn.current {
     background-color: #9a70ff;
 }
