@@ -1,5 +1,6 @@
 navigate_page(page_name) {
-    wv.Navigate("file:///" StrReplace(A_ScriptDir "\ui\web\html\" page_name ".html", "\", "/"))
+    wv.SetVirtualHostNameToFolderMapping("app.localhost", A_ScriptDir "/ui/web", 2)
+    wv.Navigate("http://app.localhost/html/index.html")
 }
 
 win_display_initial(dimensions_obj) {
