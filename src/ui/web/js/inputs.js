@@ -27,6 +27,35 @@ export const create_checkbox = ({
     checkbox.checked = value;
     x.append(input_item, checkbox);
 
+    create_label({ name, input_item });
+};
+
+export const create_text_input = ({
+    name,
+    parent_section,
+    config_val_accessor,
+    subtype,
+    placeholder,
+}) => {
+    const value = x.get_nested_val(config_val_accessor, config);
+
+    const input_item = x.create('div', `input_item ${subtype} ${name}`);
+    x.append(parent_section, input_item);
+
+    create_label({ name, input_item });
+
+    const text_input = x.create('input', '');
+    text_input.type = subtype;
+    text_input.id = name;
+    text_input.name = name;
+    text_input.value = value;
+    text_input.placeholder = placeholder;
+    text_input.autocomplete = 'off';
+    text_input.spellcheck = false;
+    x.append(input_item, text_input);
+};
+
+export const create_label = ({ name, input_item }) => {
     const label = x.create('label', 'input_label');
     label.for = name;
     label.textContent = x.convert_cls_to_label({ cls: name });

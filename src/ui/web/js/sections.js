@@ -15,7 +15,41 @@ const sections = [
             { name: 'enable_windows_api_layout_switching', type: 'checkbox' },
         ],
     },
-    { name: 'layouts' },
+    {
+        name: 'layouts',
+        inputs: [
+            {
+                name: 'all_layouts_ordered',
+                type: 'text',
+                placeholder: 'en-DVORAK,en-US',
+            },
+            {
+                name: 'layout_ids',
+                type: 'text',
+                placeholder: '-268303351,67699721',
+            },
+            {
+                name: 'primary_layout',
+                type: 'text',
+                placeholder: 'en-DVORAK',
+            },
+            {
+                name: 'secondary_layouts',
+                type: 'text',
+                placeholder: 'en-US,es-ES',
+            },
+            {
+                name: 'fallback_layout_switching_exes',
+                type: 'text',
+                placeholder: 'x360ce,RazerAppEngine',
+            },
+            {
+                name: 'layout_switching_delay',
+                type: 'number',
+                placeholder: '30',
+            },
+        ],
+    },
     { name: 'hotkeys', subsections: ['general', 'context_key_remapping'] },
     { name: 'audio' },
     { name: 'links' },
@@ -45,6 +79,18 @@ export const create_sections = () => {
                         name: input.name,
                         parent_section: section_el,
                         config_val_accessor: ['features', input.name],
+                    });
+                }
+            });
+        } else if (section.name === 'layouts') {
+            section.inputs.forEach((input) => {
+                if (['text', 'number'].includes(input.type)) {
+                    inputs.create_text_input({
+                        name: input.name,
+                        parent_section: section_el,
+                        config_val_accessor: ['layouts', input.name],
+                        subtype: input.type,
+                        placeholder: input.placeholder,
                     });
                 }
             });
