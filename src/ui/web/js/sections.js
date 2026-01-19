@@ -50,7 +50,75 @@ const sections = [
             },
         ],
     },
-    { name: 'hotkeys', subsections: ['general', 'context_key_remapping'] },
+    {
+        name: 'hotkeys',
+        subsections: [
+            {
+                name: 'general',
+                inputs: [
+                    {
+                        name: 'display_current_layout_id',
+                        type: 'text',
+                        placeholder: '^!+sc017',
+                    },
+                    {
+                        name: 'set_primary_layout',
+                        type: 'text',
+                        placeholder: 'ScrollLock',
+                    },
+                    {
+                        name: 'set_secondary_layout',
+                        type: 'text',
+                        placeholder: 'Pause',
+                    },
+                    {
+                        name: 'dedicated_layout_hotkeys',
+                        type: 'text',
+                        placeholder: '^+F8,^+F9',
+                    },
+                    {
+                        name: 'toggle_sequential_layout_switching',
+                        type: 'text',
+                        placeholder: '^!+sc01B',
+                    },
+                    {
+                        name: 'toggle_dedicated_layout_switching',
+                        type: 'text',
+                        placeholder: '^!+sc01A',
+                    },
+                    {
+                        name: 'toggle_all_bindings',
+                        type: 'text',
+                        placeholder: '^!+sc035',
+                    },
+                    {
+                        name: 'toggle_windows_api_layout_switching',
+                        type: 'text',
+                        placeholder: '^!+sc019',
+                    },
+                    {
+                        name: 'toggle_layout_switching_audio',
+                        type: 'text',
+                        placeholder: '^!+sc034',
+                    },
+                    {
+                        name: 'toggle_typing_audio',
+                        type: 'text',
+                        placeholder: '^!+sc033',
+                    },
+                    {
+                        name: 'toggle_feature_state_audio',
+                        type: 'text',
+                        placeholder: '^!+sc032',
+                    },
+                ],
+            },
+            {
+                name: 'context_key_remapping',
+                inputs: [],
+            },
+        ],
+    },
     { name: 'audio' },
     { name: 'links' },
 ];
@@ -66,7 +134,7 @@ export const create_sections = () => {
         if (n(section.subsections)) {
             section.subsections.forEach((subsection) => {
                 headers.create_subsection_header({
-                    name: subsection,
+                    name: subsection.name,
                     parent: section_el,
                 });
             });
@@ -91,6 +159,24 @@ export const create_sections = () => {
                         config_val_accessor: ['layouts', input.name],
                         subtype: input.type,
                         placeholder: input.placeholder,
+                    });
+                }
+            });
+        } else if (section.name === 'hotkeys') {
+            section.subsections.forEach((subsection) => {
+                if (subsection.name === 'general') {
+                    subsection.inputs.forEach((input) => {
+                        if (input.type === 'text') {
+                            inputs.create_text_input({
+                                name: input.name,
+                                parent_section: s(
+                                    `.subsection.${subsection.name}`
+                                ),
+                                config_val_accessor: ['hotkeys', input.name],
+                                subtype: input.type,
+                                placeholder: input.placeholder,
+                            });
+                        }
                     });
                 }
             });
