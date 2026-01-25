@@ -226,7 +226,7 @@ const create_input_bindings_inputs = () => {
                 'input_bindings',
                 key,
             ],
-            subtype: 'input_bindings_item',
+            subtype: 'text',
             placeholder: '^+F2',
             convert_cls_to_label: false,
         });
