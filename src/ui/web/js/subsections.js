@@ -1,17 +1,18 @@
-import * as x from './x.js';
+import { x } from './internal.js';
 
 export const create_subsection = ({
     name,
     cls,
     parent,
-    name_spaces_replaced_with_underscore = undefined,
+    convert_cls_to_label,
 }) => {
-    const name_final = name_spaces_replaced_with_underscore
-        ? name_spaces_replaced_with_underscore
+    const subsection_el = x.create('div', `${cls}`);
+    const header_el = x.create('h1', `header`);
+
+    subsection_el.dataset.name = name;
+    header_el.textContent = convert_cls_to_label
+        ? x.convert_cls_to_label(name)
         : name;
-    const subsection_el = x.create('div', `${cls} ${name_final}`);
-    const header_el = x.create('h1', `${name_final}`);
-    header_el.textContent = x.convert_cls_to_label(name);
 
     x.append(subsection_el, header_el);
     x.append(parent, subsection_el);

@@ -1,4 +1,4 @@
-import * as sections from './sections.js';
+import { sections } from './internal.js';
 
 window.chrome.webview.addEventListener('message', (e) => {
     const msg_obj = JSON.parse(JSON.parse(e.data));

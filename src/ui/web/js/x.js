@@ -70,10 +70,6 @@ export const convert_cls_to_label = (cls) => {
     return first_letter_uppercase;
 };
 
-export const replace_spaces_with_underscore = (text) => {
-    return `_${text.replace(/ /g, '_')}`;
-};
-
 export const get_nested_val_undefined = (val_accessor, obj) => {
     return n(val_accessor)
         ? val_accessor.reduce((current_obj, key) => current_obj?.[key], obj)
@@ -87,3 +83,5 @@ export const get_nested_val = (val_accessor, obj) => {
 
     return n(nested_val) ? nested_val : '';
 };
+
+export const get_keys = (obj) => (n(obj) ? Object.keys(obj) : []);

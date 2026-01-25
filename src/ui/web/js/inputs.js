@@ -1,4 +1,4 @@
-import * as x from './x.js';
+import { x } from './internal.js';
 
 export const create_section_btn = ({ name }) => {
     const el = x.create(
@@ -37,13 +37,14 @@ export const create_text_input = ({
     subtype,
     placeholder,
     val,
+    convert_cls_to_label,
 }) => {
     const value = n(val) ? val : x.get_nested_val(config_val_accessor, config);
 
     const input_item = x.create('div', `input_item ${subtype} ${name}`);
     x.append(parent_section, input_item);
 
-    create_label({ name, input_item });
+    create_label({ name, input_item, convert_cls_to_label });
 
     const text_input = x.create('input', '');
     text_input.type = subtype;

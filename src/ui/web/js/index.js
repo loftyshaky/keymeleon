@@ -1,3 +1,4 @@
-import * as config from './config.js';
+import { configuration } from './internal.js';
 
-config.get_config();
+configuration.set_template();
+configuration.get_config();
