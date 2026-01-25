@@ -1,0 +1,32 @@
+input[type='checkbox'] {
+    accent-color: #3097e9;
+    margin: 0;
+    margin-right: 8px;
+    vertical-align: -3px;
+    height: 18px;
+    width: 18px;
+}
+
+input[type='text'],
+input[type='number'] {
+    width: 500px;
+    border: 0;
+    background-color: #efefef;
+    outline: 1px solid #bbb;
+    padding: 0 7px;
+    height: 28px;
+}
+
+.input_item.text > *,
+.input_item.number > * {
+    display: block;
+}
+
+.input_item.text label,
+.input_item.number label {
+    margin-bottom: 4px;
+}
+
+.input_item:not(:first-child) {
+    margin-top: 10px;
+}

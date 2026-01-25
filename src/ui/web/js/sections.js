@@ -31,7 +31,7 @@ const create_context_remap_inner_subsection = ({
 }) => {
     subsections.create_subsection({
         name: inner_subsection_key,
-        cls: 'inner_subsection_context_remap',
+        cls: 'inner_subsection inner_subsection_layer_1',
         parent: s(
             `.subsection[data-name="${config_template_subsection.name}"]`
         ),
@@ -43,9 +43,9 @@ const create_exe_inner_subsection = ({ inner_subsection_key, exe_obj_key }) => {
     // Fallout4, default in exe
     subsections.create_subsection({
         name: exe_obj_key,
-        cls: `inner_subsection_exe`,
+        cls: `inner_subsection inner_subsection_layer_2`,
         parent: s(
-            `.inner_subsection_context_remap[data-name="${inner_subsection_key}"]`
+            `.inner_subsection_layer_1[data-name="${inner_subsection_key}"]`
         ),
         convert_cls_to_label: false,
     });
@@ -55,8 +55,8 @@ const create_key_bindings_inner_subsection = ({ exe_obj_key }) => {
     // key_bindings in specific exe (literaly "key_bindings" items)
     subsections.create_subsection({
         name: 'key_bindings',
-        cls: `inner_subsection_key_bindings`,
-        parent: s(`.inner_subsection_exe[data-name="${exe_obj_key}"]`),
+        cls: `inner_subsection inner_subsection_layer_3`,
+        parent: s(`.inner_subsection_layer_2[data-name="${exe_obj_key}"]`),
         convert_cls_to_label: true,
     });
 };
@@ -68,9 +68,9 @@ const create_custom_binding_name_inner_subsection = ({
 }) => {
     subsections.create_subsection({
         name: custom_binding_name_key,
-        cls: `inner_subsection_key_bindings_item`,
+        cls: `inner_subsection inner_subsection_layer_4`,
         parent: s(
-            `.inner_subsection_exe[data-name="${exe_obj_key}"] .inner_subsection_key_bindings`
+            `.inner_subsection_layer_2[data-name="${exe_obj_key}"] .inner_subsection_layer_3`
         ),
         convert_cls_to_label: false,
     });
@@ -218,7 +218,7 @@ const create_input_bindings_inputs = () => {
         inputs.create_text_input({
             name: key,
             parent_section: s(
-                `.inner_subsection_context_remap[data-name="input_bindings"]`
+                `.inner_subsection_layer_1[data-name="input_bindings"]`
             ),
             config_val_accessor: [
                 'hotkeys',
@@ -256,7 +256,7 @@ const create_custom_binding_name_inputs = ({
         inputs.create_text_input({
             name: custom_binding_name_item.name,
             parent_section: s(
-                `.inner_subsection_exe[data-name="${exe_obj_key}"] .inner_subsection_key_bindings_item[data-name="${key_bindings_obj_key}"]`
+                `.inner_subsection_layer_2[data-name="${exe_obj_key}"] .inner_subsection_layer_4[data-name="${key_bindings_obj_key}"]`
             ),
             val: custom_binding_name_item_val,
             subtype: custom_binding_name_item.type,
@@ -286,7 +286,7 @@ const create_specific_exe_inputs = ({
         inputs.create_text_input({
             name: specific_exe_section_item.name,
             parent_section: s(
-                `.inner_subsection_exe[data-name="${exe_obj_key}"]`
+                `.inner_subsection_layer_2[data-name="${exe_obj_key}"]`
             ),
             val: specific_exe_section_item_val,
             subtype: specific_exe_section_item.type,

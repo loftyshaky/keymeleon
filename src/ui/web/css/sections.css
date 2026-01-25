@@ -1,3 +1,8 @@
 .section_btns {
     height: 100%;
 }
+
+.sections {
+    overflow: auto;
+    padding: 10px;
+}

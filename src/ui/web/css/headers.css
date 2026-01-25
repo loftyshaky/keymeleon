@@ -1,0 +1,25 @@
+.header {
+    margin: 0;
+    margin-bottom: 6px;
+}
+
+.subsection > .header {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.inner_subsection_layer_1 > .header {
+    font-size: 29px;
+}
+
+.inner_subsection_layer_2 > .header {
+    font-size: 26px;
+}
+
+.inner_subsection_layer_3 > .header {
+    font-size: 23px;
+}
+
+.inner_subsection_layer_4 > .header {
+    font-size: 20px;
+}
