@@ -61,6 +61,16 @@ const create_key_bindings_inner_subsection = ({ exe_obj_key }) => {
     });
 };
 
+const create_specific_exe_inputs_w = ({ exe_obj_key }) => {
+    const exe_properties_w_el = x.create('div', `specific_exe_inputs_w`);
+    exe_properties_w_el.dataset.name = exe_obj_key;
+
+    x.append(
+        s(`.inner_subsection_layer_2[data-name="${exe_obj_key}"]`),
+        exe_properties_w_el
+    );
+};
+
 const create_custom_binding_name_inner_subsection = ({
     // button_1, button_2
     custom_binding_name_key,
@@ -99,6 +109,13 @@ const get_key_bindings_keys = ({ exe_obj_key }) => {
     return key_bindings_obj_keys;
 };
 
+const insert_input_bindings_in_the_beginning_of_context_remap = () => {
+    x.before(
+        s(`.inner_subsection[data-name="exe"]`),
+        s(`.inner_subsection[data-name="input_bindings"]`)
+    );
+};
+
 const create_headers = ({ section_el, config_template_section }) => {
     if (n(config_template_section.subsections)) {
         config_template_section.subsections.forEach(
@@ -134,6 +151,9 @@ const create_headers = ({ section_el, config_template_section }) => {
                                         x.get_keys(key_bindings_obj);
 
                                     if (n(key_bindings_obj)) {
+                                        create_specific_exe_inputs_w({
+                                            exe_obj_key,
+                                        });
                                         create_key_bindings_inner_subsection(
                                             // key_bindings in specific exe (literaly "key_bindings" items)
                                             { exe_obj_key }
@@ -286,7 +306,7 @@ const create_specific_exe_inputs = ({
         inputs.create_text_input({
             name: specific_exe_section_item.name,
             parent_section: s(
-                `.inner_subsection_layer_2[data-name="${exe_obj_key}"]`
+                `.specific_exe_inputs_w[data-name="${exe_obj_key}"]`
             ),
             val: specific_exe_section_item_val,
             subtype: specific_exe_section_item.type,
@@ -358,6 +378,8 @@ const create_hotkey_inputs = ({ config_template_section }) => {
             }
         }
     );
+
+    insert_input_bindings_in_the_beginning_of_context_remap();
 };
 
 export const create_sections = () => {

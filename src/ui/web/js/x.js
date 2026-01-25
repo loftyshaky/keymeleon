@@ -59,6 +59,18 @@ export const append = (parent, child) => {
         parent.appendChild(child);
     }
 };
+
+export const before = (el_to_insert_before, child) => {
+    if (
+        n(el_to_insert_before) &&
+        n(child) &&
+        n(el_to_insert_before.parentNode) &&
+        [1, 11].includes(child.nodeType)
+    ) {
+        el_to_insert_before.before(child);
+    }
+};
+
 // < dom manipulation
 
 export const convert_cls_to_label = (cls) => {
