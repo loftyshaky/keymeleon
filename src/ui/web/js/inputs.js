@@ -63,7 +63,7 @@ export const create_label = ({
     convert_cls_to_label = true,
 }) => {
     const label = x.create('label', 'input_label');
-    label.for = name;
+    label.setAttribute('for', name);
     label.textContent = convert_cls_to_label
         ? x.convert_cls_to_label(name)
         : name;
