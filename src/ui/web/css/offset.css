@@ -1,3 +1,6 @@
-.inner_subsection {
+.inner_subsection,
+.specific_exe_inputs_w > .input_item,
+.inner_subsection_layer_1[data-name='input_bindings'] > .input_item,
+.inner_subsection_layer_4 > .input_item {
     margin-left: 30px;
 }
