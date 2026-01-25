@@ -61,7 +61,7 @@ export const append = (parent, child) => {
 };
 // < dom manipulation
 
-export const convert_cls_to_label = ({ cls }) => {
+export const convert_cls_to_label = (cls) => {
     const underscores_replaced_with_spaces = cls.replace(/_/g, ' ');
     const first_letter_uppercase =
         underscores_replaced_with_spaces.charAt(0).toUpperCase() +
@@ -70,6 +70,20 @@ export const convert_cls_to_label = ({ cls }) => {
     return first_letter_uppercase;
 };
 
+export const replace_spaces_with_underscore = (text) => {
+    return `_${text.replace(/ /g, '_')}`;
+};
+
+export const get_nested_val_undefined = (val_accessor, obj) => {
+    return n(val_accessor)
+        ? val_accessor.reduce((current_obj, key) => current_obj?.[key], obj)
+        : undefined;
+};
+
 export const get_nested_val = (val_accessor, obj) => {
-    return val_accessor.reduce((current_obj, key) => current_obj?.[key], obj);
+    const nested_val = n(val_accessor)
+        ? get_nested_val_undefined(val_accessor, obj)
+        : undefined;
+
+    return n(nested_val) ? nested_val : '';
 };

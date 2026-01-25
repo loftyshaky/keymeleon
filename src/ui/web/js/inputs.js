@@ -5,7 +5,7 @@ export const create_section_btn = ({ name }) => {
         'button',
         `btn ${name} ${name === 'hotkeys' ? 'current' : ''}`
     );
-    el.textContent = x.convert_cls_to_label({ cls: name });
+    el.textContent = x.convert_cls_to_label(name);
 
     x.append(s('.section_btns'), el);
 };
@@ -36,8 +36,9 @@ export const create_text_input = ({
     config_val_accessor,
     subtype,
     placeholder,
+    val,
 }) => {
-    const value = x.get_nested_val(config_val_accessor, config);
+    const value = n(val) ? val : x.get_nested_val(config_val_accessor, config);
 
     const input_item = x.create('div', `input_item ${subtype} ${name}`);
     x.append(parent_section, input_item);
@@ -55,9 +56,15 @@ export const create_text_input = ({
     x.append(input_item, text_input);
 };
 
-export const create_label = ({ name, input_item }) => {
+export const create_label = ({
+    name,
+    input_item,
+    convert_cls_to_label = true,
+}) => {
     const label = x.create('label', 'input_label');
     label.for = name;
-    label.textContent = x.convert_cls_to_label({ cls: name });
+    label.textContent = convert_cls_to_label
+        ? x.convert_cls_to_label(name)
+        : name;
     x.append(input_item, label);
 };
