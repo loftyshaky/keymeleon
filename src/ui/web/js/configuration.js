@@ -153,22 +153,19 @@ export const set_template = () => {
             },
             {
                 name: 'enable_layout_switching_audio',
-                type: 'text',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'enable_layout_switching_audio_for_automatic_layout_change',
-                type: 'text',
-                placeholder: 0,
+                type: 'checkbox',
             },
             {
                 name: 'enable_typing_audio',
-                type: 'text',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'automatic_exe_windows_api_layout_switching_delay',
-                type: 'text',
+                type: 'number',
                 placeholder: 1000,
             },
             {
@@ -203,8 +200,7 @@ export const set_template = () => {
             },
             {
                 name: 'wait',
-                type: 'number',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'key_wait',
@@ -218,18 +214,15 @@ export const set_template = () => {
             },
             {
                 name: 'allow_native_function',
-                type: 'number',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'ignore_extra_modifiers',
-                type: 'number',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'blind',
-                type: 'number',
-                placeholder: 1,
+                type: 'checkbox',
             },
             {
                 name: 'send_mode',

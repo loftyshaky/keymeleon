@@ -14,9 +14,9 @@ export const create_checkbox = ({
     name,
     parent_section,
     config_val_accessor,
+    val,
 }) => {
-    const value = x.get_nested_val(config_val_accessor, config);
-
+    const value = n(val) ? val : x.get_nested_val(config_val_accessor, config);
     const input_item = x.create('div', `input_item checkbox ${name}`);
     x.append(parent_section, input_item);
 

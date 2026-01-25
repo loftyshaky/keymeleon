@@ -211,7 +211,7 @@ const create_layouts_inputs = ({ section_el, config_template_section }) => {
 const create_general_inputs = ({ config_template_subsection }) => {
     // set_primary_layout, set_secondary_layout
     config_template_subsection.inputs.forEach((input) => {
-        if (input.type === 'text') {
+        if (['text', 'number'].includes(input.type)) {
             inputs.create_text_input({
                 name: input.name,
                 parent_section: s(
@@ -272,7 +272,11 @@ const create_custom_binding_name_inputs = ({
         config
     );
 
-    if (n(custom_binding_name_item)) {
+    const parent_section = s(
+        `.inner_subsection_layer_2[data-name="${exe_obj_key}"] .inner_subsection_layer_4[data-name="${key_bindings_obj_key}"]`
+    );
+
+    if (['text', 'number'].includes(custom_binding_name_item.type)) {
         inputs.create_text_input({
             name: custom_binding_name_item.name,
             parent_section: s(
@@ -282,6 +286,12 @@ const create_custom_binding_name_inputs = ({
             subtype: custom_binding_name_item.type,
             placeholder: custom_binding_name_item.placeholder,
             convert_cls_to_label: true,
+        });
+    } else if (custom_binding_name_item.type === 'checkbox') {
+        inputs.create_checkbox({
+            name: custom_binding_name_item.name,
+            parent_section,
+            val: custom_binding_name_item_val,
         });
     }
 };
@@ -301,17 +311,24 @@ const create_specific_exe_inputs = ({
         ],
         config
     );
+    const parent_section = s(
+        `.specific_exe_inputs_w[data-name="${exe_obj_key}"]`
+    );
 
-    if (n(specific_exe_section_item_val)) {
+    if (['text', 'number'].includes(specific_exe_section_item.type)) {
         inputs.create_text_input({
             name: specific_exe_section_item.name,
-            parent_section: s(
-                `.specific_exe_inputs_w[data-name="${exe_obj_key}"]`
-            ),
+            parent_section,
             val: specific_exe_section_item_val,
             subtype: specific_exe_section_item.type,
             placeholder: specific_exe_section_item.placeholder,
             convert_cls_to_label: true,
+        });
+    } else if (specific_exe_section_item.type === 'checkbox') {
+        inputs.create_checkbox({
+            name: specific_exe_section_item.name,
+            parent_section,
+            val: specific_exe_section_item_val,
         });
     }
 };
@@ -363,9 +380,7 @@ const create_hotkey_inputs = ({ config_template_section }) => {
                                         );
                                     }
                                 );
-                            } else if (
-                                specific_exe_section_item.type === 'text'
-                            ) {
+                            } else {
                                 create_specific_exe_inputs({
                                     // inputs like enable_layout_switching_audio, enable_layout_switching_audio_for_automatic_layout_change inside specific exe like Fallout4
                                     exe_obj_key,
