@@ -1,8 +1,14 @@
-import { x, configuration, inputs, subsections } from './internal.js';
+import {
+    x,
+    configuration,
+    inputs,
+    side_menu,
+    subsections,
+} from './internal.js';
 
 const create_section = ({ config_template_section }) => {
     // features, layouts, hotkeys, audio, links
-    inputs.create_section_btn({ name: config_template_section.name });
+    side_menu.create_section_btn({ name: config_template_section.name });
 
     const section_el = x.create(
         'div',
@@ -414,4 +420,8 @@ export const create_sections = () => {
             create_hotkey_inputs({ config_template_section });
         }
     });
+
+    x.bind(sa('.section_btn'), 'click', side_menu.select_section);
+
+    side_menu.select_section();
 };

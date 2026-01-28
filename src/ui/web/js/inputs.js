@@ -1,14 +1,4 @@
-import { x } from './internal.js';
-
-export const create_section_btn = ({ name }) => {
-    const el = x.create(
-        'button',
-        `btn ${name} ${name === 'hotkeys' ? 'current' : ''}`
-    );
-    el.textContent = x.convert_cls_to_label(name);
-
-    x.append(s('.section_btns'), el);
-};
+import { x, configuration } from './internal.js';
 
 export const create_checkbox = ({
     name,
@@ -16,7 +6,9 @@ export const create_checkbox = ({
     config_val_accessor,
     val,
 }) => {
-    const value = n(val) ? val : x.get_nested_val(config_val_accessor, config);
+    const value = n(val)
+        ? val
+        : configuration.get_config_val({ val_accessor: config_val_accessor });
     const input_item = x.create('div', `input_item checkbox ${name}`);
     x.append(parent_section, input_item);
 
@@ -39,7 +31,9 @@ export const create_text_input = ({
     val,
     convert_cls_to_label,
 }) => {
-    const value = n(val) ? val : x.get_nested_val(config_val_accessor, config);
+    const value = n(val)
+        ? val
+        : configuration.get_config_val({ val_accessor: config_val_accessor });
 
     const input_item = x.create('div', `input_item ${subtype} ${name}`);
     x.append(parent_section, input_item);

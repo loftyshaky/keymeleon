@@ -1,7 +1,27 @@
-import { msgs } from './internal.js';
+import { x, msgs } from './internal.js';
 
 export const get_config = () => {
     msgs.send_msg({ msg: 'get_config' });
+};
+
+export const get_config_val = ({ val_accessor }) =>
+    x.get_nested_val(val_accessor, config);
+
+export const set_config_val = ({ val_setter, val }) => {
+    config = x.set_nested_val(val_setter, val, config);
+};
+
+export const write = () => {
+    msgs.send_msg({ msg: 'write_config', config });
+};
+
+export const write_change = ({ val_setter, val }) => {
+    set_config_val({
+        val_setter,
+        val,
+    });
+
+    write();
 };
 
 export const set_template = () => {

@@ -44,6 +44,21 @@ const shared = {
 
         return variable;
     },
+
+    all: (els, callback) => {
+        if (n(els)) {
+            if (
+                !(els instanceof Window) &&
+                (els instanceof NodeList || els.length > 1)
+            ) {
+                Array.from(els).forEach((el) => {
+                    callback(el);
+                });
+            } else {
+                callback(els);
+            }
+        }
+    },
 };
 
 // > dom manipulation
@@ -73,6 +88,38 @@ export const before = (el_to_insert_before, child) => {
 
 // < dom manipulation
 
+export const add_cls = (els, cls) => {
+    const one = (el) => {
+        if (n(el) && el.nodeType === 1) {
+            el.classList.add(cls);
+        }
+    };
+
+    shared.all(els, one);
+};
+
+export const remove_cls = (els, cls) => {
+    const one = (el) => {
+        if (n(el) && el.nodeType === 1) {
+            el.classList.remove(cls);
+        }
+    };
+
+    shared.all(els, one);
+};
+
+// > add event listener to one or multiple elements t
+export const bind = (els, event, f) => {
+    const one = (el) => {
+        if (n(el.addEventListener)) {
+            el.addEventListener(event, f);
+        }
+    };
+
+    shared.all(els, one);
+};
+// < add event listener to one or multiple elements t
+
 export const convert_cls_to_label = (cls) => {
     const underscores_replaced_with_spaces = cls.replace(/_/g, ' ');
     const first_letter_uppercase =
@@ -94,6 +141,23 @@ export const get_nested_val = (val_accessor, obj) => {
         : undefined;
 
     return n(nested_val) ? nested_val : '';
+};
+
+export const set_nested_val = (val_setter, val, obj) => {
+    let new_item = obj;
+    val_setter.forEach((item, i) => {
+        if (i < val_setter.length - 1) {
+            if (!n(obj[item])) {
+                new_item[item] = {};
+            }
+
+            new_item = obj[item];
+        } else {
+            new_item[item] = val;
+        }
+    });
+
+    return obj;
 };
 
 export const get_keys = (obj) => (n(obj) ? Object.keys(obj) : []);

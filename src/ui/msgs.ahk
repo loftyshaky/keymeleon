@@ -17,7 +17,7 @@ on_message(sender, args) {
 
             send_response(jxon_dump(response))
         } else if (msg_str = "write_config") {
-            log(msg_obj["audio"]["default_file_extension"])
+            config_write(msg_obj["config"])
         }
 
     } catch as e {
