@@ -17,9 +17,13 @@ export const create_checkbox = ({
     checkbox.id = name;
     checkbox.name = name;
     checkbox.checked = value;
+    checkbox.dataset.config_val_accessor = config_val_accessor;
+
     x.append(input_item, checkbox);
 
     create_label({ name, input_item });
+
+    checkbox.addEventListener('input', configuration.update_checkbox_val);
 };
 
 export const create_text_input = ({
@@ -27,6 +31,7 @@ export const create_text_input = ({
     parent_section,
     config_val_accessor,
     subtype,
+    val_type,
     placeholder,
     val,
     convert_cls_to_label,
@@ -48,7 +53,12 @@ export const create_text_input = ({
     text_input.placeholder = placeholder;
     text_input.autocomplete = 'off';
     text_input.spellcheck = false;
+    text_input.dataset.config_val_accessor = config_val_accessor;
+    text_input.dataset.val_type = val_type;
+
     x.append(input_item, text_input);
+
+    text_input.addEventListener('input', configuration.update_text_input_val);
 };
 
 export const create_label = ({

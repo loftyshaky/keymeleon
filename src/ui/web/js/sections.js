@@ -207,6 +207,7 @@ const create_layouts_inputs = ({ section_el, config_template_section }) => {
                 parent_section: section_el,
                 config_val_accessor: ['layouts', input.name],
                 subtype: input.type,
+                val_type: input.val_type,
                 placeholder: input.placeholder,
                 convert_cls_to_label: true,
             });
@@ -225,6 +226,7 @@ const create_general_inputs = ({ config_template_subsection }) => {
                 ),
                 config_val_accessor: ['hotkeys', input.name],
                 subtype: input.type,
+                val_type: input.val_type,
                 placeholder: input.placeholder,
                 convert_cls_to_label: true,
             });
@@ -232,14 +234,14 @@ const create_general_inputs = ({ config_template_subsection }) => {
     });
 };
 
-const create_input_bindings_inputs = () => {
+const create_input_bindings_inputs = ({ config_template_subsection }) => {
     // button_1, button_2 in input_bindings
     const input_bindings_obj = x.get_nested_val_undefined(
         ['hotkeys', 'context_remap', 'input_bindings'],
         config
     );
     const input_bindings_keys = x.get_keys(input_bindings_obj);
-
+    l(config_template_subsection);
     input_bindings_keys.forEach((key) => {
         inputs.create_text_input({
             name: key,
@@ -253,6 +255,7 @@ const create_input_bindings_inputs = () => {
                 key,
             ],
             subtype: 'text',
+            val_type: 'text',
             placeholder: '^+F2',
             convert_cls_to_label: false,
         });
@@ -265,16 +268,17 @@ const create_custom_binding_name_inputs = ({
     key_bindings_obj_key,
     custom_binding_name_item,
 }) => {
+    const config_val_accessor = [
+        'hotkeys',
+        'context_remap',
+        'exe',
+        exe_obj_key,
+        'key_bindings',
+        key_bindings_obj_key,
+        custom_binding_name_item.name,
+    ];
     const custom_binding_name_item_val = x.get_nested_val_undefined(
-        [
-            'hotkeys',
-            'context_remap',
-            'exe',
-            exe_obj_key,
-            'key_bindings',
-            key_bindings_obj_key,
-            custom_binding_name_item.name,
-        ],
+        config_val_accessor,
         config
     );
 
@@ -288,8 +292,10 @@ const create_custom_binding_name_inputs = ({
             parent_section: s(
                 `.inner_subsection_layer_2[data-name="${exe_obj_key}"] .inner_subsection_layer_4[data-name="${key_bindings_obj_key}"]`
             ),
+            config_val_accessor,
             val: custom_binding_name_item_val,
             subtype: custom_binding_name_item.type,
+            val_type: custom_binding_name_item.val_type,
             placeholder: custom_binding_name_item.placeholder,
             convert_cls_to_label: true,
         });
@@ -297,6 +303,7 @@ const create_custom_binding_name_inputs = ({
         inputs.create_checkbox({
             name: custom_binding_name_item.name,
             parent_section,
+            config_val_accessor,
             val: custom_binding_name_item_val,
         });
     }
@@ -307,14 +314,16 @@ const create_specific_exe_inputs = ({
     exe_obj_key,
     specific_exe_section_item,
 }) => {
+    const config_val_accessor = [
+        'hotkeys',
+        'context_remap',
+        'exe',
+        exe_obj_key,
+        specific_exe_section_item.name,
+    ];
+
     const specific_exe_section_item_val = x.get_nested_val_undefined(
-        [
-            'hotkeys',
-            'context_remap',
-            'exe',
-            exe_obj_key,
-            specific_exe_section_item.name,
-        ],
+        config_val_accessor,
         config
     );
     const parent_section = s(
@@ -325,8 +334,10 @@ const create_specific_exe_inputs = ({
         inputs.create_text_input({
             name: specific_exe_section_item.name,
             parent_section,
+            config_val_accessor,
             val: specific_exe_section_item_val,
             subtype: specific_exe_section_item.type,
+            val_type: specific_exe_section_item.val_type,
             placeholder: specific_exe_section_item.placeholder,
             convert_cls_to_label: true,
         });
@@ -334,6 +345,7 @@ const create_specific_exe_inputs = ({
         inputs.create_checkbox({
             name: specific_exe_section_item.name,
             parent_section,
+            config_val_accessor,
             val: specific_exe_section_item_val,
         });
     }
@@ -348,7 +360,7 @@ const create_hotkey_inputs = ({ config_template_section }) => {
                     config_template_subsection,
                 });
             } else if (config_template_subsection.name === 'context_remap') {
-                create_input_bindings_inputs(); // button_1, button_2 in input_bindings
+                create_input_bindings_inputs({ config_template_subsection }); // button_1, button_2 in input_bindings
 
                 const exe_obj_keys = get_exe_obj_keys();
 

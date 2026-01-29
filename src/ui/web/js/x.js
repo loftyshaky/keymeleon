@@ -144,20 +144,24 @@ export const get_nested_val = (val_accessor, obj) => {
 };
 
 export const set_nested_val = (val_setter, val, obj) => {
-    let new_item = obj;
-    val_setter.forEach((item, i) => {
-        if (i < val_setter.length - 1) {
-            if (!n(obj[item])) {
-                new_item[item] = {};
-            }
+    let current = { ...obj };
+    let root = current;
 
-            new_item = obj[item];
+    val_setter.forEach((key, i) => {
+        if (i < val_setter.length - 1) {
+            if (!n(current[key])) {
+                current[key] = {};
+            }
+            current = current[key];
         } else {
-            new_item[item] = val;
+            current[key] = val;
         }
     });
 
-    return obj;
+    return root;
 };
 
 export const get_keys = (obj) => (n(obj) ? Object.keys(obj) : []);
+
+export const split_comma_trim = (val) =>
+    val.split(',').map((item) => item.trim());

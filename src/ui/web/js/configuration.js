@@ -24,6 +24,31 @@ export const write_change = ({ val_setter, val }) => {
     write();
 };
 
+export const update_checkbox_val = (e) => {
+    write_change({
+        val_setter: read_config_val_accessor_val({ el: e.target }),
+        val: e.target.checked ? 1 : 0,
+    });
+};
+
+export const update_text_input_val = (e) => {
+    let new_val = e.target.value;
+
+    if (e.target.dataset.val_type === 'number') {
+        new_val = +new_val;
+    } else if (e.target.dataset.val_type === 'array') {
+        new_val = x.split_comma_trim(new_val);
+    }
+
+    write_change({
+        val_setter: read_config_val_accessor_val({ el: e.target }),
+        val: new_val,
+    });
+};
+
+const read_config_val_accessor_val = ({ el }) =>
+    el.dataset.config_val_accessor.split(',');
+
 export const set_template = () => {
     template = {
         main: [
@@ -60,31 +85,37 @@ export const set_template = () => {
                     {
                         name: 'all_layouts_ordered',
                         type: 'text',
+                        val_type: 'array',
                         placeholder: 'en-DVORAK,en-US',
                     },
                     {
                         name: 'layout_ids',
                         type: 'text',
+                        val_type: 'array',
                         placeholder: '-268303351,67699721',
                     },
                     {
                         name: 'primary_layout',
                         type: 'text',
+                        val_type: 'string',
                         placeholder: 'en-DVORAK',
                     },
                     {
                         name: 'secondary_layouts',
                         type: 'text',
+                        val_type: 'array',
                         placeholder: 'en-US,es-ES',
                     },
                     {
                         name: 'fallback_layout_switching_exes',
                         type: 'text',
+                        val_type: 'array',
                         placeholder: 'x360ce,RazerAppEngine',
                     },
                     {
                         name: 'layout_switching_delay',
                         type: 'number',
+                        val_type: 'number',
                         placeholder: '30',
                     },
                 ],
@@ -98,26 +129,31 @@ export const set_template = () => {
                             {
                                 name: 'display_current_layout_id',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+sc017',
                             },
                             {
                                 name: 'set_primary_layout',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: 'ScrollLock',
                             },
                             {
                                 name: 'set_secondary_layout',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: 'Pause',
                             },
                             {
                                 name: 'dedicated_layout_hotkeys',
                                 type: 'text',
+                                val_type: 'array',
                                 placeholder: '^+F8,^+F9',
                             },
                             {
                                 name: 'toggle_sequential_layout_switching',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC01B',
                             },
                             {
@@ -128,26 +164,31 @@ export const set_template = () => {
                             {
                                 name: 'toggle_all_bindings',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC035',
                             },
                             {
                                 name: 'toggle_windows_api_layout_switching',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC019',
                             },
                             {
                                 name: 'toggle_layout_switching_audio',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC034',
                             },
                             {
                                 name: 'toggle_typing_audio',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC033',
                             },
                             {
                                 name: 'toggle_feature_state_audio',
                                 type: 'text',
+                                val_type: 'string',
                                 placeholder: '^!+SC032',
                             },
                         ],
@@ -164,11 +205,13 @@ export const set_template = () => {
             {
                 name: 'layout',
                 type: 'text',
+                val_type: 'string',
                 placeholder: 'en-US',
             },
             {
                 name: 'binding_disabled_layouts',
                 type: 'text',
+                val_type: 'array',
                 placeholder: 'en-DVORAK,es-ES',
             },
             {
@@ -186,6 +229,7 @@ export const set_template = () => {
             {
                 name: 'automatic_exe_windows_api_layout_switching_delay',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 1000,
             },
             {
@@ -196,26 +240,31 @@ export const set_template = () => {
             {
                 name: 'key',
                 type: 'text',
+                val_type: 'string',
                 placeholder: 'a',
             },
             {
                 name: 'delay_before',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 30,
             },
             {
                 name: 'delay_between',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 30,
             },
             {
                 name: 'pre_key_delay',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 30,
             },
             {
                 name: 'post_key_delay',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 30,
             },
             {
@@ -225,11 +274,13 @@ export const set_template = () => {
             {
                 name: 'key_wait',
                 type: 'text',
+                val_type: 'string',
                 placeholder: 'f3',
             },
             {
                 name: 'modifiers',
                 type: 'text',
+                val_type: 'array',
                 placeholder: 'Ctrl,Shift',
             },
             {
@@ -247,16 +298,19 @@ export const set_template = () => {
             {
                 name: 'send_mode',
                 type: 'text',
+                val_type: 'string',
                 placeholder: 'SendEvent',
             },
             {
                 name: 'modifiers_release_timeout',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 300,
             },
             {
                 name: 'repeat_count',
                 type: 'number',
+                val_type: 'number',
                 placeholder: 3,
             },
             {
