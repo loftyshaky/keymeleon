@@ -49,33 +49,52 @@ export const update_text_input_val = (e) => {
 const read_config_val_accessor_val = ({ el }) =>
     el.dataset.config_val_accessor.split(',');
 
+export const remove_val = ({ el }) => {
+    x.remove_nested_val(config, el.dataset.config_val_accessor.split(','));
+
+    write();
+};
+
 export const set_template = () => {
     template = {
         main: [
             {
                 name: 'features',
                 inputs: [
-                    { name: 'enable_all_bindings', type: 'checkbox' },
+                    {
+                        name: 'enable_all_bindings',
+                        type: 'checkbox',
+                        default_val: true,
+                    },
                     {
                         name: 'enable_dedicated_layout_switching',
                         type: 'checkbox',
+                        default_val: true,
                     },
                     {
                         name: 'enable_sequential_layout_switching',
                         type: 'checkbox',
+                        default_val: true,
                     },
                     {
                         name: 'enable_layout_switching_audio',
                         type: 'checkbox',
+                        default_val: true,
                     },
-                    { name: 'enable_typing_audio', type: 'checkbox' },
+                    {
+                        name: 'enable_typing_audio',
+                        type: 'checkbox',
+                        default_val: true,
+                    },
                     {
                         name: 'enable_feature_state_audio',
                         type: 'checkbox',
+                        default_val: true,
                     },
                     {
                         name: 'enable_windows_api_layout_switching',
                         type: 'checkbox',
+                        default_val: true,
                     },
                 ],
             },
@@ -217,14 +236,17 @@ export const set_template = () => {
             {
                 name: 'enable_layout_switching_audio',
                 type: 'checkbox',
+                default_val: true,
             },
             {
                 name: 'enable_layout_switching_audio_for_automatic_layout_change',
                 type: 'checkbox',
+                default_val: true,
             },
             {
                 name: 'enable_typing_audio',
                 type: 'checkbox',
+                default_val: true,
             },
             {
                 name: 'automatic_exe_windows_api_layout_switching_delay',
@@ -270,6 +292,7 @@ export const set_template = () => {
             {
                 name: 'wait',
                 type: 'checkbox',
+                default_val: false,
             },
             {
                 name: 'key_wait',
@@ -286,14 +309,17 @@ export const set_template = () => {
             {
                 name: 'allow_native_function',
                 type: 'checkbox',
+                default_val: false,
             },
             {
                 name: 'ignore_extra_modifiers',
                 type: 'checkbox',
+                default_val: false,
             },
             {
                 name: 'blind',
                 type: 'checkbox',
+                default_val: false,
             },
             {
                 name: 'send_mode',

@@ -88,6 +88,14 @@ export const before = (el_to_insert_before, child) => {
 
 // < dom manipulation
 
+export const matches = (el, selector) => {
+    if (n(el) && el.nodeType === 1) {
+        return el.matches(selector);
+    }
+
+    return false;
+};
+
 export const add_cls = (els, cls) => {
     const one = (el) => {
         if (n(el) && el.nodeType === 1) {
@@ -159,6 +167,24 @@ export const set_nested_val = (val_setter, val, obj) => {
     });
 
     return root;
+};
+
+export const remove_nested_val = (obj, val_accessor) => {
+    const parent_path = val_accessor.slice(0, -1);
+    const last_key = val_accessor[val_accessor.length - 1];
+
+    const parent = parent_path.reduce((acc, key) => {
+        return acc && typeof acc === 'object' && n(acc) ? acc[key] : undefined;
+    }, obj);
+
+    if (
+        parent &&
+        typeof parent === 'object' &&
+        n(parent) &&
+        parent.hasOwnProperty(last_key)
+    ) {
+        delete parent[last_key];
+    }
 };
 
 export const get_keys = (obj) => (n(obj) ? Object.keys(obj) : []);

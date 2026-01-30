@@ -1,4 +1,5 @@
 export * as x from './x.js';
+export * as svg from './svg.js';
 export * as configuration from './configuration.js';
 export * as inputs from './inputs.js';
 export * as msgs from './msgs.js';

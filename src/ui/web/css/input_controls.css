@@ -1,0 +1,27 @@
+.input_controls {
+    display: block;
+    margin-right: 10px;
+}
+
+.input_control {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.input_control svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+.input_control.on {
+    background-color: #32bf4a;
+}
+
+.input_control.off {
+    background-color: #f14444;
+}

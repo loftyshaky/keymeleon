@@ -10,11 +10,11 @@ input[type='checkbox'] {
 input[type='text'],
 input[type='number'] {
     width: 500px;
-    border: 0;
     background-color: #efefef;
-    outline: 1px solid #bbb;
+    border: 1px solid #bbb;
     padding: 0 7px;
-    height: 28px;
+    height: 30px;
+    box-sizing: border-box;
 }
 
 .input_item.text > *,
@@ -29,4 +29,9 @@ input[type='number'] {
 
 .input_item:not(:first-child) {
     margin-top: 10px;
+}
+
+.input_item .input_w {
+    display: flex;
+    align-items: center;
 }

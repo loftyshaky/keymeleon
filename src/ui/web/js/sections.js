@@ -192,6 +192,8 @@ const create_feautures_inputs = ({ section_el, config_template_section }) => {
         if (input.type === 'checkbox') {
             inputs.create_checkbox({
                 name: input.name,
+                default_val: input.default_val,
+                type: 'features',
                 parent_section: section_el,
                 config_val_accessor: ['features', input.name],
             });
@@ -204,6 +206,7 @@ const create_layouts_inputs = ({ section_el, config_template_section }) => {
         if (['text', 'number'].includes(input.type)) {
             inputs.create_text_input({
                 name: input.name,
+                type: 'layouts',
                 parent_section: section_el,
                 config_val_accessor: ['layouts', input.name],
                 subtype: input.type,
@@ -221,6 +224,7 @@ const create_general_inputs = ({ config_template_subsection }) => {
         if (['text', 'number'].includes(input.type)) {
             inputs.create_text_input({
                 name: input.name,
+                type: 'general',
                 parent_section: s(
                     `.subsection[data-name="${config_template_subsection.name}"]`
                 ),
@@ -241,10 +245,11 @@ const create_input_bindings_inputs = ({ config_template_subsection }) => {
         config
     );
     const input_bindings_keys = x.get_keys(input_bindings_obj);
-    l(config_template_subsection);
+
     input_bindings_keys.forEach((key) => {
         inputs.create_text_input({
             name: key,
+            type: 'input_bindings',
             parent_section: s(
                 `.inner_subsection_layer_1[data-name="input_bindings"]`
             ),
@@ -289,6 +294,7 @@ const create_custom_binding_name_inputs = ({
     if (['text', 'number'].includes(custom_binding_name_item.type)) {
         inputs.create_text_input({
             name: custom_binding_name_item.name,
+            type: 'custom_binding_name',
             parent_section: s(
                 `.inner_subsection_layer_2[data-name="${exe_obj_key}"] .inner_subsection_layer_4[data-name="${key_bindings_obj_key}"]`
             ),
@@ -302,6 +308,8 @@ const create_custom_binding_name_inputs = ({
     } else if (custom_binding_name_item.type === 'checkbox') {
         inputs.create_checkbox({
             name: custom_binding_name_item.name,
+            default_val: custom_binding_name_item.default_val,
+            type: 'custom_binding_name',
             parent_section,
             config_val_accessor,
             val: custom_binding_name_item_val,
@@ -333,6 +341,7 @@ const create_specific_exe_inputs = ({
     if (['text', 'number'].includes(specific_exe_section_item.type)) {
         inputs.create_text_input({
             name: specific_exe_section_item.name,
+            type: 'specific_exe',
             parent_section,
             config_val_accessor,
             val: specific_exe_section_item_val,
@@ -344,6 +353,8 @@ const create_specific_exe_inputs = ({
     } else if (specific_exe_section_item.type === 'checkbox') {
         inputs.create_checkbox({
             name: specific_exe_section_item.name,
+            default_val: specific_exe_section_item.default_val,
+            type: 'specific_exe',
             parent_section,
             config_val_accessor,
             val: specific_exe_section_item_val,
