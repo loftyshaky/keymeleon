@@ -1,6 +1,7 @@
 import { x, svg, configuration, sections } from './internal.js';
 
 const create_control = ({
+    name,
     input_control,
     input_el,
     input_default_val,
@@ -10,28 +11,31 @@ const create_control = ({
     force_on,
 }) => {
     if (input_control.display_in.includes(type)) {
-        const input_control_el = x.create(
+        const control_el = x.create(
             'span',
             `control ${input_control.name} ${input_control.on_and_off({ config_val_accessor, force_on })}`,
         );
-        input_control_el.innerHTML = svg[input_control.svg_name];
-        input_control_el.dataset.config_val_accessor = config_val_accessor;
+        control_el.dataset.name = name;
+        control_el.innerHTML = svg[input_control.svg_name];
+        control_el.dataset.config_val_accessor = config_val_accessor;
 
-        x.append(parent, input_control_el);
+        x.append(parent, control_el);
 
-        input_control_el.addEventListener('click', () =>
+        control_el.addEventListener('click', () =>
             input_control.on_click({
                 input_el,
                 input_default_val,
-                el: input_control_el,
+                el: control_el,
+                config_val_accessor,
             }),
         );
 
-        return input_control_el;
+        return control_el;
     }
 };
 
 export const create_header_controls = ({
+    name,
     parent,
     config_val_accessor,
     type,
@@ -53,10 +57,25 @@ export const create_header_controls = ({
                 'custom_binding_name',
             ],
             on_and_off: remove_property_control_on_and_off,
-            on_click: activate_control,
+            on_click: activate_input_control,
+        },
+        {
+            name: 'change_section_visibility',
+            svg_name: 'keyboard_arrow_down',
+            display_in: [
+                'context_remap',
+                'input_bindings',
+                'exe',
+                'app_exe_name',
+                'key_bindings',
+                'custom_binding_name',
+            ],
+            on_and_off: remove_property_control_on_and_off,
+            on_click: activate_header_control,
         },
     ].forEach((input_control) => {
         const input_control_el = create_control({
+            name,
             input_control,
             parent: header_controls,
             config_val_accessor,
@@ -71,6 +90,7 @@ export const create_header_controls = ({
 };
 
 export const create_input_controls = ({
+    name,
     input_el,
     input_default_val,
     parent,
@@ -91,10 +111,11 @@ export const create_input_controls = ({
                 'custom_binding_name',
             ],
             on_and_off: remove_property_control_on_and_off,
-            on_click: activate_control,
+            on_click: activate_input_control,
         },
     ].forEach((input_control) => {
         const input_control_el = create_control({
+            name,
             input_control,
             input_el,
             input_default_val,
@@ -118,15 +139,14 @@ const remove_property_control_on_and_off = ({
         val_accessor: config_val_accessor,
     });
 
-    return val !== '' || force_on ? 'on' : 'off';
+    return val !== '' || force_on ? '' : 'off';
 };
 
-const activate_control = ({ input_el, input_default_val, el }) => {
+const activate_input_control = ({ input_el, input_default_val, el }) => {
     const is_input_bindings_section =
         el.dataset.config_val_accessor.includes('input_bindings,');
 
     x.add_cls(el, 'off');
-    x.remove_cls(el, 'on');
 
     if (input_el) {
         if (x.matches(input_el, '.checkbox')) {
@@ -140,5 +160,52 @@ const activate_control = ({ input_el, input_default_val, el }) => {
 
     if (!n(input_el) || is_input_bindings_section) {
         sections.create_sections();
+    }
+};
+
+export const activate_header_control = ({ config_val_accessor }) => {
+    const join_config_val_accessor = ({ config_val_accessor }) =>
+        config_val_accessor.join(',');
+
+    const section_selector = `.subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > *:not(.header_w), .inner_subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > *:not(.header_w)`;
+    const control_selector = `.subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > .header_w .control.change_section_visibility, .inner_subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > .header_w .control.change_section_visibility`;
+    const is_visible_config_val_accessor = [
+        ...['ui', 'window', 'section_visibility_state'],
+        ...config_val_accessor,
+        'is_visible',
+    ];
+    const is_visible = configuration.get_config_val({
+        val_accessor: is_visible_config_val_accessor,
+    });
+
+    if (sections.first_run) {
+        if (!is_visible) {
+            // is collapsed
+            x.dynamic_css(
+                document.head,
+                config_val_accessor.join('_'),
+                `${section_selector}{display:none}${control_selector}{background-color:#f14444}`,
+            );
+        }
+    } else if (is_visible) {
+        // 0 collapse
+        x.dynamic_css(
+            document.head,
+            config_val_accessor.join('_'),
+            `${section_selector}{display:none}${control_selector}{background-color:#f14444}`,
+        );
+
+        configuration.write_change({
+            val_setter: is_visible_config_val_accessor,
+            val: false,
+        });
+    } else {
+        // 1 expand
+        x.remove(sa(`style[data-name="${config_val_accessor.join('_')}"]`));
+
+        configuration.write_change({
+            val_setter: is_visible_config_val_accessor,
+            val: true,
+        });
     }
 };

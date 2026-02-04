@@ -119,6 +119,5 @@ const update_text_input_val = ({ el }, e) => {
 const add_config_val = ({ el }) => {
     if (el) {
         x.remove_cls(el, 'off');
-        x.add_cls(el, 'on');
     }
 };

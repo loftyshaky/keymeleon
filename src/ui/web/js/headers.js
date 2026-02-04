@@ -18,11 +18,13 @@ export const create_header = ({
         const input_w = x.create('div', 'header_w');
 
         subsection_el.dataset.name = name;
+        subsection_el.dataset.config_val_accessor = config_val_accessor;
         header_el.textContent = convert_cls_to_label
             ? x.convert_cls_to_label(name)
             : name;
 
-        controls.create_header_controls({
+        const control_els = controls.create_header_controls({
+            name,
             parent: input_w,
             config_val_accessor,
             type,
@@ -31,5 +33,11 @@ export const create_header = ({
         x.append(subsection_el, input_w);
         x.append(input_w, header_el);
         x.append(parent, subsection_el);
+
+        if (n(control_els.change_section_visibility)) {
+            controls.activate_header_control({
+                config_val_accessor,
+            });
+        }
     }
 };

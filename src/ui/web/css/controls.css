@@ -1,5 +1,5 @@
 .controls {
-    display: block;
+    display: flex;
     margin-right: 10px;
 }
 
@@ -10,16 +10,17 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: #32bf4a;
+}
+
+.control:not(:last-child) {
+    margin-right: 10px;
 }
 
 .control svg {
     width: 18px;
     height: 18px;
     fill: white;
-}
-
-.control.on {
-    background-color: #32bf4a;
 }
 
 .control.off {

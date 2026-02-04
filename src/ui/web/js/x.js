@@ -86,6 +86,15 @@ export const before = (el_to_insert_before, child) => {
     }
 };
 
+export const remove = (els) => {
+    const one = (el) => {
+        if (n(el) && n(el.parentNode) && el.nodeType === 1) {
+            el.parentNode.removeChild(el);
+        }
+    };
+
+    shared.all(els, one);
+};
 // < dom manipulation
 
 export const matches = (el, selector) => {
@@ -128,6 +137,24 @@ export const bind = (els, event, f) => {
 };
 // < add event listener to one or multiple elements t
 
+export const dynamic_css = (parent, name, css) => {
+    const old_style = sb(parent, `style[data="${name}"]`);
+
+    if (n(old_style)) {
+        remove(old_style);
+    }
+
+    const new_style = create('style', '');
+    new_style.dataset.name = name;
+    new_style.innerHTML = css;
+
+    if (n(parent)) {
+        parent.appendChild(new_style);
+    }
+
+    return new_style;
+};
+
 export const convert_cls_to_label = (cls) => {
     const underscores_replaced_with_spaces = cls.replace(/_/g, ' ');
     const first_letter_uppercase =
@@ -137,11 +164,10 @@ export const convert_cls_to_label = (cls) => {
     return first_letter_uppercase;
 };
 
-export const get_nested_val_undefined = (val_accessor, obj) => {
-    return n(val_accessor)
+export const get_nested_val_undefined = (val_accessor, obj) =>
+    n(val_accessor)
         ? val_accessor.reduce((current_obj, key) => current_obj?.[key], obj)
         : undefined;
-};
 
 export const get_nested_val = (val_accessor, obj) => {
     const nested_val = n(val_accessor)

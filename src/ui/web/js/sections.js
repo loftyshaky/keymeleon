@@ -1,5 +1,7 @@
 import { x, configuration, inputs, side_menu, headers } from './internal.js';
 
+export let first_run = true;
+
 const create_section = ({ config_template_section }) => {
     // features, layouts, hotkeys, audio, links
     side_menu.create_section_btn({ name: config_template_section.name });
@@ -467,4 +469,6 @@ export const create_sections = () => {
     x.bind(sa('.section_btn'), 'click', side_menu.select_section);
 
     side_menu.select_section();
+
+    first_run = false;
 };
