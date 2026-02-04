@@ -2,6 +2,9 @@ import { x, svg, configuration, sections } from './internal.js';
 
 export const state = { regenerate: true };
 
+const join_config_val_accessor = ({ config_val_accessor }) =>
+    config_val_accessor.join(',');
+
 const create_control = ({
     name,
     input_control,
@@ -27,8 +30,9 @@ const create_control = ({
             input_control.on_click({
                 input_el,
                 input_default_val,
-                el: control_el,
+                control_el,
                 config_val_accessor,
+                type,
             }),
         );
 
@@ -137,13 +141,18 @@ const remove_property_control_on_and_off = ({
     return val !== '' || force_on ? '' : 'off';
 };
 
-const activate_input_control = ({ input_el, input_default_val, el }) => {
+const activate_input_control = ({
+    input_el,
+    input_default_val,
+    config_val_accessor,
+    control_el,
+}) => {
     state.regenerate = true;
 
     const is_input_bindings_section =
-        el.dataset.config_val_accessor.includes('input_bindings,');
+        control_el.dataset.config_val_accessor.includes('input_bindings,');
 
-    x.add_cls(el, 'off');
+    x.add_cls(control_el, 'off');
 
     if (input_el) {
         if (x.matches(input_el, '.checkbox')) {
@@ -153,16 +162,39 @@ const activate_input_control = ({ input_el, input_default_val, el }) => {
         }
     }
 
-    configuration.remove_val({ el });
+    configuration.remove_val({ el: control_el });
 
     if (!n(input_el) || is_input_bindings_section) {
-        sections.create_sections();
+        x.remove(
+            s(
+                `.subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"], .inner_subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"]`,
+            ),
+        );
     }
 };
 
-export const activate_header_control = ({ config_val_accessor }) => {
-    const join_config_val_accessor = ({ config_val_accessor }) =>
-        config_val_accessor.join(',');
+export const activate_header_control = ({
+    control_el,
+    config_val_accessor,
+    type,
+    called_from_create_header = false,
+}) => {
+    const set_section_to_collapsed = () => {
+        x.dynamic_css(
+            document.head,
+            config_val_accessor.join('_'),
+            `${section_selector}{display:none}${control_selector}{background-color:#f14444}`,
+        );
+    };
+
+    const load_later_type = [
+        'app_exe_name',
+        'key_bindings',
+        'custom_binding_name',
+    ].includes(type);
+    const section_creation_collection_item_filled = n(
+        sections.section_creation_collection.headers[control_el.dataset.name],
+    );
 
     const section_selector = `.subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > *:not(.header_w), .inner_subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > *:not(.header_w)`;
     const control_selector = `.subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > .header_w .control.change_section_visibility, .inner_subsection[data-config_val_accessor="${join_config_val_accessor({ config_val_accessor })}"] > .header_w .control.change_section_visibility`;
@@ -175,34 +207,66 @@ export const activate_header_control = ({ config_val_accessor }) => {
         val_accessor: is_visible_config_val_accessor,
     });
 
-    if (sections.first_run || state.regenerate) {
+    if (called_from_create_header) {
+        // runs on web view open
         if (!is_visible) {
-            // is collapsed
-            x.dynamic_css(
-                document.head,
-                config_val_accessor.join('_'),
-                `${section_selector}{display:none}${control_selector}{background-color:#f14444}`,
-            );
+            // 0 collapse
+
+            set_section_to_collapsed();
+        } else if (
+            load_later_type &&
+            is_visible &&
+            !n(
+                sections.section_creation_collection.headers[
+                    control_el.dataset.name
+                ],
+            )
+        ) {
+            sections.section_creation_collection.headers[
+                control_el.dataset.name
+            ] = {};
+            sections.section_creation_collection.headers[
+                control_el.dataset.name
+            ].force_build_section = true;
         }
-    } else if (is_visible) {
-        // 0 collapse
-        x.dynamic_css(
-            document.head,
-            config_val_accessor.join('_'),
-            `${section_selector}{display:none}${control_selector}{background-color:#f14444}`,
-        );
-
-        configuration.write_change({
-            val_setter: is_visible_config_val_accessor,
-            val: false,
-        });
     } else {
-        // 1 expand
-        x.remove(sa(`style[data-name="${config_val_accessor.join('_')}"]`));
+        // runs on control click
 
-        configuration.write_change({
-            val_setter: is_visible_config_val_accessor,
-            val: true,
-        });
+        if (is_visible) {
+            // 0 collapse
+
+            set_section_to_collapsed();
+
+            if (n(control_el)) {
+                configuration.write_change({
+                    val_setter: is_visible_config_val_accessor,
+                    val: false,
+                });
+            }
+        } else {
+            // 1 expand
+
+            x.remove(sa(`style[data-name="${config_val_accessor.join('_')}"]`));
+
+            configuration.write_change({
+                val_setter: is_visible_config_val_accessor,
+                val: true,
+            });
+
+            if (
+                type === 'app_exe_name' &&
+                section_creation_collection_item_filled &&
+                !sections.section_creation_collection.headers[
+                    control_el.dataset.name
+                ].section_is_built
+            ) {
+                sections.section_creation_collection.headers[
+                    control_el.dataset.name
+                ].section_is_built = true;
+                sections.section_creation_collection.headers[
+                    control_el.dataset.name
+                ].f();
+            }
+        }
     }
 };

@@ -7,6 +7,7 @@ import {
     headers,
 } from './internal.js';
 
+export const section_creation_collection = { headers: {}, inputs: {} };
 export let first_run = true;
 
 const create_section = ({ config_template_section }) => {
@@ -153,7 +154,6 @@ const create_headers = ({ section_el, config_template_section }) => {
         config_template_section.subsections.forEach(
             (config_template_subsection) => {
                 create_header({
-                    // general and context_remap it hotkeys
                     section_el,
                     config_template_subsection: config_template_subsection,
                 });
@@ -162,7 +162,6 @@ const create_headers = ({ section_el, config_template_section }) => {
                     ['exe', 'input_bindings'].forEach(
                         (inner_subsection_key) => {
                             create_context_remap_inner_subsection({
-                                // exe and input_bindings in context_remap
                                 inner_subsection_key,
                                 config_template_subsection,
                             });
@@ -172,37 +171,77 @@ const create_headers = ({ section_el, config_template_section }) => {
                             if (inner_subsection_key === 'exe') {
                                 exe_obj_keys.forEach((exe_obj_key) => {
                                     create_exe_inner_subsection({
-                                        // Fallout4, default in exe
                                         inner_subsection_key,
                                         exe_obj_key,
                                     });
 
-                                    const key_bindings_obj =
-                                        get_key_bindings_obj({ exe_obj_key });
-                                    const key_bindings_obj_keys =
-                                        x.get_keys(key_bindings_obj);
+                                    if (
+                                        !n(
+                                            section_creation_collection.headers[
+                                                exe_obj_key
+                                            ],
+                                        )
+                                    ) {
+                                        section_creation_collection.headers[
+                                            exe_obj_key
+                                        ] = {};
+                                    }
 
-                                    create_specific_exe_inputs_w({
-                                        exe_obj_key,
-                                    });
+                                    const f = () => {
+                                        const key_bindings_obj =
+                                            get_key_bindings_obj({
+                                                exe_obj_key,
+                                            });
+                                        const key_bindings_obj_keys =
+                                            x.get_keys(key_bindings_obj);
 
-                                    if (n(key_bindings_obj)) {
-                                        create_key_bindings_inner_subsection(
-                                            // key_bindings in specific exe (literaly "key_bindings" items)
-                                            { exe_obj_key },
-                                        );
+                                        create_specific_exe_inputs_w({
+                                            exe_obj_key,
+                                        });
 
-                                        key_bindings_obj_keys.forEach(
-                                            (custom_binding_name_key) => {
-                                                create_custom_binding_name_inner_subsection(
-                                                    // button_1, button_2
-                                                    {
-                                                        custom_binding_name_key,
-                                                        exe_obj_key,
-                                                    },
-                                                );
-                                            },
-                                        );
+                                        if (n(key_bindings_obj)) {
+                                            create_key_bindings_inner_subsection(
+                                                { exe_obj_key },
+                                            );
+
+                                            key_bindings_obj_keys.forEach(
+                                                (custom_binding_name_key) => {
+                                                    create_custom_binding_name_inner_subsection(
+                                                        {
+                                                            custom_binding_name_key,
+                                                            exe_obj_key,
+                                                        },
+                                                    );
+                                                },
+                                            );
+                                        }
+                                    };
+
+                                    section_creation_collection.headers[
+                                        exe_obj_key
+                                    ].section_is_built =
+                                        section_creation_collection.headers[
+                                            exe_obj_key
+                                        ].force_build_section;
+
+                                    if (
+                                        section_creation_collection.headers[
+                                            exe_obj_key
+                                        ].force_build_section
+                                    ) {
+                                        f();
+                                    } else {
+                                        section_creation_collection.headers[
+                                            exe_obj_key
+                                        ].f = () => {
+                                            f();
+                                            create_hotkey_inputs({
+                                                config_template_section:
+                                                    configuration.template
+                                                        .hotkeys_context_remap,
+                                                exe_obj_key,
+                                            });
+                                        };
                                     }
                                 });
                             }
@@ -265,7 +304,7 @@ const create_general_inputs = ({ config_template_subsection }) => {
     });
 };
 
-const create_input_bindings_inputs = ({ config_template_subsection }) => {
+const create_input_bindings_inputs = () => {
     // button_1, button_2 in input_bindings
     const input_bindings_obj = x.get_nested_val_undefined(
         ['hotkeys', 'context_remap', 'input_bindings'],
@@ -389,7 +428,7 @@ const create_specific_exe_inputs = ({
     }
 };
 
-const create_hotkey_inputs = ({ config_template_section }) => {
+const create_hotkey_inputs = ({ config_template_section, exe_obj_key }) => {
     config_template_section.subsections.forEach(
         (config_template_subsection) => {
             if (config_template_subsection.name === 'general') {
@@ -398,9 +437,11 @@ const create_hotkey_inputs = ({ config_template_section }) => {
                     config_template_subsection,
                 });
             } else if (config_template_subsection.name === 'context_remap') {
-                create_input_bindings_inputs({ config_template_subsection }); // button_1, button_2 in input_bindings
+                create_input_bindings_inputs(); // button_1, button_2 in input_bindings
 
-                const exe_obj_keys = get_exe_obj_keys();
+                const exe_obj_keys = n(exe_obj_key)
+                    ? [exe_obj_key]
+                    : get_exe_obj_keys();
 
                 exe_obj_keys.forEach((exe_obj_key) => {
                     configuration.template.exe.forEach(

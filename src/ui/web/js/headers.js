@@ -36,7 +36,10 @@ export const create_header = ({
 
         if (n(control_els.change_section_visibility)) {
             controls.activate_header_control({
+                control_el: control_els.change_section_visibility,
                 config_val_accessor,
+                type,
+                called_from_create_header: true,
             });
         }
     }

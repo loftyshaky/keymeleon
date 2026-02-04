@@ -343,6 +343,14 @@ export const set_template = () => {
                 name: 'macro',
             },
         ],
+        hotkeys_context_remap: {
+            name: 'hotkeys',
+            subsections: [
+                {
+                    name: 'context_remap',
+                },
+            ],
+        },
     };
 };
 
