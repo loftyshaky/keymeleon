@@ -182,10 +182,11 @@ const create_headers = ({ section_el, config_template_section }) => {
                                     const key_bindings_obj_keys =
                                         x.get_keys(key_bindings_obj);
 
+                                    create_specific_exe_inputs_w({
+                                        exe_obj_key,
+                                    });
+
                                     if (n(key_bindings_obj)) {
-                                        create_specific_exe_inputs_w({
-                                            exe_obj_key,
-                                        });
                                         create_key_bindings_inner_subsection(
                                             // key_bindings in specific exe (literaly "key_bindings" items)
                                             { exe_obj_key },
