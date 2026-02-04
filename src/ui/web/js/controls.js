@@ -50,14 +50,7 @@ export const create_header_controls = ({
         {
             name: 'remove_property_control',
             svg_name: 'delete_',
-            display_in: [
-                'context_remap',
-                'input_bindings',
-                'exe',
-                'app_exe_name',
-                'key_bindings',
-                'custom_binding_name',
-            ],
+            display_in: ['app_exe_name', 'custom_binding_name'],
             on_and_off: remove_property_control_on_and_off,
             on_click: activate_input_control,
         },
