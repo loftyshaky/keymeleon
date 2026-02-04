@@ -1,9 +1,9 @@
-.input_controls {
+.controls {
     display: block;
     margin-right: 10px;
 }
 
-.input_control {
+.control {
     width: 30px;
     height: 30px;
     display: flex;
@@ -12,16 +12,16 @@
     cursor: pointer;
 }
 
-.input_control svg {
+.control svg {
     width: 18px;
     height: 18px;
     fill: white;
 }
 
-.input_control.on {
+.control.on {
     background-color: #32bf4a;
 }
 
-.input_control.off {
+.control.off {
     background-color: #f14444;
 }

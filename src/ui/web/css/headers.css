@@ -3,23 +3,28 @@
     margin-bottom: 6px;
 }
 
-.subsection > .header {
+.subsection > .header_w .header {
     font-size: 32px;
     margin-top: 10px;
 }
 
-.inner_subsection_layer_1 > .header {
+.inner_subsection_layer_1 .header_w > .header {
     font-size: 29px;
 }
 
-.inner_subsection_layer_2 > .header {
+.inner_subsection_layer_2 .header_w > .header {
     font-size: 26px;
 }
 
-.inner_subsection_layer_3 > .header {
+.inner_subsection_layer_3 .header_w > .header {
     font-size: 23px;
 }
 
-.inner_subsection_layer_4 > .header {
+.inner_subsection_layer_4 .header_w > .header {
     font-size: 20px;
+}
+
+.subsection .header_w {
+    display: flex;
+    align-items: center;
 }
