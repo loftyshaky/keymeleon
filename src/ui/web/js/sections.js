@@ -1,4 +1,11 @@
-import { x, configuration, inputs, side_menu, headers } from './internal.js';
+import {
+    x,
+    configuration,
+    controls,
+    inputs,
+    side_menu,
+    headers,
+} from './internal.js';
 
 export let first_run = true;
 
@@ -471,4 +478,5 @@ export const create_sections = () => {
     side_menu.select_section();
 
     first_run = false;
+    controls.state.regenerate = false;
 };

@@ -1,5 +1,7 @@
 import { x, svg, configuration, sections } from './internal.js';
 
+export const state = { regenerate: true };
+
 const create_control = ({
     name,
     input_control,
@@ -143,6 +145,8 @@ const remove_property_control_on_and_off = ({
 };
 
 const activate_input_control = ({ input_el, input_default_val, el }) => {
+    state.regenerate = true;
+
     const is_input_bindings_section =
         el.dataset.config_val_accessor.includes('input_bindings,');
 
@@ -178,7 +182,7 @@ export const activate_header_control = ({ config_val_accessor }) => {
         val_accessor: is_visible_config_val_accessor,
     });
 
-    if (sections.first_run) {
+    if (sections.first_run || state.regenerate) {
         if (!is_visible) {
             // is collapsed
             x.dynamic_css(
