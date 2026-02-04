@@ -17,6 +17,15 @@ input[type='number'] {
     box-sizing: border-box;
 }
 
+.input_item {
+    display: flex;
+    align-items: center;
+}
+.input_item.text,
+.input_item.number {
+    align-items: end;
+}
+
 .input_item.text > *,
 .input_item.number > * {
     display: block;
@@ -33,5 +42,5 @@ input[type='number'] {
 
 .input_item .input_w {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }

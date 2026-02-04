@@ -14,9 +14,6 @@ export const create_checkbox = ({
     const input_item = x.create('div', `input_item checkbox ${name}`);
     x.append(parent_section, input_item);
 
-    const input_w = x.create('div', 'input_w');
-    x.append(input_item, input_w);
-
     const checkbox = x.create('input', 'checkbox');
     checkbox.type = 'checkbox';
     checkbox.id = name;
@@ -27,14 +24,14 @@ export const create_checkbox = ({
     const input_control_els = controls.create_input_controls({
         input_el: checkbox,
         input_default_val: default_val,
-        parent: input_w,
+        parent: input_item,
         config_val_accessor,
         type,
     });
 
-    x.append(input_w, checkbox);
+    x.append(input_item, checkbox);
 
-    create_label({ name, parent: input_w });
+    create_label({ name, parent: input_item });
 
     checkbox.addEventListener('input', (e) =>
         update_checkbox_val(
@@ -60,12 +57,9 @@ export const create_text_input = ({
         : configuration.get_config_val({ val_accessor: config_val_accessor });
 
     const input_item = x.create('div', `input_item ${subtype} ${name}`);
-    x.append(parent_section, input_item);
-
-    create_label({ name, parent: input_item, convert_cls_to_label });
-
     const input_w = x.create('div', 'input_w');
-    x.append(input_item, input_w);
+
+    create_label({ name, parent: input_w, convert_cls_to_label });
 
     const text_input = x.create('input', 'text');
     text_input.type = subtype;
@@ -80,12 +74,14 @@ export const create_text_input = ({
 
     const input_control_els = controls.create_input_controls({
         input_el: text_input,
-        parent: input_w,
+        parent: input_item,
         config_val_accessor,
         type,
     });
 
+    x.append(parent_section, input_item);
     x.append(input_w, text_input);
+    x.append(input_item, input_w);
 
     text_input.addEventListener('input', (e) =>
         update_text_input_val(
