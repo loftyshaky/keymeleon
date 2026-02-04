@@ -129,36 +129,38 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
         modifiers_release_timeout_final := n(modifiers_release_timeout) ? modifiers_release_timeout :
             0
         modifier_keys_exist := n(modifiers) && modifier_keys_final.Length != 0
+        send_mode := config_get(["send_mode"], exe_key_binding)
+
         if (n(key)) {
             release_input_binding_modifiers(input_binding_modifiers,
                 modifiers_release_timeout_final)
             Sleep(delay_before_final)
 
             if (modifier_keys_exist) {
-                send_modifier_keys(modifier_keys_final, "down", "none")
+                send_modifier_keys(modifier_keys_final, "down", "none", send_mode)
                 Sleep(pre_key_delay_final)
             }
 
             if (wait_final || key_wait_final) {
-                SendInput(blind_send_input "{" key " down}")
+                send_f(blind_send_input "{" key " down}", send_mode)
                 key_wait_f(wait_final, key_wait_final)
-                SendInput(blind_send_input "{" key " up}")
+                send_f(blind_send_input "{" key " up}", send_mode)
             } else {
-                SendInput(blind_send_input "{" key " down}")
+                send_f(blind_send_input "{" key " down}", send_mode)
                 Sleep(delay_between_final)
-                SendInput(blind_send_input "{" key " up}")
+                send_f(blind_send_input "{" key " up}", send_mode)
             }
 
             if (modifier_keys_exist) {
                 Sleep(post_key_delay_final)
-                send_modifier_keys(modifier_keys_final, "up", true)
+                send_modifier_keys(modifier_keys_final, "up", true, send_mode)
             }
 
         }
     }
     else {
-        SendInput(blind_send_input "{" exe_key_binding " down}")
-        SendInput(blind_send_input "{" exe_key_binding " up}")
+        send_f(blind_send_input "{" exe_key_binding " down}", send_mode)
+        send_f(blind_send_input "{" exe_key_binding " up}", send_mode)
     }
 }
 
@@ -219,21 +221,25 @@ send_macro_item(macro_item) {
     wait_final := n(wait) ? wait : 0
     key_wait := config_get(["key_wait"], macro_item)
     key_wait_final := n(key_wait) ? key_wait : 0
+    blind := config_get(["blind"], macro_item)
+    blind_final := n(blind) ? blind : 0
+    blind_send_input := blind ? "{Blind}" : ""
+    send_mode := config_get(["send_mode"], macro_item)
 
     if (wait_final || key_wait_final) {
         key_wait_f(wait_final, key_wait_final)
     }
     if (n(key)) {
-        SendInput("{" key "}")
+        send_f(blind_send_input "{" key "}", send_mode)
     } else if (n(delay)) {
         Sleep(delay)
     }
 }
 
-send_modifier_keys(modifiers, state, state_compare) {
+send_modifier_keys(modifiers, state, state_compare, send_mode) {
     for (i, modifier_key in modifiers) {
         if (state_compare = 'none' || GetKeyState(modifier_key) = state_compare) {
-            SendInput("{" modifier_key " " state "}")
+            send_f("{" modifier_key " " state "}", send_mode)
         }
     }
 }
@@ -311,5 +317,19 @@ release_keys() {
 key_wait_f(wait, key_wait) {
     if (wait || key_wait) {
         KeyWait(key_wait ? key_wait : RegExReplace(A_ThisHotkey, "[\~\^\!\+\#]"))
+    }
+}
+
+send_f(send_string, send_mode) {
+    if (!n(send_mode) || send_mode = "SendInput") {
+        SendInput(send_string)
+    } else if (send_mode = "Send") {
+        Send(send_string)
+    } else if (send_mode = "SendText") {
+        SendText(send_string)
+    } else if (send_mode = "SendPlay") {
+        SendPlay(send_string)
+    } else if (send_mode = "SendEvent") {
+        SendEvent(send_string)
     }
 }

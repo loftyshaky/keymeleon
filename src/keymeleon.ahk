@@ -4,6 +4,7 @@
 
 ProcessSetPriority "Realtime"
 SetWorkingDir(A_ScriptDir)
+SetKeyDelay(0)
 
 #Include %A_ScriptDir%\lib\_JXON.ahk
 #Include %A_ScriptDir%\lib\WebView2\WebView2.ahk
