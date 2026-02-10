@@ -1,0 +1,47 @@
+/* stylelint-disable selector-class-pattern */
+
+.scheduler,
+.code_editor {
+    .input_item .input_w {
+        &.is_in_focus_state:not(.select)::before {
+            outline-color: $yun;
+        }
+
+        &.is_in_warn_state:not(.select)::before {
+            outline-color: $suc;
+        }
+    }
+}
+
+.keyboard .pagination_btn:not(.active, .disabled):focus {
+    outline-color: $upd;
+}
+
+.keyboard .scheduler .btn.text_input::before,
+.keyboard .code_editor .btn.text_input::before,
+body.keyboard .scheduler .btn.text:focus,
+body.keyboard .code_editor .btn.text:focus,
+.keyboard .scheduler .btn.icon_btn:focus,
+.keyboard .code_editor .btn.icon_btn:focus,
+.keyboard .link_btn:focus,
+.keyboard .scheduler .code_editor .link_btn:focus,
+.keyboard .scheduler .input_item .input_w:not(.text, .textarea).is_in_focus_state::before,
+.keyboard .code_editor .input_item .input_w:not(.text, .textarea).is_in_focus_state::before {
+    outline-color: $dwk;
+}
+
+.keyboard .backgrounds .background .ui:focus {
+    outline-color: $fpw;
+}
+
+.keyboard .backgrounds .background .delete_background_btn:focus {
+    background-color: #ab57b7;
+}
+
+.keyboard .backgrounds .background .overlay_item:focus {
+    background-color: rgb(143 48 155 / 85%);
+}
+
+.keyboard .backgrounds .background .action_btns_w .btn:focus {
+    background-color: #f7bbff;
+}

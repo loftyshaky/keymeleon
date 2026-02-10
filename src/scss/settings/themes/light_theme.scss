@@ -1,0 +1,12 @@
+@import '../../../../node_modules/@loftyshaky/shared-app/scss/shared/vars';
+@import '../../../../node_modules/@loftyshaky/shared-app/scss/shared/mixins';
+@import '../../../../node_modules/@loftyshaky/shared-app/scss/shared/themes/colors/light';
+@import 'template';
+
+.background .overlay_item {
+    color: white;
+}
+
+.sections .section {
+    box-shadow: rgb(0 0 0 / 20%) 0 1px 6px;
+}
