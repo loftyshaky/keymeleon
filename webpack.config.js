@@ -8,6 +8,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LicensePlugin = require('webpack-license-plugin');
 
+const { Env } = require('@loftyshaky/shared-app/js/env');
+const { Locales } = require('@loftyshaky/shared-app/js/locales');
 const { shared_config } = require('@loftyshaky/shared-app/js/webpack.config');
 const { TaskScheduler } = require('@loftyshaky/shared-app/js/task_scheduler');
 const { Dependencies: DependenciesShared } = require('@loftyshaky/shared-app/js/dependencies');
@@ -18,6 +20,8 @@ const app_root = appRoot.path;
 const task_scheduler = new TaskScheduler();
 const dependencies_shared = new DependenciesShared({ app_root });
 
+const env_instance = new Env({ app_root });
+const locales = new Locales({ app_root, exclude_shared_locales: ['de', 'ru'] });
 const dependencies = new Dependencies();
 
 module.exports = (env, argv) => {
@@ -50,6 +54,10 @@ module.exports = (env, argv) => {
             });
         },
         callback_done: () => {
+            const env_2 = 'app';
+
+            env_instance.generate({ browser: env.browser, mode: argv.mode, env: env_2 });
+            locales.merge({ env: env_2 });
             dependencies_shared.add_missing_dependesies({
                 extension_specific_missing_dependencies: dependencies.missing_dependencies,
             });
@@ -60,6 +68,19 @@ module.exports = (env, argv) => {
         ...config.resolve.alias,
         ...{
             settings: path.join(paths.ts, 'settings'),
+        },
+    };
+
+    config.resolve.fallback = {
+        ...config.resolve.fallback,
+        ...{
+            fs: require.resolve('fs-extra'),
+            util: require.resolve('util/'),
+            assert: require.resolve('assert/'),
+            buffer: require.resolve('buffer/'),
+            path: require.resolve('path-browserify'),
+            stream: require.resolve('stream-browserify'),
+            constants: require.resolve('constants-browserify'),
         },
     };
 

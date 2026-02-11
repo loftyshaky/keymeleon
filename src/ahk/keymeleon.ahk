@@ -7,6 +7,7 @@ SetWorkingDir(A_ScriptDir)
 SetKeyDelay(0)
 
 #Include %A_ScriptDir%\lib\_JXON.ahk
+#Include %A_ScriptDir%\lib\WebView2\WebView2.ahk
 
 #Include %A_ScriptDir%\config.ahk
 #Include %A_ScriptDir%\user_dir.ahk
@@ -18,16 +19,17 @@ set_up_user_dir()
 #Include %A_ScriptDir%\utils.ahk
 #Include %A_ScriptDir%\keys.ahk
 #Include %A_ScriptDir%\context_remap.ahk
-#Include %A_ScriptDir%\tray.ahk
 #Include %A_ScriptDir%\audio.ahk
 #Include %A_ScriptDir%\features.ahk
+#Include %A_ScriptDir%\icon.ahk
 #Include %A_ScriptDir%\layouts.ahk
 #Include %A_ScriptDir%\log.ahk
+#Include %A_ScriptDir%\ui\index.ahk
 
 last_switched_layout := get_current_layout()
 
 bind_play_audio_on_key_press()
-set_tray_icon()
+set_icons()
 generate_all_layouts_in_switch_order_arr()
 bind_unbind_layout_layout_switching_keys()
 bind_unbind_layout_dedicated_layout_switching_keys()

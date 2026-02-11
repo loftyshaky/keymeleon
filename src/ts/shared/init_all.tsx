@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import '@loftyshaky/shared-app/ext';
 import {
     c_crash_handler,
     c_error,
@@ -9,12 +8,8 @@ import {
     d_loading_screen,
     s_tab_index,
     s_theme as s_theme_shared,
-    s_title,
 } from '@loftyshaky/shared-app/shared';
-import { s_suffix, s_theme } from 'shared_clean/internal';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, @typescript-eslint/no-unused-vars
-declare let __webpack_public_path__: string;
+import { s_css_vars, s_suffix, s_theme } from 'shared_clean/internal';
 
 class Class {
     private static instance: Class;
@@ -48,7 +43,7 @@ class Class {
                                 x.bind(loading_screen_css, 'load', (): void =>
                                     err(() => {
                                         s_theme_shared.Theme.set({
-                                            name: 'lavender', // data.settings.prefs.options_page_theme
+                                            name: data.settings.prefs.options_page_theme,
                                             additional_theme_callback: s_theme.Theme.set,
                                         });
 
@@ -61,10 +56,7 @@ class Class {
                         }
                     }, 'cnt_1351');
 
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                __webpack_public_path__ = we.runtime.getURL('');
-
-                s_title.Title.set();
+                s_css_vars.CssVars.set();
 
                 const error_root: ShadowRoot = this.create_root({ prefix: 'error' }) as ShadowRoot;
                 const loading_screen_root: ShadowRoot | undefined = this.create_root({
@@ -147,7 +139,7 @@ class Class {
                                 const settings_css = x.css('settings_css', document.head);
 
                                 s_theme_shared.Theme.set({
-                                    name: 'lavender', // data.settings.prefs.options_page_theme
+                                    name: data.settings.prefs.options_page_theme,
                                     additional_theme_callback: s_theme.Theme.set,
                                 });
 
@@ -182,7 +174,7 @@ class Class {
                                     );
 
                                     s_theme_shared.Theme.set({
-                                        name: 'lavender', // data.settings.prefs.options_page_theme
+                                        name: data.settings.prefs.options_page_theme,
                                         additional_theme_callback: s_theme.Theme.set,
                                     });
 

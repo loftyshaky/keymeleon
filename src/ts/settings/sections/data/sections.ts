@@ -16,5 +16,3 @@ class Class {
 }
 
 export const Sections = Class.get_instance();
-
-l('hello world');

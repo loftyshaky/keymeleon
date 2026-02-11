@@ -31,7 +31,6 @@
         "eslint-plugin-prettier": "^5.2.1",
         "eslint-plugin-react": "^7.37.0",
         "eslint-plugin-react-hooks": "^4.6.2",
-        "fs-extra": "^11.2.0",
         "mini-css-extract-plugin": "^2.9.1",
         "sass": "^1.79.3",
         "sass-loader": "^16.0.2",
@@ -48,13 +47,20 @@
     "dependencies": {
         "@loftyshaky/shared-app": "2.2.0",
         "@simonwep/pickr": "^1.9.1",
+        "assert": "^2.1.0",
+        "buffer": "^6.0.3",
         "confusing-browser-globals": "^1.0.11",
+        "constants-browserify": "^1.0.0",
+        "fs-extra": "^11.3.3",
         "lodash": "^4.17.21",
         "mobx": "^6.13.1",
         "mobx-react": "9.1.1",
         "mobx-utils": "^6.0.8",
         "normalize.css": "^8.0.1",
+        "path-browserify": "^1.0.1",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1"
+        "react-dom": "^18.3.1",
+        "stream-browserify": "^3.0.0",
+        "util": "^0.12.5"
     }
 }
