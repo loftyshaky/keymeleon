@@ -1,5 +1,8 @@
 {
     "name": {
         "message": "Keymeleon"
+    },
+    "key_bindings_label_text": {
+        "message": "Key bindings"
     }
 }

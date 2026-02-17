@@ -9,5 +9,8 @@ export * as c_settings from 'settings/components';
 export * as d_sections from 'settings/sections/data';
 
 export * as s_msgs from 'settings/msgs/scripts';
+export * as s_sections from 'settings/sections/scripts';
 
 export * as p_settings from 'settings/components/prop_types';
+
+export * as i_sections from 'settings/sections/interfaces';

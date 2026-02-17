@@ -89,13 +89,6 @@ module.exports = (env, argv) => {
         ...{
             settings: path.join(paths.ts, 'settings', 'settings.ts'),
             settings_css: path.join(app_root, 'src', 'scss', 'settings', 'index.scss'),
-            settings_light_theme: path.join(paths.themes, 'light_theme.scss'),
-            settings_dark_theme: path.join(paths.themes, 'dark_theme.scss'),
-            settings_very_dark_theme: path.join(paths.themes, 'very_dark_theme.scss'),
-            settings_clover_theme: path.join(paths.themes, 'clover_theme.scss'),
-            settings_aqua_theme: path.join(paths.themes, 'aqua_theme.scss'),
-            settings_lavender_theme: path.join(paths.themes, 'lavender_theme.scss'),
-            settings_ruby_theme: path.join(paths.themes, 'ruby_theme.scss'),
         },
     };
 

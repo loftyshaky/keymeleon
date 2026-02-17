@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { c_inputs, o_inputs } from '@loftyshaky/shared-app/inputs';
-import { c_settings, d_sections, p_settings } from 'settings/internal';
+import { c_settings } from '@loftyshaky//shared-app/settings';
+import { d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import { d_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
     const { on_render } = props;
@@ -11,26 +12,35 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
         on_render();
     }, [on_render]);
 
+    useEffect(
+        () =>
+            err(() => {
+                const run = async () =>
+                    err(() => {
+                        d_inputs.NestedInput.set_all_parents_disbled_vals({
+                            sections: d_sections.Sections.sections as i_inputs.Sections,
+                        });
+                    }, 'seg_1123');
+
+                run();
+            }, 'seg_1124'),
+        [],
+    );
+
     return (
         <div className='main'>
-            <div className='main_2'>
-                <div className='sections custom settings'>
-                    {Object.values(d_sections.Sections.sections).map(
-                        (section: o_inputs.Section, i: number): JSX.Element => (
-                            <c_settings.Section
-                                key={i}
-                                section_name={section.name}
-                                section={section}
-                            >
-                                <c_inputs.SectionContent
-                                    section={section}
-                                    inputs={section.inputs}
-                                />
-                            </c_settings.Section>
-                        ),
-                    )}
-                </div>
-            </div>
+            <c_settings.Body
+                sections={d_sections.Sections.sections as i_inputs.Sections}
+                initial_section={d_sections.Sections.current_section}
+                change_section_callback={(): void => {
+                    d_inputs.NestedInput.set_all_parents_disbled_vals({
+                        sections: d_sections.Sections.sections as i_inputs.Sections,
+                    });
+
+                    // d_sections.Sections.change_current_section_val();
+                }}
+                enable_developer_mode_save_callback={() => {}}
+            />
         </div>
     );
 });
