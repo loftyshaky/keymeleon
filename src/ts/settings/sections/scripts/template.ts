@@ -1,7 +1,8 @@
 import get from 'lodash/get';
 
 import { o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
-import { i_sections } from 'settings/internal';
+import { svg } from 'shared/internal';
+import { d_sections, i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -285,9 +286,11 @@ class Class {
     private generate_input = ({
         section_item,
         val_accessor,
+        side_btns,
     }: {
         section_item: i_sections.SectionTemplateItem;
         val_accessor: string;
+        side_btns?: i_inputs.SideBtn[];
     }): i_inputs.Input | undefined =>
         err(() => {
             if (section_item.type === 'checkbox') {
@@ -296,6 +299,7 @@ class Class {
                     default_val: section_item.default_val,
                     val_accessor,
                     event_callback: () => {},
+                    ...(n(side_btns) && { side_btns }),
                 });
             }
 
@@ -309,6 +313,7 @@ class Class {
                     placeholder: section_item.placeholder,
                     event_callback: () => {},
                     warn_state_checker: () => false,
+                    ...(n(side_btns) && { side_btns }),
                 });
             }
 
@@ -348,7 +353,7 @@ class Class {
             if (n(input_bindings_obj)) {
                 section_inputs = Object.keys(input_bindings_obj).flatMap((input_name: string) =>
                     err(() => {
-                        const input: i_inputs.Input | undefined = this.generate_input({
+                        const input_2: i_inputs.Input | undefined = this.generate_input({
                             section_item: {
                                 name: input_name,
                                 type: 'text',
@@ -356,9 +361,22 @@ class Class {
                                 placeholder: '^+F2',
                             },
                             val_accessor: `settings.hotkeys.context_remap.input_bindings.${input_name}`,
+                            side_btns: [
+                                {
+                                    name: 'remove_property',
+                                    Svg: svg.Delete,
+                                    event_callback: ({ input }: { input: i_inputs.Input }) => {
+                                        d_sections.Val.remove_property({
+                                            input_type: 'input_bindings',
+                                            input,
+                                            section_path: `input_bindings.inputs.${input_name}`,
+                                        });
+                                    },
+                                },
+                            ],
                         });
 
-                        return n(input) ? [input] : [];
+                        return n(input_2) ? [input_2] : [];
                     }, 'cnt_3468'),
                 );
             }
@@ -371,6 +389,58 @@ class Class {
 
     public generate_exe_section = (): o_inputs.Section =>
         err(() => {
+            const generate_individual_key_bindings_inputs_inner = ({
+                exe_name,
+                key_bindings_obj_item_key,
+            }: {
+                exe_name: string;
+                key_bindings_obj_item_key: string;
+            }): i_inputs.Input[] =>
+                err(
+                    () =>
+                        this.custom_binding_name.flatMap(
+                            (
+                                // eslint-disable-next-line max-len
+                                section_item_2: i_sections.SectionTemplateItem,
+                            ): i_inputs.Input[] =>
+                                err(() => {
+                                    const event_callback = ({
+                                        input,
+                                    }: {
+                                        input: i_inputs.Input;
+                                    }) => {
+                                        d_sections.Val.remove_property({
+                                            input_type: 'key_bindings',
+                                            input,
+                                            section_path: `exe.inputs.${this.sanitize_text_for_class({ text: exe_name })}_individual_exe_group.inputs.key_bindings_group.inputs.${key_bindings_obj_item_key}_individual_input_key_binding_group.inputs.${section_item_2.name}`,
+                                        });
+                                    };
+
+                                    const side_btns = [
+                                        {
+                                            name: 'remove_property',
+                                            Svg: svg.Delete,
+                                            is_enabled_cond:
+                                                d_sections.Val
+                                                    .remove_property_side_btn_is_enabled_cond,
+                                            event_callback,
+                                        },
+                                    ];
+
+                                    const input_3: i_inputs.Input | undefined = this.generate_input(
+                                        {
+                                            section_item: section_item_2,
+                                            val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_bindings_obj_item_key}.${section_item_2.name}`,
+                                            side_btns,
+                                        },
+                                    );
+
+                                    return n(input_3) ? [input_3] : [];
+                                }, 'cnt_4345'),
+                        ),
+                    'cnt_4358',
+                );
+
             const section_name: string = 'exe';
             const exe_obj = get(data.settings, ['hotkeys', 'context_remap', 'exe']);
             let section_inputs: i_inputs.Inputs = [];
@@ -385,10 +455,17 @@ class Class {
                 exe_name: string;
             }): o_inputs.Group =>
                 err(() => {
+                    const collapse_group_event_callback = ({ input }: { input: i_inputs.Input }) =>
+                        err(() => {
+                            d_sections.Val.collapse_group({
+                                input,
+                            });
+                        }, 'cnt_4345');
+
                     const group_inputs: i_inputs.Inputs = this[section_name_2].flatMap(
                         (section_item: i_sections.SectionTemplateItem) =>
                             err(() => {
-                                let input: i_inputs.Input | undefined;
+                                let input_2: i_inputs.Input | undefined;
 
                                 if (section_item.name === 'key_bindings') {
                                     const key_bindings_obj = get(data.settings, [
@@ -407,22 +484,10 @@ class Class {
                                     }): i_inputs.Inputs =>
                                         err(
                                             () =>
-                                                this.custom_binding_name.flatMap(
-                                                    (
-                                                        // eslint-disable-next-line max-len
-                                                        section_item_2: i_sections.SectionTemplateItem,
-                                                    ): i_inputs.Input[] =>
-                                                        err(() => {
-                                                            const input_2:
-                                                                | i_inputs.Input
-                                                                | undefined = this.generate_input({
-                                                                section_item: section_item_2,
-                                                                val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_bindings_obj_item_key}.${section_item_2.name}`,
-                                                            });
-
-                                                            return n(input_2) ? [input_2] : [];
-                                                        }, 'cnt_4345'),
-                                                ),
+                                                generate_individual_key_bindings_inputs_inner({
+                                                    exe_name,
+                                                    key_bindings_obj_item_key,
+                                                }),
                                             'cnt_4372',
                                         );
 
@@ -430,47 +495,160 @@ class Class {
                                         individual_key_bindings_groups = Object.keys(
                                             key_bindings_obj,
                                         ).map((key_bindings_obj_item_key: string) =>
-                                            err(
-                                                () =>
-                                                    new o_inputs.Group({
-                                                        name: `${this.sanitize_text_for_class({ text: key_bindings_obj_item_key })}_individual_input_keybinding_group`,
-                                                        alt_msg: key_bindings_obj_item_key,
-                                                        is_column_layout: true,
-                                                        event_callback: () => undefined,
-                                                        // eslint-disable-next-line max-len
-                                                        inputs: generate_individual_key_bindings_inputs(
-                                                            { key_bindings_obj_item_key },
-                                                        ),
-                                                    }),
-                                                'cnt_8415',
-                                            ),
+                                            err(() => {
+                                                const remove_property_event_callback = ({
+                                                    input,
+                                                }: {
+                                                    input: i_inputs.Input;
+                                                }) =>
+                                                    err(() => {
+                                                        d_sections.Val.remove_property({
+                                                            input_type:
+                                                                'individual_input_key_binding_group',
+                                                            input,
+                                                            section_path: `exe.inputs.${this.sanitize_text_for_class({ text: exe_name })}_individual_exe_group.inputs.key_bindings_group.inputs.${key_bindings_obj_item_key}_individual_input_key_binding_group`,
+                                                        });
+                                                    }, 'cnt_4345');
+
+                                                return new o_inputs.Group({
+                                                    name: `${this.sanitize_text_for_class({ text: key_bindings_obj_item_key })}_individual_input_key_binding_group`,
+                                                    alt_msg: key_bindings_obj_item_key,
+                                                    is_column_layout: true,
+                                                    content_is_visible_default: false,
+                                                    val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_bindings_obj_item_key}`,
+                                                    content_is_visible_val_accessor: `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_bindings_obj_item_key}.is_visible`,
+                                                    event_callback: () => undefined,
+                                                    // eslint-disable-next-line max-len
+                                                    inputs: generate_individual_key_bindings_inputs(
+                                                        {
+                                                            key_bindings_obj_item_key,
+                                                        },
+                                                    ),
+                                                    side_btns: [
+                                                        {
+                                                            name: 'remove_property',
+                                                            Svg: svg.Delete,
+                                                            event_callback:
+                                                                remove_property_event_callback,
+                                                        },
+                                                        {
+                                                            name: 'collapse_group',
+                                                            Svg: svg.KeyboardArrowDown,
+                                                            is_enabled_cond:
+                                                                d_sections.Val
+                                                                    .collapse_group_side_btn_is_enabled_cond, // eslint-disable-line max-len
+                                                            event_callback:
+                                                                collapse_group_event_callback,
+                                                        },
+                                                    ],
+                                                });
+                                            }, 'cnt_8415'),
                                         );
                                     }
 
-                                    input = new o_inputs.Group({
+                                    const remove_property_event_callback = ({
+                                        input,
+                                    }: {
+                                        input: i_inputs.Input;
+                                    }) =>
+                                        err(() => {
+                                            d_sections.Val.remove_property({
+                                                input_type: 'key_bindings_group',
+                                                input,
+                                                section_path: `exe.inputs.${this.sanitize_text_for_class({ text: exe_name })}_individual_exe_group.inputs.key_bindings_group`,
+                                            });
+                                        }, 'cnt_4345');
+
+                                    input_2 = new o_inputs.Group({
                                         name: 'key_bindings_group',
                                         alt_msg: app.msg('key_bindings_label_text'),
                                         is_column_layout: true,
+                                        content_is_visible_default: false,
+                                        val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings`,
+                                        content_is_visible_val_accessor: `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.is_visible`,
                                         event_callback: () => undefined,
                                         inputs: individual_key_bindings_groups,
+                                        side_btns: [
+                                            {
+                                                name: 'remove_property',
+                                                Svg: svg.Delete,
+                                                event_callback: remove_property_event_callback,
+                                            },
+                                            {
+                                                name: 'collapse_group',
+                                                Svg: svg.KeyboardArrowDown,
+                                                is_enabled_cond:
+                                                    d_sections.Val
+                                                        .collapse_group_side_btn_is_enabled_cond,
+                                                event_callback: collapse_group_event_callback,
+                                            },
+                                        ],
                                     });
                                 } else {
-                                    input = this.generate_input({
+                                    const event_callback = ({
+                                        input,
+                                    }: {
+                                        input: i_inputs.Input;
+                                    }) => {
+                                        d_sections.Val.remove_property({
+                                            input_type: 'exe',
+                                            input,
+                                            section_path: `exe.inputs.${this.sanitize_text_for_class({ text: exe_name })}_individual_exe_group.inputs.${section_item.name}`,
+                                        });
+                                    };
+
+                                    input_2 = this.generate_input({
                                         section_item,
                                         val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.${section_item.name}`,
+                                        side_btns: [
+                                            {
+                                                name: 'remove_property',
+                                                Svg: svg.Delete,
+                                                is_enabled_cond:
+                                                    d_sections.Val
+                                                        .remove_property_side_btn_is_enabled_cond,
+                                                event_callback,
+                                            },
+                                        ],
                                     });
                                 }
 
-                                return n(input) ? [input] : [];
+                                return n(input_2) ? [input_2] : [];
                             }, 'cnt_3113'),
                     );
+
+                    const remove_property_event_callback = ({ input }: { input: i_inputs.Input }) =>
+                        err(() => {
+                            d_sections.Val.remove_property({
+                                input_type: 'individual_exe_group',
+                                input,
+                                section_path: `exe.inputs.${this.sanitize_text_for_class({ text: exe_name })}_individual_exe_group`,
+                            });
+                        }, 'cnt_4345');
 
                     return new o_inputs.Group({
                         name: `${this.sanitize_text_for_class({ text: group_name })}_group`,
                         alt_msg: exe_name,
                         is_column_layout: true,
+                        content_is_visible_default: false,
+                        val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}`,
+                        content_is_visible_val_accessor: `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.is_visible`,
                         event_callback: () => undefined,
                         inputs: group_inputs,
+                        side_btns: [
+                            {
+                                name: 'remove_property',
+                                Svg: svg.Delete,
+                                event_callback: remove_property_event_callback,
+                            },
+                            {
+                                name: 'collapse_group',
+                                Svg: svg.KeyboardArrowDown,
+                                is_enabled_cond:
+                                    d_sections.Val.collapse_group_side_btn_is_enabled_cond,
+                                event_callback: collapse_group_event_callback,
+                            },
+                        ],
                     });
                 }, 'cnt_3417');
 

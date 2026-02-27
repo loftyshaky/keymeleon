@@ -1,21 +1,25 @@
 [class*='_individual_exe_group'],
 .key_bindings_group,
-[class*='individual_input_keybinding'] {
-    &.input_item {
-        > .input_w_and_help_btn {
-            margin-left: $exe_group_offset;
-        }
+[class*='individual_input_key_binding'] {
+    &.input_item.group > .input_item_inner > .input_w_and_help_btn > .input_w {
+        margin-left: $exe_group_offset;
     }
 }
 
-[class*='_individual_exe_group'] > .label_in_input_item {
+[class*='_individual_exe_group']
+    > .input_item_inner
+    > .label_in_input_item_w
+    > .label_in_input_item {
     font-size: 29px;
 }
 
-.key_bindings_group > .label_in_input_item {
+.key_bindings_group > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
     font-size: 25px;
 }
 
-[class*='individual_input_keybinding'] > .label_in_input_item {
+[class*='individual_input_key_binding']
+    > .input_item_inner
+    > .label_in_input_item_w
+    > .label_in_input_item {
     font-size: 21px;
 }

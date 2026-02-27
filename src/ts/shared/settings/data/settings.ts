@@ -1,6 +1,7 @@
+import unset from 'lodash/unset';
 import set from 'lodash/set';
 import get from 'lodash/get';
-import { makeObservable, action } from 'mobx';
+import { makeObservable, action, toJS } from 'mobx';
 
 import { s_theme } from '@loftyshaky/shared-app/shared';
 import { s_msgs } from 'shared_clean/internal';
@@ -13,7 +14,7 @@ class Class {
     }
 
     public constructor() {
-        makeObservable(this, {
+        makeObservable<Class, 'set_val'>(this, {
             set: action,
             set_val: action,
         });
@@ -29,24 +30,40 @@ class Class {
             s_msgs.Msgs.send({ msg: 'get_config' });
         }, 'shr_1125');
 
-    public get_val = ({ val_accessor }: { val_accessor: string[] }): any =>
+    public get_val = ({ val_accessor }: { val_accessor: string }): any =>
         err(() => get(data.settings, val_accessor), 'shr_1126');
 
-    set_val = ({ val_setter, val }: { val_setter: string[]; val: any }): void =>
+    private set_val = ({ val_setter, val }: { val_setter: string; val: any }): void =>
         err(() => {
-            data.settings = set(data.settings, val_setter, val);
+            const updated_data = toJS(data);
+            set(updated_data, val_setter, val);
+
+            data.settings = updated_data.settings;
 
             s_theme.Theme.set({
                 name: data.settings.prefs.options_page_theme,
             });
         }, 'shr_1127');
 
-    write = (): void =>
+    private unset_val = ({ val_setter }: { val_setter: string }): void =>
+        err(() => {
+            const updated_data = toJS(data);
+
+            unset(updated_data, val_setter);
+
+            data.settings = updated_data.settings;
+
+            s_theme.Theme.set({
+                name: data.settings.prefs.options_page_theme,
+            });
+        }, 'shr_1107');
+
+    private write = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'write_config', config: data.settings });
         }, 'shr_1128');
 
-    write_change = ({ val_setter, val }: { val_setter: string[]; val: any }): void =>
+    public write_change = ({ val_setter, val }: { val_setter: string; val: any }): void =>
         err(() => {
             this.set_val({
                 val_setter,
@@ -55,6 +72,14 @@ class Class {
 
             this.write();
         }, 'shr_1129');
+
+    public write_unset = ({ val_setter }: { val_setter: string }): void =>
+        err(() => {
+            this.unset_val({
+                val_setter,
+            });
+            this.write();
+        }, 'shr_1130');
 }
 
 export const Settings = Class.get_instance();

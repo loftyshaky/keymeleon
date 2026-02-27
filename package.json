@@ -42,7 +42,7 @@
         "typescript": "^5.6.2",
         "webpack": "^5.95.0",
         "webpack-cli": "^5.1.4",
-        "webpack-license-plugin": "^4.5.0"
+        "webpack-license-plugin": "^4.5.1"
     },
     "dependencies": {
         "@loftyshaky/shared-app": "2.2.0",
