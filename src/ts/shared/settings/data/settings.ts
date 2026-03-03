@@ -58,12 +58,26 @@ class Class {
             });
         }, 'shr_1107');
 
+    public set_key = ({
+        val_unsetter,
+        val_setter,
+        val,
+    }: {
+        val_unsetter: string;
+        val_setter: string;
+        val: any;
+    }): void =>
+        err(() => {
+            this.unset_val({ val_setter: val_unsetter });
+            this.set_val({ val_setter, val });
+        }, 'shr_1127');
+
     private write = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'write_config', config: data.settings });
         }, 'shr_1128');
 
-    public write_change = ({ val_setter, val }: { val_setter: string; val: any }): void =>
+    public write_change_val = ({ val_setter, val }: { val_setter: string; val: any }): void =>
         err(() => {
             this.set_val({
                 val_setter,
@@ -80,6 +94,25 @@ class Class {
             });
             this.write();
         }, 'shr_1130');
+
+    public write_change_key = ({
+        val_unsetter,
+        val_setter,
+        val,
+    }: {
+        val_unsetter: string;
+        val_setter: string;
+        val: any;
+    }): void =>
+        err(() => {
+            this.set_key({
+                val_unsetter,
+                val_setter,
+                val,
+            });
+
+            this.write();
+        }, 'shr_1129');
 }
 
 export const Settings = Class.get_instance();

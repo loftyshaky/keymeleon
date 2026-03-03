@@ -532,6 +532,16 @@ class Class {
                                                                 remove_property_event_callback,
                                                         },
                                                         {
+                                                            name: 'edit_group_label',
+                                                            Svg: svg.Edit,
+                                                            event_callback:
+                                                                d_sections.Val
+                                                                    .toggle_edit_label_state,
+                                                            is_enabled_cond:
+                                                                d_sections.Val
+                                                                    .editing_group_label_side_btn_is_enabled_cond, // eslint-disable-line max-len
+                                                        },
+                                                        {
                                                             name: 'collapse_group',
                                                             Svg: svg.KeyboardArrowDown,
                                                             is_enabled_cond:
@@ -640,6 +650,13 @@ class Class {
                                 name: 'remove_property',
                                 Svg: svg.Delete,
                                 event_callback: remove_property_event_callback,
+                            },
+                            {
+                                name: 'edit_group_label',
+                                Svg: svg.Edit,
+                                event_callback: d_sections.Val.toggle_edit_label_state,
+                                is_enabled_cond:
+                                    d_sections.Val.editing_group_label_side_btn_is_enabled_cond,
                             },
                             {
                                 name: 'collapse_group',
