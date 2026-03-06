@@ -1,3 +1,8 @@
+import isObject from 'lodash/isObject';
+import isArray from 'lodash/isArray';
+import fromPairs from 'lodash/fromPairs';
+import sortBy from 'lodash/sortBy';
+import toPairs from 'lodash/toPairs';
 import unset from 'lodash/unset';
 import set from 'lodash/set';
 import get from 'lodash/get';
@@ -14,9 +19,10 @@ class Class {
     }
 
     public constructor() {
-        makeObservable<Class, 'set_val'>(this, {
+        makeObservable<Class, 'set_val' | 'unset_val'>(this, {
             set: action,
             set_val: action,
+            unset_val: action,
         });
     }
 
@@ -38,7 +44,7 @@ class Class {
             const updated_data = toJS(data);
             set(updated_data, val_setter, val);
 
-            data.settings = updated_data.settings;
+            data.settings = this.deep_obj_sort_by_key<any>({ obj: updated_data }).settings;
 
             s_theme.Theme.set({
                 name: data.settings.prefs.options_page_theme,
@@ -112,6 +118,20 @@ class Class {
             });
 
             this.write();
+        }, 'shr_1129');
+
+    private deep_obj_sort_by_key = <T>({ obj }: { obj: T }): T =>
+        err(() => {
+            if (!isObject(obj) || isArray(obj)) {
+                return obj;
+            }
+
+            return fromPairs(
+                sortBy(toPairs(obj), [0]).map(([key, val]) => [
+                    key,
+                    this.deep_obj_sort_by_key({ obj: val }),
+                ]),
+            ) as T;
         }, 'shr_1129');
 }
 

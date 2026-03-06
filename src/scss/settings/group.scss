@@ -1,25 +1,19 @@
-[class*='_individual_exe_group'],
-.key_bindings_group,
-[class*='individual_input_key_binding'] {
+[class*='_exe_group_level_1'],
+[class*='_exe_group_level_2'],
+[class*='_exe_group_level_3'] {
     &.input_item.group > .input_item_inner > .input_w_and_help_btn > .input_w {
         margin-left: $exe_group_offset;
     }
 }
 
-[class*='_individual_exe_group']
-    > .input_item_inner
-    > .label_in_input_item_w
-    > .label_in_input_item {
+[class*='_exe_group_level_1'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
     font-size: 29px;
 }
 
-.key_bindings_group > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
+[class*='_exe_group_level_2'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
     font-size: 25px;
 }
 
-[class*='individual_input_key_binding']
-    > .input_item_inner
-    > .label_in_input_item_w
-    > .label_in_input_item {
+[class*='_exe_group_level_3'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
     font-size: 21px;
 }

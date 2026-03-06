@@ -1,10 +1,8 @@
 import get from 'lodash/get';
-import set from 'lodash/set';
 import { makeObservable, action } from 'mobx';
 
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
-import { d_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -28,43 +26,10 @@ class Class {
     public remove_val = (/* { input }: { input: i_inputs.Input } */): Promise<void> =>
         err(async () => {}, 'cnt_1290');
 
-    public remove_property = ({
-        input_type,
-        input,
-        section_path,
-    }: {
-        input_type: string;
-        input: i_inputs.Input;
-        section_path: string;
-    }): Promise<void> =>
+    public remove_property = ({ input }: { input: i_inputs.Input }): Promise<void> =>
         err_async(async () => {
             if (n(input.val_accessor)) {
-                // Remove from data
                 d_settings.Settings.write_unset({ val_setter: input.val_accessor });
-
-                if (
-                    [
-                        'input_bindings',
-                        'key_bindings_group',
-                        'individual_input_key_binding_group',
-                        'individual_exe_group',
-                    ].includes(input_type)
-                ) {
-                    // the code below can remove "exe" and "key_bindings" inputs from sections ui too, but I don't this here
-                    const { sections } = d_sections.Sections;
-                    const path_parts = section_path.split('.');
-                    const parent_path = path_parts.slice(0, -1).join('.');
-                    const last_key = path_parts[path_parts.length - 1];
-                    const parent = get(sections, parent_path);
-
-                    if (n(parent)) {
-                        const copy = { ...parent };
-
-                        delete copy[last_key];
-
-                        set(sections, parent_path, copy);
-                    }
-                }
             }
         }, 'cnt_1291');
 

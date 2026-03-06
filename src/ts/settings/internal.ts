@@ -5,6 +5,9 @@ misplaced_dependency('settings');
 export * from 'settings/init';
 
 export * as c_settings from 'settings/components';
+export * as c_sections from 'settings/sections/components';
+
+export * as o_sections from 'settings/sections/obj';
 
 export * as d_sections from 'settings/sections/data';
 
@@ -12,5 +15,6 @@ export * as s_msgs from 'settings/msgs/scripts';
 export * as s_sections from 'settings/sections/scripts';
 
 export * as p_settings from 'settings/components/prop_types';
+export * as p_sections from 'settings/sections/components/prop_types';
 
 export * as i_sections from 'settings/sections/interfaces';

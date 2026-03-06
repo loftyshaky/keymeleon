@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { c_settings } from '@loftyshaky//shared-app/settings';
-import { d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
-import { d_sections, p_settings } from 'settings/internal';
+import { c_sections, o_sections, s_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
     const { on_render } = props;
@@ -12,35 +10,25 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
         on_render();
     }, [on_render]);
 
-    useEffect(
-        () =>
-            err(() => {
-                const run = async () =>
-                    err(() => {
-                        d_inputs.NestedInput.set_all_parents_disbled_vals({
-                            sections: d_sections.Sections.sections as i_inputs.Sections,
-                        });
-                    }, 'seg_1123');
-
-                run();
-            }, 'seg_1124'),
-        [],
-    );
-
     return (
         <div className='main'>
-            <c_settings.Body
-                sections={d_sections.Sections.sections as i_inputs.Sections}
-                initial_section={d_sections.Sections.current_section}
-                change_section_callback={(): void => {
-                    d_inputs.NestedInput.set_all_parents_disbled_vals({
-                        sections: d_sections.Sections.sections as i_inputs.Sections,
-                    });
-
-                    // d_sections.Sections.change_current_section_val();
-                }}
-                enable_developer_mode_save_callback={() => {}}
-            />
+            <div className={x.cls(['main_2', 'settings'])}>
+                <div className='section_btns'>
+                    {Object.keys(s_sections.Template.sections).map(
+                        (section_name: string, i: number): JSX.Element => (
+                            <c_sections.SectionBtn
+                                key={i}
+                                section_btn={new o_sections.SectionBtn({ section_name })}
+                            />
+                        ),
+                    )}
+                </div>
+                <div className='sections_and_offers'>
+                    <div className='sections'>
+                        <c_sections.Section />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 });
