@@ -36,7 +36,7 @@ class Class {
                     content_is_visible_default: false,
                     val_accessor,
                     content_is_visible_val_accessor,
-                    event_callback: () => undefined,
+                    event_callback: () => {},
                     inputs,
                     ...(n(side_btns) && { side_btns }),
                 });
@@ -47,7 +47,11 @@ class Class {
                     name: section_item.name,
                     default_val: section_item.default_val,
                     val_accessor,
-                    event_callback: () => {},
+                    event_callback: ({ input }: { input: i_inputs.Input }) =>
+                        d_sections.Val.change({
+                            input,
+                            section_item,
+                        }),
                     ...(n(side_btns) && { side_btns }),
                 });
             }
@@ -58,7 +62,11 @@ class Class {
                     default_val: section_item.default_val,
                     val_accessor,
                     options: d_sections.Options.options,
-                    event_callback: () => {},
+                    event_callback: ({ input }: { input: i_inputs.Input }) =>
+                        d_sections.Val.change({
+                            input,
+                            section_item,
+                        }),
                     ...(n(side_btns) && { side_btns }),
                 });
             }
@@ -70,7 +78,16 @@ class Class {
                 val_accessor,
                 allow_removing_val: true,
                 placeholder: section_item.placeholder,
-                event_callback: () => {},
+                event_callback: ({ input }: { input: i_inputs.Input }) =>
+                    d_sections.Val.change({
+                        input,
+                        section_item,
+                    }),
+                remove_val_callback: ({ input }: { input: i_inputs.Input }) =>
+                    d_sections.Val.remove_val({
+                        input,
+                        section_item,
+                    }),
                 warn_state_checker: () => false,
                 ...(n(side_btns) && { side_btns }),
             });

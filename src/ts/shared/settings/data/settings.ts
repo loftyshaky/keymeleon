@@ -8,7 +8,8 @@ import set from 'lodash/set';
 import get from 'lodash/get';
 import { makeObservable, action, toJS } from 'mobx';
 
-import { s_theme } from '@loftyshaky/shared-app/shared';
+import { s_theme, i_data } from '@loftyshaky/shared-app/shared';
+import { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 
 class Class {
@@ -78,27 +79,45 @@ class Class {
             this.set_val({ val_setter, val });
         }, 'shr_1127');
 
-    private write = (): void =>
+    private write = ({ config }: { config: any }): void =>
         err(() => {
-            s_msgs.Msgs.send({ msg: 'write_config', config: data.settings });
+            s_msgs.Msgs.send({ msg: 'write_config', config });
         }, 'shr_1128');
 
-    public write_change_val = ({ val_setter, val }: { val_setter: string; val: any }): void =>
+    public write_change_val = ({
+        val_setter,
+        val,
+        val_type,
+    }: {
+        val_setter: string | undefined;
+        val: any;
+        val_type?: i_settings.ValType;
+    }): void =>
         err(() => {
-            this.set_val({
-                val_setter,
-                val,
-            });
+            if (n(val_setter)) {
+                this.set_val({
+                    val_setter,
+                    val,
+                });
 
-            this.write();
+                const data_clone = n(val_type) ? toJS(data) : data;
+
+                if (n(val_type)) {
+                    set(data_clone, val_setter, this.transform_val({ val, val_type }));
+                }
+
+                this.write({ config: data_clone.settings });
+            }
         }, 'shr_1129');
 
-    public write_unset = ({ val_setter }: { val_setter: string }): void =>
+    public write_unset = ({ val_setter }: { val_setter: string | undefined }): void =>
         err(() => {
-            this.unset_val({
-                val_setter,
-            });
-            this.write();
+            if (n(val_setter)) {
+                this.unset_val({
+                    val_setter,
+                });
+                this.write({ config: data.settings });
+            }
         }, 'shr_1130');
 
     public write_change_key = ({
@@ -106,18 +125,19 @@ class Class {
         val_setter,
         val,
     }: {
-        val_unsetter: string;
-        val_setter: string;
+        val_unsetter: string | undefined;
+        val_setter: string | undefined;
         val: any;
     }): void =>
         err(() => {
-            this.set_key({
-                val_unsetter,
-                val_setter,
-                val,
-            });
-
-            this.write();
+            if (n(val_unsetter) && n(val_setter)) {
+                this.set_key({
+                    val_unsetter,
+                    val_setter,
+                    val,
+                });
+            }
+            this.write({ config: data.settings });
         }, 'shr_1129');
 
     private deep_obj_sort_by_key = <T>({ obj }: { obj: T }): T =>
@@ -133,6 +153,31 @@ class Class {
                 ]),
             ) as T;
         }, 'shr_1129');
+
+    private transform_val = ({
+        val,
+        val_type,
+    }: {
+        val: i_data.Val;
+        val_type: i_settings.ValType;
+    }): i_data.Val =>
+        err(() => {
+            let val_final: i_data.Val = val;
+
+            if (n(val)) {
+                if (val_type === 'number') {
+                    val_final = +val;
+                } else if (val_type === 'array') {
+                    val_final = (val as string).split(',');
+
+                    if (val_final.length === 1 && val_final[0] === '') {
+                        val_final = [];
+                    }
+                }
+            }
+
+            return val_final;
+        }, 'cnt_1288');
 }
 
 export const Settings = Class.get_instance();

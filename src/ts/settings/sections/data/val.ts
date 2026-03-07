@@ -1,8 +1,10 @@
 import get from 'lodash/get';
 import { makeObservable, action } from 'mobx';
 
+import { i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
+import { i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -19,18 +21,42 @@ class Class {
     }
 
     public change = action(
-        (/* { input }: { input: i_inputs.Input } */): Promise<void> =>
-            err(async () => {}, 'cnt_1288'),
+        ({
+            input,
+            section_item,
+        }: {
+            input: i_inputs.Input;
+            section_item: i_sections.SectionTemplateItem;
+        }): void =>
+            err(() => {
+                const val: i_data.Val = d_inputs.Val.access({ input });
+
+                d_settings.Settings.write_change_val({
+                    val_setter: input.val_accessor,
+                    val,
+                    val_type: section_item.val_type,
+                });
+            }, 'cnt_1288'),
     );
 
-    public remove_val = (/* { input }: { input: i_inputs.Input } */): Promise<void> =>
-        err(async () => {}, 'cnt_1290');
+    public remove_val = ({
+        input,
+        section_item,
+    }: {
+        input: i_inputs.Input;
+        section_item: i_sections.SectionTemplateItem;
+    }): void =>
+        err(() => {
+            d_settings.Settings.write_change_val({
+                val_setter: input.val_accessor,
+                val: '',
+                val_type: section_item.val_type,
+            });
+        }, 'cnt_1290');
 
-    public remove_property = ({ input }: { input: i_inputs.Input }): Promise<void> =>
-        err_async(async () => {
-            if (n(input.val_accessor)) {
-                d_settings.Settings.write_unset({ val_setter: input.val_accessor });
-            }
+    public remove_property = ({ input }: { input: i_inputs.Input }): void =>
+        err(() => {
+            d_settings.Settings.write_unset({ val_setter: input.val_accessor });
         }, 'cnt_1291');
 
     public remove_property_side_btn_is_enabled_cond = ({
