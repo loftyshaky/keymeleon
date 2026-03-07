@@ -40,12 +40,22 @@ class Class {
     public get_val = ({ val_accessor }: { val_accessor: string }): any =>
         err(() => get(data.settings, val_accessor), 'shr_1126');
 
-    private set_val = ({ val_setter, val }: { val_setter: string; val: any }): void =>
+    private set_val = ({
+        val_setter,
+        val,
+        sort = false,
+    }: {
+        val_setter: string;
+        val: any;
+        sort?: boolean;
+    }): void =>
         err(() => {
             const updated_data = toJS(data);
             set(updated_data, val_setter, val);
 
-            data.settings = this.deep_obj_sort_by_key<any>({ obj: updated_data }).settings;
+            data.settings = (
+                sort ? this.deep_obj_sort_by_key<any>({ obj: updated_data }) : updated_data
+            ).settings;
 
             s_theme.Theme.set({
                 name: data.settings.prefs.options_page_theme,
@@ -69,14 +79,16 @@ class Class {
         val_unsetter,
         val_setter,
         val,
+        sort = false,
     }: {
         val_unsetter: string;
         val_setter: string;
         val: any;
+        sort?: boolean;
     }): void =>
         err(() => {
             this.unset_val({ val_setter: val_unsetter });
-            this.set_val({ val_setter, val });
+            this.set_val({ val_setter, val, sort });
         }, 'shr_1127');
 
     private write = ({ config }: { config: any }): void =>
@@ -88,16 +100,19 @@ class Class {
         val_setter,
         val,
         val_type,
+        sort = false,
     }: {
         val_setter: string | undefined;
         val: any;
         val_type?: i_settings.ValType;
+        sort?: boolean;
     }): void =>
         err(() => {
             if (n(val_setter)) {
                 this.set_val({
                     val_setter,
                     val,
+                    sort,
                 });
 
                 const data_clone = n(val_type) ? toJS(data) : data;
@@ -124,10 +139,12 @@ class Class {
         val_unsetter,
         val_setter,
         val,
+        sort = false,
     }: {
         val_unsetter: string | undefined;
         val_setter: string | undefined;
         val: any;
+        sort?: boolean;
     }): void =>
         err(() => {
             if (n(val_unsetter) && n(val_setter)) {
@@ -135,6 +152,7 @@ class Class {
                     val_unsetter,
                     val_setter,
                     val,
+                    sort,
                 });
             }
             this.write({ config: data.settings });

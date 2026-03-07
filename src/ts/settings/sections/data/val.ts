@@ -165,6 +165,7 @@ class Class {
                         val_unsetter: val_unsetter_config,
                         val_setter: val_setter_config,
                         val: val_config,
+                        sort: true,
                     });
                 }
             }
