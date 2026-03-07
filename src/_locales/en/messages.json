@@ -4,5 +4,20 @@
     },
     "key_bindings_label_text": {
         "message": "Key bindings"
+    },
+    "send_option_text": {
+        "message": "Send"
+    },
+    "send_input_option_text": {
+        "message": "SendInput"
+    },
+    "send_text_option_text": {
+        "message": "SendText"
+    },
+    "send_play_option_text": {
+        "message": "SendPlay"
+    },
+    "send_event_option_text": {
+        "message": "SendEvent"
     }
 }

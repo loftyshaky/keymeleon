@@ -4,7 +4,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import { c_inputs, o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
-import { s_sections, i_sections } from 'settings/internal';
+import { d_sections, s_sections, i_sections } from 'settings/internal';
 
 export const Section: React.FunctionComponent = observer(() => {
     let sections: JSX.Element[] | undefined;
@@ -26,6 +26,17 @@ export const Section: React.FunctionComponent = observer(() => {
             if (section_item.type === 'checkbox') {
                 return (
                     <c_inputs.Checkbox key={i} input={input as o_inputs.Checkbox} calculate_width />
+                );
+            }
+
+            if (section_item.type === 'select') {
+                return (
+                    <c_inputs.Select
+                        key={i}
+                        input={input as o_inputs.Select}
+                        include_label
+                        calculate_width
+                    />
                 );
             }
 
@@ -61,7 +72,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                             !isEmpty(get(data, key_bindings_path))
                                         ) {
                                             const side_btns: i_inputs.SideBtn[] =
-                                                s_sections.Template.generate_side_btns({
+                                                d_sections.Sections.generate_side_btns({
                                                     side_btns_to_generate: [
                                                         'remove_property',
                                                         'collapse_group',
@@ -72,7 +83,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 type: 'group',
                                             };
 
-                                            const input = s_sections.Template.generate_input({
+                                            const input = d_sections.Sections.generate_input({
                                                 section_item: section_item_2,
                                                 alt_msg: app.msg(`${section_item.name}_label_text`),
                                                 val_accessor: key_bindings_path,
@@ -91,11 +102,11 @@ export const Section: React.FunctionComponent = observer(() => {
 
                                         if (section_item.name !== 'key_bindings') {
                                             const side_btns: i_inputs.SideBtn[] =
-                                                s_sections.Template.generate_side_btns({
+                                                d_sections.Sections.generate_side_btns({
                                                     side_btns_to_generate: ['remove_property'],
                                                 });
 
-                                            const input = s_sections.Template.generate_input({
+                                            const input = d_sections.Sections.generate_input({
                                                 section_item,
                                                 val_accessor: `settings.hotkeys.context_remap.${section_name}.${exe_name}.${section_item.name}`,
                                                 side_btns,
@@ -128,7 +139,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                               const input_path: string = `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}`;
                                               const is_visible_input_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}.is_visible`;
                                               const side_btns: i_inputs.SideBtn[] =
-                                                  s_sections.Template.generate_side_btns({
+                                                  d_sections.Sections.generate_side_btns({
                                                       side_btns_to_generate: [
                                                           'remove_property',
                                                           'edit_group_label',
@@ -139,7 +150,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                   name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_3`,
                                                   type: 'group',
                                               };
-                                              const input = s_sections.Template.generate_input({
+                                              const input = d_sections.Sections.generate_input({
                                                   section_item,
                                                   alt_msg: input_name,
                                                   val_accessor: input_path,
@@ -174,11 +185,11 @@ export const Section: React.FunctionComponent = observer(() => {
                                 (section_item: i_sections.SectionTemplateItem): i_inputs.Input =>
                                     err(() => {
                                         const side_btns: i_inputs.SideBtn[] =
-                                            s_sections.Template.generate_side_btns({
+                                            d_sections.Sections.generate_side_btns({
                                                 side_btns_to_generate: ['remove_property'],
                                             });
 
-                                        const input = s_sections.Template.generate_input({
+                                        const input = d_sections.Sections.generate_input({
                                             section_item,
                                             val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}.${section_item.name}`,
                                             side_btns,
@@ -195,7 +206,7 @@ export const Section: React.FunctionComponent = observer(() => {
                         (input_name: string, i: number): JSX.Element =>
                             err(() => {
                                 const side_btns: i_inputs.SideBtn[] =
-                                    s_sections.Template.generate_side_btns({
+                                    d_sections.Sections.generate_side_btns({
                                         side_btns_to_generate: ['remove_property'],
                                     });
                                 const section_item: i_sections.SectionTemplateItem = {
@@ -204,7 +215,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                     val_type: 'string',
                                     placeholder: '^+F2',
                                 };
-                                const input = s_sections.Template.generate_input({
+                                const input = d_sections.Sections.generate_input({
                                     section_item,
                                     val_accessor: `settings.hotkeys.context_remap.input_bindings.${input_name}`,
                                     side_btns,
@@ -221,7 +232,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                 const exe_path: string = `settings.hotkeys.context_remap.exe.${exe_name}`;
                                 const exe_is_visible_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.is_visible`;
                                 const side_btns: i_inputs.SideBtn[] =
-                                    s_sections.Template.generate_side_btns({
+                                    d_sections.Sections.generate_side_btns({
                                         side_btns_to_generate: [
                                             'remove_property',
                                             'edit_group_label',
@@ -233,7 +244,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                     type: 'group',
                                 };
 
-                                const input = s_sections.Template.generate_input({
+                                const input = d_sections.Sections.generate_input({
                                     section_item,
                                     alt_msg: exe_name,
                                     val_accessor: exe_path,
@@ -253,7 +264,7 @@ export const Section: React.FunctionComponent = observer(() => {
                     sections = s_sections.Template.sections[section_name].map(
                         (section_item: i_sections.SectionTemplateItem, i: number): JSX.Element =>
                             err(() => {
-                                const input = s_sections.Template.generate_input({
+                                const input = d_sections.Sections.generate_input({
                                     section_item,
                                     val_accessor: `settings.${section_name}.${section_item.name}`,
                                 });
