@@ -5,6 +5,9 @@
     "key_bindings_label_text": {
         "message": "Key bindings"
     },
+    "val_type_label_text": {
+        "message": "Value type"
+    },
     "send_option_text": {
         "message": "Send"
     },
@@ -19,5 +22,11 @@
     },
     "send_event_option_text": {
         "message": "SendEvent"
+    },
+    "string_option_text": {
+        "message": "String"
+    },
+    "object_option_text": {
+        "message": "Object"
     }
 }

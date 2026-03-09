@@ -12,6 +12,10 @@ class Class {
     public init = (): void =>
         err(() => {
             this.options = {
+                val_type: [
+                    new o_inputs.Option({ name: 'string' }),
+                    new o_inputs.Option({ name: 'object' }),
+                ],
                 send_mode: [
                     new o_inputs.Option({ name: 'send', val: 'Send' }),
                     new o_inputs.Option({ name: 'send_input', val: 'SendInput' }),

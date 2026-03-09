@@ -197,13 +197,23 @@ class Class {
         ],
     };
 
-    public custom_binding_name: i_sections.SectionTemplateItem[] = [
+    public custom_binding_name_string: i_sections.SectionTemplateItem[] = [
+        {
+            name: 'val_type',
+            type: 'select',
+            val_type: 'string',
+            default_val: 'string',
+        },
         {
             name: 'key',
             type: 'text',
             val_type: 'string',
             placeholder: 'a',
         },
+    ];
+
+    public custom_binding_name_object: i_sections.SectionTemplateItem[] = [
+        ...this.custom_binding_name_string,
         {
             name: 'delay_before',
             type: 'number',

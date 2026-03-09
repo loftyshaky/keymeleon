@@ -1,0 +1,6 @@
+.input_item {
+    &.val_type,
+    &.key:last-child {
+        margin-left: 40px !important;
+    }
+}

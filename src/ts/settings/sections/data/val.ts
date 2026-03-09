@@ -1,7 +1,8 @@
 import get from 'lodash/get';
+import isObject from 'lodash/isObject';
 import { makeObservable, action } from 'mobx';
 
-import { i_data } from '@loftyshaky/shared-app/shared';
+import { t, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
 import { i_sections } from 'settings/internal';
@@ -20,6 +21,11 @@ class Class {
         });
     }
 
+    public val_type_reaction_id: string = x.unique_id();
+    public remove_property_reaction_id: string = x.unique_id();
+    public edit_group_label_reaction_id: string = x.unique_id();
+    public collapse_group_reaction_id: string = x.unique_id();
+
     public change = action(
         ({
             input,
@@ -31,6 +37,53 @@ class Class {
             err(() => {
                 const val: i_data.Val = d_inputs.Val.access({ input });
 
+                if (input.name === 'val_type' && input.val_accessor) {
+                    const val_accessor_split: string[] = input.val_accessor.split('.');
+
+                    val_accessor_split.pop();
+
+                    if (n(val_accessor_split)) {
+                        val_accessor_split.shift();
+                    }
+
+                    const val_accesor_join: string = val_accessor_split.join('.');
+
+                    const key_bindings_item_val_accessor: string = `settings.${val_accesor_join}`;
+                    const key_val_accessor: string = `settings.${val_accesor_join}.key`;
+                    const key_bindings_item_val = get(data, key_bindings_item_val_accessor);
+                    const key_val = get(data, key_val_accessor);
+                    let key_bindings_item_val_or_key_val;
+                    let new_key_bindings_item_val: string | number | t.AnyRecord = '';
+
+                    if (n(key_val)) {
+                        key_bindings_item_val_or_key_val = key_val;
+                    } else if (n(key_bindings_item_val)) {
+                        key_bindings_item_val_or_key_val = key_bindings_item_val;
+                    }
+
+                    const key_bindings_item_val_or_key_val_is_not_object =
+                        n(key_bindings_item_val_or_key_val) &&
+                        ['string', 'number'].includes(typeof key_bindings_item_val_or_key_val);
+
+                    if (val === 'string') {
+                        new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
+                            ? key_bindings_item_val_or_key_val.toString()
+                            : '';
+                    } else if (val === 'object') {
+                        new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
+                            ? { key: key_bindings_item_val_or_key_val.toString() }
+                            : {};
+                    }
+
+                    d_settings.Settings.write_change_val({
+                        val_setter: key_bindings_item_val_accessor,
+                        val: new_key_bindings_item_val,
+                        val_type: 'string',
+                    });
+
+                    this.val_type_reaction_id = x.unique_id();
+                }
+
                 d_settings.Settings.write_change_val({
                     val_setter: input.val_accessor,
                     val,
@@ -38,6 +91,17 @@ class Class {
                 });
             }, 'cnt_1288'),
     );
+
+    public compute_val_type_initial_val = ({ val_accessor }: { val_accessor: string }): string =>
+        err(() => {
+            const val = get(data, val_accessor);
+
+            if (isObject(val)) {
+                return 'object';
+            }
+
+            return 'string';
+        }, 'cnt_1291');
 
     public remove_val = ({
         input,
@@ -57,6 +121,8 @@ class Class {
     public remove_property = ({ input }: { input: i_inputs.Input }): void =>
         err(() => {
             d_settings.Settings.write_unset({ val_setter: input.val_accessor });
+
+            this.remove_property_reaction_id = x.unique_id();
         }, 'cnt_1291');
 
     public remove_property_side_btn_is_enabled_cond = ({
@@ -118,6 +184,8 @@ class Class {
                     val_setter: val_accessor,
                     val: new_content_is_visible_val,
                 });
+
+                this.collapse_group_reaction_id = x.unique_id();
             }
         }, 'cnt_7844');
 
@@ -128,6 +196,8 @@ class Class {
                     input,
                     callback: this.toggle_edit_label_state_callback,
                 });
+
+                this.edit_group_label_reaction_id = x.unique_id();
             }
         }, 'cnt_5168');
 
