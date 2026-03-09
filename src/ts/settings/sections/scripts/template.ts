@@ -265,7 +265,6 @@ class Class {
             type: 'select',
             val_type: 'string',
             default_val: 'SendInput',
-            placeholder: 'SendEvent',
         },
         {
             name: 'modifiers_release_timeout',
