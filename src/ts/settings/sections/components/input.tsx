@@ -1,5 +1,4 @@
 import React, { memo, useMemo } from 'react';
-// import { observer } from 'mobx-react';
 
 import { c_inputs, o_inputs } from '@loftyshaky/shared-app/inputs';
 import { p_sections } from 'settings/internal';

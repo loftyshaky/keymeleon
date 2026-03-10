@@ -258,28 +258,50 @@ export const Section: React.FunctionComponent = observer(() => {
                             ).map(
                                 (input_name: string, i: number): JSX.Element =>
                                     err(() => {
-                                        const side_btns: i_inputs.SideBtn[] =
+                                        const group_side_btns: i_inputs.SideBtn[] =
                                             d_sections.Sections.generate_side_btns({
-                                                side_btns_to_generate: ['remove_property'],
+                                                side_btns_to_generate: [
+                                                    'remove_property',
+                                                    'edit_group_label',
+                                                ],
                                             });
                                         const section_item: i_sections.SectionTemplateItem = {
-                                            name: input_name,
+                                            name: `${input_name}`,
                                             type: 'text',
                                             val_type: 'string',
                                             placeholder: '^+F2',
                                         };
+                                        const group_section_item: i_sections.SectionTemplateItem = {
+                                            name: input_name,
+                                            type: 'group',
+                                        };
                                         const input = d_sections.Sections.generate_input({
-                                            section_item,
+                                            section_item: group_section_item,
+                                            alt_msg: input_name,
+                                            content_is_visible_default: true,
                                             val_accessor: `settings.hotkeys.context_remap.input_bindings.${input_name}`,
-                                            side_btns,
+                                            side_btns: group_side_btns,
+                                            inputs: [
+                                                d_sections.Sections.generate_input({
+                                                    section_item,
+                                                    val_accessor: `settings.hotkeys.context_remap.input_bindings.${input_name}`,
+                                                    label_is_visible: false,
+                                                }),
+                                            ],
                                         });
 
                                         return (
                                             <c_sections.Input
                                                 key={i}
-                                                section_item={section_item}
+                                                section_item={group_section_item}
                                                 input={input}
                                                 i={i}
+                                                remove_property_reaction_id={
+                                                    d_sections.Val.remove_property_reaction_id
+                                                }
+                                                edit_group_label_reaction_id={
+                                                    d_sections.Val.edit_group_label_reaction_id
+                                                }
                                             />
                                         );
                                     }, 'cnt_4363'),
@@ -377,7 +399,7 @@ export const Section: React.FunctionComponent = observer(() => {
     const sections: JSX.Element[] | undefined = generate_sections();
 
     return (
-        <div className='section'>
+        <div className={x.cls(['section', data.settings.prefs.current_section])}>
             <div className='inputs'>{sections}</div>
         </div>
     );

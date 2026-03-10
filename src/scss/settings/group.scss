@@ -17,3 +17,14 @@
 [class*='_exe_group_level_3'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
     font-size: 21px;
 }
+
+.section.input_bindings .input_item.group {
+    .side_btns {
+        position: relative;
+        top: 17px;
+    }
+
+    > .input_item_inner > .input_w_and_help_btn {
+        margin-left: 80px;
+    }
+}

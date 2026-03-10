@@ -17,14 +17,18 @@ class Class {
         val_accessor,
         side_btns,
         alt_msg,
+        label_is_visible = true,
         content_is_visible_val_accessor,
+        content_is_visible_default = false,
         inputs,
     }: {
         section_item: i_sections.SectionTemplateItem;
         val_accessor: string;
         side_btns?: i_inputs.SideBtn[];
         alt_msg?: string;
+        label_is_visible?: boolean;
         content_is_visible_val_accessor?: string;
+        content_is_visible_default?: boolean;
         inputs?: i_inputs.Inputs;
     }): i_inputs.Input =>
         err(() => {
@@ -33,7 +37,7 @@ class Class {
                     name: section_item.name,
                     alt_msg,
                     is_column_layout: true,
-                    content_is_visible_default: false,
+                    content_is_visible_default,
                     val_accessor,
                     content_is_visible_val_accessor,
                     event_callback: () => {},
@@ -61,6 +65,7 @@ class Class {
                     name: section_item.name,
                     default_val: section_item.default_val,
                     val_accessor,
+                    label_is_visible,
                     options: d_sections.Options.options,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
@@ -76,6 +81,7 @@ class Class {
                 text_type: section_item.type as 'text' | 'number',
                 default_val: section_item.default_val,
                 val_accessor,
+                label_is_visible,
                 allow_removing_val: true,
                 placeholder: section_item.placeholder,
                 event_callback: ({ input }: { input: i_inputs.Input }) =>

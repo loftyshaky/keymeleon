@@ -205,9 +205,11 @@ class Class {
         err(() => {
             const { editing_label, content_is_visible_val_accessor } = input as o_inputs.Group;
 
-            if (!editing_label && n(input.val_accessor) && n(content_is_visible_val_accessor)) {
+            if (!editing_label && n(input.val_accessor)) {
                 const content_is_visible_val_accessor_arr: string[] =
-                    content_is_visible_val_accessor.split('.');
+                    content_is_visible_val_accessor
+                        ? content_is_visible_val_accessor.split('.')
+                        : [];
                 const val_accessor_arr_ui: string[] = content_is_visible_val_accessor_arr.slice(
                     0,
                     -1,
