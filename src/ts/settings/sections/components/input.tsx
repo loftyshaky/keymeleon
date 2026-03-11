@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 
 import { c_inputs, o_inputs } from '@loftyshaky/shared-app/inputs';
-import { p_sections } from 'settings/internal';
+import { s_sections, p_sections } from 'settings/internal';
 
 export const Input: React.FunctionComponent<p_sections.Input> = memo(
     (props) => {
@@ -42,6 +42,7 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
     // Custom comparison function for props
     (prev_props, next_props) => {
         if (
+            s_sections.Template.static_sections.includes(data.settings.prefs.current_section) ||
             prev_props.val_type_reaction_id !== next_props.val_type_reaction_id ||
             prev_props.remove_property_reaction_id !== next_props.remove_property_reaction_id ||
             prev_props.edit_group_label_reaction_id !== next_props.edit_group_label_reaction_id ||

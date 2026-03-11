@@ -363,7 +363,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                     }, 'cnt_4363'),
                             );
                         } else if (
-                            ['features', 'layouts', 'hotkeys'].includes(
+                            s_sections.Template.static_sections.includes(
                                 data.settings.prefs.current_section,
                             )
                         ) {
@@ -373,6 +373,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                     i: number,
                                 ): JSX.Element =>
                                     err(() => {
+                                        l(i);
                                         const input = d_sections.Sections.generate_input({
                                             section_item,
                                             val_accessor: `settings.${section_name}.${section_item.name}`,

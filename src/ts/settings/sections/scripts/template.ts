@@ -12,6 +12,8 @@ class Class {
 
     [key: string]: any;
 
+    public static_sections: string[] = ['features', 'layouts', 'hotkeys'];
+
     public sections: i_sections.Sections = {
         features: [
             {
