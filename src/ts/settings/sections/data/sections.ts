@@ -12,12 +12,15 @@ class Class {
     // eslint-disable-next-line no-useless-constructor, no-empty-function
     private constructor() {}
 
+    public scroll_sections_to_bottom: boolean = false;
+
     public generate_input = ({
         section_item,
         val_accessor,
         side_btns,
         alt_msg,
         label_is_visible = true,
+        svg_2,
         content_is_visible_val_accessor,
         content_is_visible_default = false,
         inputs,
@@ -27,6 +30,7 @@ class Class {
         side_btns?: i_inputs.SideBtn[];
         alt_msg?: string;
         label_is_visible?: boolean;
+        svg_2?: string;
         content_is_visible_val_accessor?: string;
         content_is_visible_default?: boolean;
         inputs?: i_inputs.Inputs;
@@ -73,6 +77,16 @@ class Class {
                             section_item,
                         }),
                     ...(n(side_btns) && { side_btns }),
+                });
+            }
+
+            if (section_item.type === 'icon_btn' && n(svg_2)) {
+                return new o_inputs.IconBtn({
+                    name: section_item.name,
+                    val_accessor,
+                    label_is_visible,
+                    Svg: svg_2,
+                    event_callback: d_sections.Val.add_new_item,
                 });
             }
 
@@ -142,6 +156,39 @@ class Class {
                 ),
             'cnt_3574',
         );
+
+    public generate_add_new_setting_input_section_item = ({
+        name_prefix,
+    }: {
+        name_prefix: string;
+    }): i_sections.SectionTemplateItem =>
+        // Changed return type to JSX.Element
+        err(
+            () => ({
+                name: `${name_prefix}_add_new_setting`,
+                type: 'icon_btn',
+            }),
+            'cnt_5464',
+        );
+
+    public generate_add_new_setting_input = ({
+        name_prefix,
+        val_accessor,
+    }: {
+        name_prefix: string;
+        val_accessor: string;
+    }): i_inputs.Input =>
+        // Changed return type to JSX.Element
+        err(() => {
+            const add_new_setting_section_item: i_sections.SectionTemplateItem =
+                this.generate_add_new_setting_input_section_item({ name_prefix });
+
+            return d_sections.Sections.generate_input({
+                section_item: add_new_setting_section_item,
+                svg_2: svg.Add,
+                val_accessor,
+            });
+        }, 'cnt_5464');
 
     public sanitize_text_for_class = ({ text }: { text: string }): string =>
         err(() => text.replace(/[^A-Za-z0-9]+/g, '_').replace(/^-|-$/g, ''), 'cnt_3478');

@@ -1,11 +1,11 @@
 import get from 'lodash/get';
 import isObject from 'lodash/isObject';
-import { makeObservable, action } from 'mobx';
+import { makeObservable, observable, action } from 'mobx';
 
 import { t, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
-import { i_sections } from 'settings/internal';
+import { d_sections, i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -18,6 +18,7 @@ class Class {
         makeObservable(this, {
             remove_property: action,
             toggle_edit_label_state: action,
+            add_new_setting: observable,
         });
     }
 
@@ -25,6 +26,7 @@ class Class {
     public remove_property_reaction_id: string = x.unique_id();
     public edit_group_label_reaction_id: string = x.unique_id();
     public collapse_group_reaction_id: string = x.unique_id();
+    public add_new_setting: string = x.unique_id();
 
     public change = action(
         ({
@@ -90,6 +92,43 @@ class Class {
                     val_type: section_item.val_type,
                 });
             }, 'cnt_1288'),
+    );
+
+    public add_new_item = action(({ input }: { input: i_inputs.Input }): void =>
+        err(() => {
+            if (input.name === 'input_bindings_add_new_setting') {
+                d_settings.Settings.write_change_val({
+                    val_setter: `${input.val_accessor}.New_input_bindings_item_${x.id()}`,
+                    val: '',
+                    val_type: 'string',
+                });
+
+                d_sections.Sections.scroll_sections_to_bottom = true;
+            } else if (input.name === 'exe_add_new_setting') {
+                d_settings.Settings.write_change_val({
+                    val_setter: `${input.val_accessor}.New_exe_${x.id()}`,
+                    val: {},
+                    val_type: 'object',
+                });
+
+                d_sections.Sections.scroll_sections_to_bottom = true;
+            } else if (input.name === 'specific_exe_add_new_setting') {
+                d_settings.Settings.write_change_val({
+                    val_setter: `${input.val_accessor}.key_bindings`,
+                    val: {},
+                    val_type: 'object',
+                });
+            } else if (input.name === 'key_bindings_add_new_setting') {
+                d_settings.Settings.write_change_val({
+                    val_setter: `${input.val_accessor}.New_input_key_bindings_item_${x.id()}`,
+                    val: '',
+                    val_type: 'string',
+                });
+            }
+
+            this.val_type_reaction_id = x.unique_id();
+            this.add_new_setting = x.unique_id();
+        }, 'cnt_1287'),
     );
 
     public compute_val_type_initial_val = ({ val_accessor }: { val_accessor: string }): string =>
@@ -237,7 +276,7 @@ class Class {
                         val_unsetter: val_unsetter_config,
                         val_setter: val_setter_config,
                         val: val_config,
-                        sort: true,
+                        sort: false,
                     });
                 }
             }

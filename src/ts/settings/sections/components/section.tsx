@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import set from 'lodash/set';
 import isObject from 'lodash/isObject';
-import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import { observer } from 'mobx-react';
 
@@ -29,7 +28,7 @@ export const Section: React.FunctionComponent = observer(() => {
 
                                 if (
                                     section_item.name === 'key_bindings' &&
-                                    !isEmpty(get(data, key_bindings_path))
+                                    isObject(get(data, key_bindings_path))
                                 ) {
                                     const side_btns: i_inputs.SideBtn[] =
                                         d_sections.Sections.generate_side_btns({
@@ -172,8 +171,8 @@ export const Section: React.FunctionComponent = observer(() => {
                         }: {
                             exe_name: string;
                         }): i_inputs.Inputs =>
-                            err(
-                                () =>
+                            err(() => {
+                                const inputs: i_inputs.Inputs =
                                     s_sections.Template.sections.exe.flatMap(
                                         (
                                             section_item: i_sections.SectionTemplateItem,
@@ -186,35 +185,60 @@ export const Section: React.FunctionComponent = observer(() => {
                                                     }),
                                                 'cnt_4363',
                                             ),
-                                    ),
-                                'cnt_4256',
-                            );
+                                    );
+                                const key_bindings_input_is_present: boolean = inputs.some(
+                                    (input: i_inputs.Input): boolean =>
+                                        err(
+                                            () => input.name === 'key_bindings_exe_group_level_2',
+                                            'cnt_5437',
+                                        ),
+                                );
 
+                                if (!key_bindings_input_is_present) {
+                                    inputs.push(
+                                        d_sections.Sections.generate_add_new_setting_input({
+                                            name_prefix: 'specific_exe',
+                                            val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}`,
+                                        }),
+                                    );
+                                }
+
+                                return inputs;
+                            }, 'cnt_4256');
                         const generate_exe_group_level_3 = ({
                             exe_name,
                         }: {
                             exe_name: string;
                         }): i_inputs.Inputs =>
-                            err(
-                                () =>
-                                    n(get(data, `settings.hotkeys.context_remap.exe.${exe_name}`))
-                                        ? Object.keys(
-                                              data.settings.hotkeys.context_remap.exe[exe_name]
-                                                  .key_bindings,
-                                          ).map(
-                                              (input_name: string): i_inputs.Input =>
-                                                  err(
-                                                      () =>
-                                                          generate_exe_group_level_3_inner({
-                                                              exe_name,
-                                                              input_name,
-                                                          }),
-                                                      'cnt_8195',
-                                                  ),
-                                          )
-                                        : [],
-                                'cnt_8195',
-                            );
+                            err(() => {
+                                const inputs: i_inputs.Inputs = n(
+                                    get(data, `settings.hotkeys.context_remap.exe.${exe_name}`),
+                                )
+                                    ? Object.keys(
+                                          data.settings.hotkeys.context_remap.exe[exe_name]
+                                              .key_bindings,
+                                      ).map(
+                                          (input_name: string): i_inputs.Input =>
+                                              err(
+                                                  () =>
+                                                      generate_exe_group_level_3_inner({
+                                                          exe_name,
+                                                          input_name,
+                                                      }),
+                                                  'cnt_8195',
+                                              ),
+                                      )
+                                    : [];
+
+                                inputs.push(
+                                    d_sections.Sections.generate_add_new_setting_input({
+                                        name_prefix: 'key_bindings',
+                                        val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings`,
+                                    }),
+                                );
+
+                                return inputs;
+                            }, 'cnt_8195');
 
                         const generate_exe_group_level_3_inputs = ({
                             exe_name,
@@ -295,7 +319,6 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 key={i}
                                                 section_item={group_section_item}
                                                 input={input}
-                                                i={i}
                                                 remove_property_reaction_id={
                                                     d_sections.Val.remove_property_reaction_id
                                                 }
@@ -305,6 +328,13 @@ export const Section: React.FunctionComponent = observer(() => {
                                             />
                                         );
                                     }, 'cnt_4363'),
+                            );
+
+                            generated_sections.push(
+                                generate_add_new_setting_input({
+                                    name_prefix: 'input_bindings',
+                                    val_accessor: 'settings.hotkeys.context_remap.input_bindings',
+                                }),
                             );
                         } else if (section_name === 'exe') {
                             generated_sections = Object.keys(
@@ -345,7 +375,6 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 key={i}
                                                 section_item={section_item}
                                                 input={input}
-                                                i={i}
                                                 val_type_reaction_id={
                                                     d_sections.Val.val_type_reaction_id
                                                 }
@@ -362,6 +391,13 @@ export const Section: React.FunctionComponent = observer(() => {
                                         );
                                     }, 'cnt_4363'),
                             );
+
+                            generated_sections.push(
+                                generate_add_new_setting_input({
+                                    name_prefix: 'exe',
+                                    val_accessor: 'settings.hotkeys.context_remap.exe',
+                                }),
+                            );
                         } else if (
                             s_sections.Template.static_sections.includes(
                                 data.settings.prefs.current_section,
@@ -373,7 +409,6 @@ export const Section: React.FunctionComponent = observer(() => {
                                     i: number,
                                 ): JSX.Element =>
                                     err(() => {
-                                        l(i);
                                         const input = d_sections.Sections.generate_input({
                                             section_item,
                                             val_accessor: `settings.${section_name}.${section_item.name}`,
@@ -384,7 +419,6 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 key={i}
                                                 section_item={section_item}
                                                 input={input}
-                                                i={i}
                                             />
                                         );
                                     }, 'cnt_4363'),
@@ -396,6 +430,31 @@ export const Section: React.FunctionComponent = observer(() => {
 
             return generated_sections;
         }, 'cnt_4245');
+
+    const generate_add_new_setting_input = ({
+        name_prefix,
+        val_accessor,
+    }: {
+        name_prefix: string;
+        val_accessor: string;
+    }): JSX.Element =>
+        // Changed return type to JSX.Element
+        err(() => {
+            const add_new_setting_section_item: i_sections.SectionTemplateItem =
+                d_sections.Sections.generate_add_new_setting_input_section_item({ name_prefix });
+            const input = d_sections.Sections.generate_add_new_setting_input({
+                name_prefix,
+                val_accessor,
+            });
+
+            return (
+                <c_sections.Input
+                    key={`${name_prefix}_add_new_setting`}
+                    section_item={add_new_setting_section_item}
+                    input={input}
+                />
+            );
+        }, 'cnt_5464');
 
     const sections: JSX.Element[] | undefined = generate_sections();
 
