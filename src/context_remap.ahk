@@ -159,8 +159,8 @@ send_one_command(input_binding_modifiers, exe_key_binding) {
         }
     }
     else {
-        send_f(blind_send_input "{" exe_key_binding " down}", send_mode)
-        send_f(blind_send_input "{" exe_key_binding " up}", send_mode)
+        send_f("{" exe_key_binding " down}", "SendInput")
+        send_f("{" exe_key_binding " up}", "SendInput")
     }
 }
 
