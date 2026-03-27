@@ -350,18 +350,14 @@ switch_layout_on_exe_change() {
 }
 
 on_exe_change() {
-    on_window_activate(w_param, l_param, msg, hwnd) {
-        if (check_if_active_window_changed(w_param)) { ; HSHELL_WINDOWACTIVATE
-            exe_change_handler(w_param, l_param, msg, hwnd)
+    exe_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
+        if (check_if_changed_active_window_2(event)) {
+            global last_switched_layout
+
+            switch_layout_on_exe_change()
+            bind_unbind_context_hotkeys(last_switched_layout)
         }
     }
 
-    register_shell_hook(on_window_activate)
-}
-
-exe_change_handler(*) {
-    global last_switched_layout
-
-    switch_layout_on_exe_change()
-    bind_unbind_context_hotkeys(last_switched_layout)
+    register_shell_hook_2(exe_change_handler)
 }
