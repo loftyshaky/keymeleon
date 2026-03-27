@@ -195,10 +195,9 @@ listen_for_focus_change() {
     target_processes := config_get(["process_control", "target_processes"])
 
     if (n(target_processes) && is_arr(target_processes)) {
-        DllCall("RegisterShellHookWindow", "UInt", A_ScriptHwnd)
-        OnMessage(DllCall("RegisterWindowMessage", "Str", "SHELLHOOK"), on_shell_hook)
+        register_shell_hook(focus_change_handler)
 
-        on_shell_hook(w_param, l_param, *) {
+        focus_change_handler(w_param, l_param, *) {
             if (l_param = 0) {
                 return
             }
@@ -207,7 +206,7 @@ listen_for_focus_change() {
             focused_exe_name := ''
 
             try {
-                if (w_param = 4 || w_param = 32772) {
+                if (check_if_active_window_changed(w_param)) {
                     window_process := WinGetProcessName("ahk_id " l_param)
                     target_processes := config_get(["process_control", "target_processes"])
 

@@ -350,7 +350,13 @@ switch_layout_on_exe_change() {
 }
 
 on_exe_change() {
-    watch_any_window_activation(exe_change_handler)
+    on_window_activate(w_param, l_param, msg, hwnd) {
+        if (check_if_active_window_changed(w_param)) { ; HSHELL_WINDOWACTIVATE
+            exe_change_handler(w_param, l_param, msg, hwnd)
+        }
+    }
+
+    register_shell_hook(on_window_activate)
 }
 
 exe_change_handler(*) {

@@ -32,14 +32,11 @@ map_to_string(map) {
     return result
 }
 
-watch_any_window_activation(callback) {
-    on_window_activate(w_param, l_param, msg, hwnd) {
-        if (w_param = 4 || w_param = 32772) { ; HSHELL_WINDOWACTIVATE
-            callback(w_param, l_param, msg, hwnd)
-        }
-    }
-
+register_shell_hook(callback) {
     DllCall("RegisterShellHookWindow", "UInt", A_ScriptHwnd)
-    msg_num := DllCall("RegisterWindowMessage", "Str", "SHELLHOOK")
-    OnMessage(msg_num, on_window_activate)
+    OnMessage(DllCall("RegisterWindowMessage", "Str", "SHELLHOOK"), callback)
+}
+
+check_if_active_window_changed(w_param) {
+    return w_param = 4 || w_param = 32772
 }
