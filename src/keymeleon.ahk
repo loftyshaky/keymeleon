@@ -22,6 +22,7 @@ set_up_user_dir()
 #Include %A_ScriptDir%\audio.ahk
 #Include %A_ScriptDir%\features.ahk
 #Include %A_ScriptDir%\layouts.ahk
+#Include %A_ScriptDir%\process_control.ahk
 #Include %A_ScriptDir%\log.ahk
 
 last_switched_layout := get_current_layout()
@@ -33,6 +34,8 @@ bind_unbind_layout_layout_switching_keys()
 bind_unbind_layout_dedicated_layout_switching_keys()
 on_exe_change()
 bind_unbind_context_hotkeys('none')
+fill_is_suspended_arr()
+listen_for_focus_change()
 
 bind_hotkey_to_function(["hotkeys", "display_current_layout_id"], (*) => display_current_layout_id())
 bind_hotkey_to_function(["hotkeys", "toggle_windows_api_layout_switching"], (*) => toggle_feature(
