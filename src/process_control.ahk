@@ -211,7 +211,7 @@ listen_for_focus_change() {
                     target_processes := config_get(["process_control", "target_processes"])
 
                     for (i, exe_name in target_processes) {
-                        if (window_process = exe_name ".exe") {
+                        if (window_process == exe_name ".exe") {
                             one_of_the_exe_is_focused := true
                             focused_exe_name := exe_name
 
