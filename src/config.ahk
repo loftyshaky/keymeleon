@@ -14,31 +14,31 @@ load_config_json(config_path) {
 config_get(keys, accessed := "") {
     global config
 
-    features_fallback_val := keys[1] == "features" ? 1 : ""
-    accessed_end_val := false
+    if (accessed = "") {
+        if (config = "") {
+            return ""
+        }
 
-    if (n(accessed)) {
-        accessed := accessed
-    }
-
-    if (!n(accessed) && n(config)) {
         accessed := config
     }
+
+    current := accessed
 
     for (i, key in keys) {
         key_string := String(key)
 
-        if (IsObject(accessed) && accessed.Has(key_string)) {
-            accessed := accessed[key_string]
+        if (!IsObject(current) || !current.Has(key_string)) {
+            if (keys[1] = "features") {
+                return 1
+            }
 
-            accessed_end_val := keys.Length = i
-        } else {
-
-            break
+            return ""
         }
+
+        current := current[key_string]
     }
 
-    return accessed_end_val ? accessed : features_fallback_val
+    return current
 }
 
 get_exe_obj() {
