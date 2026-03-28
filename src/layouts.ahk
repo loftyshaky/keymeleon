@@ -329,14 +329,26 @@ switch_layout_on_exe_change() {
         new_exe := WinGetProcessName("A")
         new_exe_name := StrReplace(new_exe, ".exe", "")
         new_exe_is_present_in_conditional_exe_list := n(config_get([new_exe_name], get_exe_obj()))
+        switched_from_any_app_to_file_explorer := (new_exe == "explorer.exe" && new_exe == last_exe && window_class ==
+            "CabinetWClass") ; CabinetWClass = File explorer.
+        is_taskbar := window_class == "Shell_TrayWnd" ; is_taskbar = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar.
 
-        if (window_class != 'Shell_TrayWnd' && new_exe_name != 'SearchHost' && new_exe != last_exe && (
-            new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) { ; window_class != 'Shell_TrayWnd' = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar. / new_exe_name != 'SearchHost' = prevent incorrect layout change when user Win.
+        if (!is_taskbar && (new_exe != last_exe || switched_from_any_app_to_file_explorer) && (
+            new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) {
             last_exe_was_present_in_conditional_exe_list := false
             last_exe := new_exe
             new_layout := get_exe_config_val("layout", false)
 
             switching_layout_with_dedicated_hotkey := true
+
+            if (window_class == "Windows.UI.Core.CoreWindow") {
+                start_menu_automatic_layout_switching_delay := config_get(["layouts",
+                    "start_menu_automatic_layout_switching_delay"])
+                start_menu_automatic_layout_switching_delay_final := n(start_menu_automatic_layout_switching_delay) ?
+                    start_menu_automatic_layout_switching_delay : 200
+
+                Sleep(start_menu_automatic_layout_switching_delay_final) ; When you press Win key and then click anywhere on start menu, the lalout may change to the wrong layout. This delay is intended to prevent this.
+            }
 
             switch_layout(new_layout, true)
         }
