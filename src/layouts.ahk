@@ -363,7 +363,7 @@ switch_layout_on_exe_change() {
 
 on_exe_change() {
     exe_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
-        if (check_if_changed_active_window_2(event)) {
+        if (check_if_changed_active_window(event)) {
             global last_switched_layout
 
             switch_layout_on_exe_change()
@@ -371,5 +371,5 @@ on_exe_change() {
         }
     }
 
-    register_shell_hook_2(exe_change_handler)
+    register_shell_hook(exe_change_handler)
 }

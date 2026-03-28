@@ -195,14 +195,14 @@ listen_for_focus_change() {
     target_processes := config_get(["process_control", "target_processes"])
 
     if (n(target_processes) && is_arr(target_processes)) {
-        register_shell_hook_2(focus_change_handler)
+        register_shell_hook(focus_change_handler)
 
         focus_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
             one_of_the_exe_is_focused := false
             focused_exe_name := ''
 
             try {
-                if (check_if_changed_active_window_2(event)) {
+                if (check_if_changed_active_window(event)) {
                     window_process := WinGetProcessName("ahk_id " hwnd)
                     target_processes := config_get(["process_control", "target_processes"])
 
