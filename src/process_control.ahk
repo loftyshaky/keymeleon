@@ -189,13 +189,14 @@ fill_is_suspended_arr() {
 }
 
 listen_for_focus_change() {
+    global change_focus_event
     global currently_focused_exe
     global last_suspended_exe
 
     target_processes := config_get(["process_control", "target_processes"])
 
     if (n(target_processes) && is_arr(target_processes)) {
-        register_shell_hook(focus_change_handler)
+        register_shell_hook(focus_change_handler, change_focus_event, change_focus_event)
 
         focus_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
             one_of_the_exe_is_focused := false

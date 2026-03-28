@@ -1,3 +1,5 @@
+change_focus_event := 0x0003
+
 n(val := "") { ; not empty
     return val != ""
 }
@@ -32,10 +34,7 @@ map_to_string(map) {
     return result
 }
 
-register_shell_hook(callback) {
-    event_min := 0x0003
-    event_max := 0x0003
-
+register_shell_hook(callback, event_min, event_max) {
     callback_ptr := CallbackCreate(callback, "F")
 
     DllCall("SetWinEventHook", "UInt", event_min, "UInt", event_max, "Ptr", 0, "Ptr", callback_ptr, "UInt", 0, "UInt",
@@ -43,5 +42,7 @@ register_shell_hook(callback) {
 }
 
 check_if_changed_active_window(event) { ; Params: h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time
-    return event == 0x0003
+    global change_focus_event
+
+    return event == change_focus_event
 }
