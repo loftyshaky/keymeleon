@@ -88,7 +88,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
     if (one_of_the_exes_suspended) { ; Resume
         last_suspended_exe_window_is_active := WinActive(last_suspended_exe_title)
         currently_focused_exe_is_the_same_as_last_suspended_exe := currently_focused_exe == last_suspended_exe
-        resume_pre_focus_delay := get_delay('focus')
+        resume_pre_focus_delay := get_delay('resume_pre_unminimize')
 
         toggle_process_suspend_state_inner(false, last_suspended_exe)
 
@@ -129,7 +129,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
 
         if (mode == "minimize_and_suspend" || mode == "resume_current_process_suspended" || (mode ==
             "resume_current_process_suspended_recursive" && is_focused_last)) {
-            suspend_post_minimize_delay := get_delay('minimize')
+            suspend_post_minimize_delay := get_delay('suspend_post_minimize')
 
             minimize_window(currently_focused_exe_title)
             Sleep(suspend_post_minimize_delay)
@@ -253,8 +253,8 @@ listen_for_focus_change() {
 
 simulate_print_screen(type) {
     pre_screenshot := config_get(["process_control", type])
-    pre_screenshot_delay := get_delay('pre_screenshot_delay')
-    post_screenshot_delay := get_delay('screenshot')
+    pre_screenshot_delay := get_delay('pre_screenshot')
+    post_screenshot_delay := get_delay('post_screenshot')
 
     if (pre_screenshot) {
         Sleep(pre_screenshot_delay)
