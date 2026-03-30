@@ -303,9 +303,14 @@
             "^+F11"
         ],
         "display_current_layout_id": "^!+sc017",
+        "resume_all_suspended_processes": "!+sc006",
+        "resume_current_process_suspended": "!+sc005",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
         "toggle_all_bindings": "^!+sc035",
+        "toggle_current_process_minimize_and_suspend_state": "!+sc004",
+        "toggle_current_process_minimized_state": "!+sc002",
+        "toggle_current_process_suspend_state": "!+sc003",
         "toggle_dedicated_layout_switching": "^!+sc01A",
         "toggle_feature_state_audio": "^!+sc032",
         "toggle_layout_switching_audio": "^!+sc034",
@@ -337,5 +342,14 @@
             "es-ES",
             "de-DE"
         ]
+    },
+    "process_control": {
+        "target_processes": ["Fallout4", "KingdomCome"],
+        "suspend_post_minimize_delay": 10,
+        "resume_pre_unminimize_delay": 10,
+        "pre_screenshot_delay": 50,
+        "post_screenshot_delay": 50,
+        "pre_minimize_screenshot": 1,
+        "pre_suspend_screenshot": 1
     }
 }
