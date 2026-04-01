@@ -3,19 +3,24 @@
 is_suspended := Map()
 is_focused := Map()
 last_suspended_exe := ""
+last_minimized_exe := ""
 currently_focused_exe := ""
 
 toggle_current_process_minimized_state() {
     global currently_focused_exe
+    global last_minimized_exe
 
     if (!process_is_suspended(currently_focused_exe)) {
-        target_exe := "ahk_exe " currently_focused_exe ".exe"
+        target_exe := "ahk_exe " (last_minimized_exe == "" ? currently_focused_exe : last_minimized_exe) ".exe"
 
         if (WinActive(target_exe)) {
+            last_minimized_exe := currently_focused_exe
+
             simulate_print_screen("pre_minimize_screenshot")
             minimize_window(target_exe)
-
         } else {
+            last_minimized_exe := ""
+
             activate_window(target_exe)
         }
     }
@@ -192,6 +197,7 @@ listen_for_focus_change() {
     global change_focus_event
     global currently_focused_exe
     global last_suspended_exe
+    global last_minimized_exe
 
     target_processes := config_get(["process_control", "target_processes"])
 
@@ -217,15 +223,17 @@ listen_for_focus_change() {
                             }
 
                             currently_focused_exe := exe_name
-
+                            last_minimized_exe := last_minimized_exe == exe_name ? "" : last_minimized_exe
                             is_focused[exe_name] := true
-                        } else {
+                        }
+                        else {
                             is_focused[exe_name] := false
                         }
                     }
                 }
 
-            } catch {
+            }
+            catch {
                 return
             }
 
