@@ -65,6 +65,12 @@ switch_layout(new_layout, is_automatic_layout_switching) {
 set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching) {
     global layout_change_step
 
+    KeyWait("Ctrl")
+    KeyWait("Alt")
+    KeyWait("Shift")
+    KeyWait("LWin")
+    KeyWait("RWin")
+
     step_is_0 := layout_change_step = 0
 
     if (!is_automatic_layout_switching) {
