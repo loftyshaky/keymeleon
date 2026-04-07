@@ -339,7 +339,7 @@ switch_layout_on_exe_change() {
 
         start_menu_is_closed := !taskbar_was_clicked && window_class ==
             "Windows.UI.Core.CoreWindow" ; When you go from fullsreen app to start menu by pressing Win key and then click on start menu button, this prevents a double layout change.
-        log (taskbar_was_clicked " taskbar_was_clicked")
+
         if (taskbar_was_clicked) {
             return
         }
