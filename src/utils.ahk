@@ -1,4 +1,5 @@
-change_focus_event := 0x0003
+EVENT_OBJECT_REORDER := 0x8004
+EVENT_SYSTEM_FOREGROUND := 0x0003      ; Window gets foreground (Alt+Tab)
 
 n(val := "") { ; not empty
     return val != ""
@@ -42,7 +43,8 @@ register_shell_hook(callback, event_min, event_max) {
 }
 
 check_if_changed_active_window(event) { ; Params: h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time
-    global change_focus_event
+    global EVENT_OBJECT_REORDER
+    global EVENT_SYSTEM_FOREGROUND
 
-    return event == change_focus_event
+    return event == EVENT_OBJECT_REORDER || event == EVENT_SYSTEM_FOREGROUND
 }

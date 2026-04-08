@@ -381,7 +381,8 @@ switch_layout_on_exe_change() {
 }
 
 on_exe_change() {
-    global change_focus_event
+    global EVENT_OBJECT_REORDER
+    global EVENT_SYSTEM_FOREGROUND
     global taskbar_was_clicked
 
     exe_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
@@ -403,5 +404,5 @@ on_exe_change() {
         }
     }
 
-    register_shell_hook(exe_change_handler, change_focus_event, change_focus_event)
+    register_shell_hook(exe_change_handler, EVENT_SYSTEM_FOREGROUND, EVENT_OBJECT_REORDER)
 }
