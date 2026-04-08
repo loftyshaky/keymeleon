@@ -2,6 +2,7 @@
 
 is_suspended := Map()
 is_focused := Map()
+exe_dims := Map()
 last_suspended_exe := ""
 last_minimized_exe := ""
 currently_focused_exe := ""
@@ -11,31 +12,83 @@ toggle_current_process_minimized_state() {
     global last_minimized_exe
 
     if (!process_is_suspended(currently_focused_exe)) {
-        target_exe := "ahk_exe " (last_minimized_exe == "" ? currently_focused_exe : last_minimized_exe) ".exe"
+        target_exe_name := (last_minimized_exe == "" ? currently_focused_exe : last_minimized_exe)
+        target_exe := "ahk_exe " target_exe_name ".exe"
 
         if (WinActive(target_exe)) {
             last_minimized_exe := currently_focused_exe
 
             simulate_print_screen("pre_minimize_screenshot")
-            minimize_window(target_exe)
+            hide_window(target_exe_name)
         } else {
             last_minimized_exe := ""
 
-            activate_window(target_exe)
+            show_window(target_exe_name)
         }
     }
 }
 
-minimize_window(target_exe) {
+hide_window(target_exe_name) {
+    target_exe := "ahk_exe " target_exe_name ".exe"
+
     if (currently_focused_exe != "" && WinExist(target_exe)) {
-        WinMinimize(target_exe)
+        move_window_off_screen(target_exe_name)
     }
 }
 
-activate_window(target_exe) {
+show_window(target_exe_name) {
+    target_exe := "ahk_exe " target_exe_name ".exe"
+
     if (currently_focused_exe != "" && WinExist(target_exe)) {
+        restore_window_position(target_exe_name)
+
         WinActivate(target_exe)
     }
+}
+
+move_window_off_screen(target_exe_name) {
+    global exe_dims
+
+    target_exe := "ahk_exe " target_exe_name ".exe"
+    hwnd := WinExist(target_exe)
+
+    if (hwnd) {
+        set_exe_window_original_dims(target_exe_name)
+
+        WinMove(99999, 99999, , , hwnd)
+
+        focus_on_desktop()
+        toggle_taskbar_and_alt_tab_itmes(false, hwnd)
+    }
+}
+
+restore_window_position(target_exe_name) {
+    global exe_dims
+
+    target_exe := "ahk_exe " target_exe_name ".exe"
+    hwnd := WinExist(target_exe)
+
+    if (hwnd) {
+        WinMove(exe_dims[target_exe_name]["original_x"], exe_dims[target_exe_name]["original_y"], , , hwnd)
+
+        toggle_taskbar_and_alt_tab_itmes(true, hwnd)
+    }
+}
+
+set_exe_window_original_dims(target_exe_name) {
+    WinGetPos(&original_x, &original_y, &original_w, &original_h)
+
+    exe_dims[target_exe_name]["original_x"] := original_x
+    exe_dims[target_exe_name]["original_y"] := original_y
+}
+
+focus_on_desktop() {
+    WinActivate("ahk_class Progman")
+}
+
+toggle_taskbar_and_alt_tab_itmes(show, hwnd) {
+    WinSetExStyle((show ? "-" : "+") "0x80", hwnd) ; Alt+Tab
+    WinSetExStyle((show ? "+" : "-") "0x40000", hwnd) ; Taskbar
 }
 
 process_is_suspended(exe_name) {
@@ -100,7 +153,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
         if (WinExist(last_suspended_exe_title) && (mode == "minimize_and_suspend" || mode ==
             "resume_current_process_suspended")) {
             Sleep(resume_pre_focus_delay)
-            activate_window(last_suspended_exe_title)
+            show_window(last_suspended_exe)
         }
 
         is_suspended[last_suspended_exe] := false
@@ -112,17 +165,19 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
         }
 
         if (mode == "resume_current_process_suspended") {
-            toggle_process_suspend_state("resume_current_process_suspended_recursive", true, is_focused_current_for_arg
+            toggle_process_suspend_state("resume_current_process_suspended_recursive", true,
+                is_focused_current_for_arg
             )
         }
 
     }
     else if ((mode == "minimize_and_suspend" || mode == "resume_current_process_suspended") && !WinActive(
         currently_focused_exe_title)) {
-        activate_window(currently_focused_exe_title)
+        show_window(currently_focused_exe_copy)
 
         if (mode == "resume_current_process_suspended") {
-            toggle_process_suspend_state("resume_current_process_suspended_recursive", true, is_focused_current_for_arg
+            toggle_process_suspend_state("resume_current_process_suspended_recursive", true,
+                is_focused_current_for_arg
             )
         }
     } else if (found_exe_name_in_toggle_process_suspend_exes_arr) {
@@ -136,7 +191,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
             "resume_current_process_suspended_recursive" && is_focused_last)) {
             suspend_post_minimize_delay := get_delay('suspend_post_minimize')
 
-            minimize_window(currently_focused_exe_title)
+            hide_window(currently_focused_exe_copy)
             Sleep(suspend_post_minimize_delay)
         }
 
@@ -171,6 +226,7 @@ resume_all_suspended_processes() {
     if (n(target_processes) && is_arr(target_processes)) {
         for (i, exe_name in target_processes) {
             toggle_process_suspend_state_inner(false, exe_name)
+            restore_window_position(exe_name)
 
             is_suspended[exe_name] := false
         }
@@ -179,9 +235,10 @@ resume_all_suspended_processes() {
     }
 }
 
-fill_is_suspended_arr() {
+fill_arr_vals() {
     global is_suspended
     global is_focused
+    global exe_dims
 
     target_processes := config_get(["process_control", "target_processes"])
 
@@ -189,6 +246,10 @@ fill_is_suspended_arr() {
         for (i, exe_name in target_processes) {
             is_suspended[exe_name] := false
             is_focused[exe_name] := false
+            exe_dims[exe_name] := Map()
+            exe_dims[exe_name]["original_x"] := 0
+            exe_dims[exe_name]["original_y"] := 0
+
         }
     }
 }

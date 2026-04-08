@@ -34,7 +34,7 @@ bind_unbind_layout_layout_switching_keys()
 bind_unbind_layout_dedicated_layout_switching_keys()
 on_exe_change()
 bind_unbind_context_hotkeys('none')
-fill_is_suspended_arr()
+fill_arr_vals()
 listen_for_focus_change()
 
 bind_hotkey_to_function(["hotkeys", "display_current_layout_id"], (*) => display_current_layout_id())
