@@ -39,10 +39,14 @@ hide_window(target_exe_name) {
 show_window(target_exe_name) {
     target_exe := "ahk_exe " target_exe_name ".exe"
 
-    if (currently_focused_exe != "" && WinExist(target_exe)) {
-        restore_window_position(target_exe_name)
+    if (currently_focused_exe != "") {
+        if (WinExist(target_exe)) {
+            restore_window_position(target_exe_name)
+        }
 
-        WinActivate(target_exe)
+        if (WinExist(target_exe)) {
+            WinActivate(target_exe)
+        }
     }
 }
 
