@@ -10,6 +10,7 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
     }
 
     input_bindings := config_get(["hotkeys", "context_remap", "input_bindings"])
+    exe_key_bindings := get_exe_config_val("key_bindings", false)
 
     if (n(input_bindings) && IsObject(input_bindings)) {
         for (input_binding_i, input_binding in input_bindings) {
@@ -19,11 +20,10 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
             key := config_get(["key"], input_binding)
             macro := config_get(["macro"], input_binding)
             key_or_macro := n(key) ? key : macro
-            input_binding := input_binding_is_obj && n(key_or_macro) ? key_or_macro : input_binding
+            input_binding_final := input_binding_is_obj && n(key_or_macro) ? key_or_macro : input_binding
 
-            exe_key_bindings := get_exe_config_val("key_bindings", false)
-            found_exe_hotkey := n(config_get([input_binding_i], exe_key_bindings))
             exe_key_binding := config_get([input_binding_i], exe_key_bindings)
+            found_exe_hotkey := n(exe_key_binding)
             exe_key_binding_is_obj := IsObject(exe_key_binding)
             binding_disabled_layouts_val := get_exe_config_val("binding_disabled_layouts", false)
             binding_disabled_layouts_arr := is_arr(binding_disabled_layouts_val) ? binding_disabled_layouts_val : []
@@ -38,11 +38,13 @@ bind_unbind_context_hotkeys(current_layout := 'none') {
             current_layout_is_in_binding_disabled_layouts := find_i_in_array(current_layout,
                 binding_disabled_layouts_arr)
 
-            bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, "Off",
+            bind_context_hotkey(input_binding_i, input_binding_final, ignore_extra_modifiers, allow_native_function,
+                "Off",
                 false)
 
             if (enable_all_bindings && !current_layout_is_in_binding_disabled_layouts) {
-                bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, "On",
+                bind_context_hotkey(input_binding_i, input_binding_final, ignore_extra_modifiers, allow_native_function,
+                    "On",
                     found_exe_hotkey)
             }
         }
