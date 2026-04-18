@@ -343,12 +343,7 @@ get_delay(name) {
 }
 
 bind_process_control_hotkeys_to_function(focused_exe_name := "") {
-    check_if_suspend_hotkey(action, enable_suspend_hotkeys) {
-        return n(find_i_in_array(action, minimize_actions)) || enable_suspend_hotkeys
-    }
-
     target_processes := config_get(["process_control", "target_processes"])
-    enable_suspend_hotkeys_global := config_get(["process_control", "enable_suspend_hotkeys"])
     minimize_actions := ["toggle_current_process_minimized_state", "resume_all_suspended_processes"]
 
     hotkey_actions := [
@@ -384,19 +379,21 @@ bind_process_control_hotkeys_to_function(focused_exe_name := "") {
 
     for (i, action in hotkey_actions) {
         context_setting := config_get(["hotkeys", "context_remap", "exe", focused_exe_name, action])
-        enable_suspend_hotkeys_local := config_get(["hotkeys", "context_remap", "exe", focused_exe_name,
-            "enable_suspend_hotkeys"])
+        enable_process_suspend_hotkeys := config_get(["hotkeys", "context_remap", "exe", focused_exe_name,
+            "enable_process_suspend_hotkeys"])
+        is_always_allowed_action := n(find_i_in_array(action,
+            minimize_actions))
 
-        if (n(context_setting)) {
-            if (check_if_suspend_hotkey(action, enable_suspend_hotkeys_local)) {
+        if (is_always_allowed_action || enable_process_suspend_hotkeys || focused_exe_name == "") {
+            if (n(context_setting)) {
                 bind_hotkey_to_function(
                     ["hotkeys", "context_remap", "exe", focused_exe_name, action],
                     hotkey_actions_functions[i],
                     true
                 )
+            } else {
+                bind_hotkey_to_function(["hotkeys", action], hotkey_actions_functions[i], true)
             }
-        } else if (check_if_suspend_hotkey(action, enable_suspend_hotkeys_global)) {
-            bind_hotkey_to_function(["hotkeys", action], hotkey_actions_functions[i], true)
         }
     }
 }
