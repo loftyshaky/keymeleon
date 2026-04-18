@@ -501,8 +501,10 @@ Automatically switch layouts when specific apps are focused:
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -514,6 +516,7 @@ Automatically switch layouts when specific apps are focused:
     }
 }
 ```
+
 Fallout 4 is just one example - you can create conditional layouts for any game or app.
 
 ### App detection
@@ -543,6 +546,7 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -550,7 +554,8 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
                             "key": "e"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -712,6 +717,7 @@ To properly bind this to `F2`, we need the script to wait for key release:
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -723,7 +729,8 @@ To properly bind this to `F2`, we need the script to wait for key release:
                             "key_wait": "f3"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1058,6 +1065,7 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
             "Fallout4": {
                 "enable_layout_switching_audio": 1,
                 "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                "enable_process_suspend_hotkeys": 1,
                 "enable_typing_audio": 0,
                 "key_bindings": {
                     "button_1": {
@@ -1129,7 +1137,8 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
                         "wait": 1
                     }
                 },
-                "layout": "en-US"
+                "layout": "en-US",
+                "process_minimize_method": "minimize"
             },
             "default": {
                 "enable_layout_switching_audio": 1,
@@ -1353,7 +1362,33 @@ Add a `process_control` object to the root of your existing config:
 }
 ```
 
-Then, use one of the hotkeys specified above. You can also add these hotkey properties to an `[app exe name]` object (within the `exe` objects) to override the global hotkeys for a specific app.
+Then, add `"enable_process_suspend_hotkeys": 1` and `"process_minimize_method": "minimize"` to the `Fallout4` object:
+
+```
+{
+    "hotkeys": {
+        "context_remap": {
+            "exe": {
+                "Fallout4": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
+                    "enable_typing_audio": 0,
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
+                },
+                "default": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_typing_audio": 1,
+                    "layout": "en-DVORAK"
+                }
+            }
+        }
+    }
+}
+```
+
+Now you can use one of the hotkeys specified above. If the hotkeys aren't minimizing the window, try changing the `process_minimize_method` property to `"hide"` or `"reposition"`. You can also add these hotkey properties to an `[app exe name]` object (within the `exe` object) to override the global hotkeys for a specific app.
 
 [`process_control` object reference](#process_control-object)<br>
 [`hotkeys` object reference](#hotkeys-object)<br>
@@ -1453,6 +1488,8 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `automatic_exe_windows_api_layout_switching_delay`         | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay. | `1000` | `0`       |
 | `key_bindings`                                 | `Object` | Key remappings specific to this application context. | `{"f2": "a"}` | -         |
 | `binding_disabled_layouts`                                 | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
+| `process_minimize_method`  | `String`  | Defines the method used when minimizing a process via hotkeys. Available values: `"minimize"` (standard Windows minimize), `"hide"` (completely hides the window), or `"reposition"` (moves the window off‑screen). | `"reposition"`       | `"minimize"` |
+| `enable_process_suspend_hotkeys`  | `Number`  | Enables (`1`) hotkeys for suspending and resuming a process, specifically `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended`, and `toggle_current_process_suspend_state`. The `toggle_current_process_minimized_state` and `resume_all_suspended_processes` hotkeys will continue to work even when this property is set to `0`. | `1`       | `0` |
 | `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+sc002"` (`Shift+Alt+1`)       |
 | `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+sc003"` `(Shift+Alt+2)`                                      | -       |
 | `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |

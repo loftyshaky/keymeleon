@@ -22,6 +22,7 @@
                     ],
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 0,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "button_1": {
@@ -101,7 +102,8 @@
                             "wait": 1
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": "default",

@@ -499,8 +499,10 @@ Keymeleon может автоматически переключать раск�
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -543,6 +545,7 @@ Keymeleon поддерживает контекстно-зависимое пе�
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -550,7 +553,8 @@ Keymeleon поддерживает контекстно-зависимое пе�
                             "key": "e"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -712,6 +716,7 @@ Keymeleon может выполнять горячие клавиши с кла�
                 "Fallout4": {
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -723,7 +728,8 @@ Keymeleon может выполнять горячие клавиши с кла�
                             "key_wait": "f3"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1057,6 +1063,7 @@ Keymeleon позволяет использовать дополнительны
             "Fallout4": {
                 "enable_layout_switching_audio": 1,
                 "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                "enable_process_suspend_hotkeys": 1,
                 "enable_typing_audio": 0,
                 "key_bindings": {
                     "button_1": {
@@ -1128,7 +1135,8 @@ Keymeleon позволяет использовать дополнительны
                         "wait": 1
                     }
                 },
-                "layout": "en-US"
+                "layout": "en-US",
+                "process_minimize_method": "minimize"
             },
             "default": {
                 "enable_layout_switching_audio": 1,
@@ -1355,7 +1363,33 @@ Keymeleon позволяет использовать дополнительны
 }
 ```
 
-Затем используйте одну из горячих клавиш, указанных выше. Вы также можете добавить эти свойства горячих клавиш в объект `[app exe name]` (внутри объектов `exe`), чтобы переопределить глобальные горячие клавиши для конкретного приложения.
+Затем добавьте `"enable_process_suspend_hotkeys": 1` и `"process_minimize_method": "minimize"` в объект Fallout4:
+
+```
+{
+    "hotkeys": {
+        "context_remap": {
+            "exe": {
+                "Fallout4": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
+                    "enable_typing_audio": 0,
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize"
+                },
+                "default": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_typing_audio": 1,
+                    "layout": "en-DVORAK"
+                }
+            }
+        }
+    }
+}
+```
+
+Затем используйте одну из горячих клавиш, указанных выше. Если горячие клавиши не сворачивают окно, попробуйте изменить свойство `process_minimize_method` на `"hide"` или `"reposition"`. Вы также можете добавить эти свойства горячих клавиш в объект `[app exe name]` (внутри объекта `exe`), чтобы переопределить глобальные горячие клавиши для конкретного приложения.
 
 [Подробнее об объекте `process_control`](#объект-process_control)<br>
 [Подробнее об объекте `hotkeys`](#объект-hotkeys)<br>
@@ -1455,6 +1489,8 @@ Keymeleon позволяет использовать дополнительны
 | `automatic_exe_windows_api_layout_switching_delay`         | `Number` | Задержка в миллисекундах после активации приложения перед автоматическим переключением раскладки. Необходима для приложений, где переключение раскладки происходит некорректно без задержки. | `1000` | `0`       |
 | `key_bindings`                                             | `Object` | Переназначения клавиш, специфичные для этого контекста приложения. | `{"f2": "a"}` | -         |
 | `binding_disabled_layouts`                                 | `Array` | Исключающий список для контекстно-зависимой системы привязки клавиш. При переключении на любую раскладку, указанную в этом массиве, система будет игнорировать все записи в `key_bindings` для текущего контекста приложения, фактически отключая пользовательские сопоставления. Названия раскладок должны соответствовать записи в `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
+| `process_minimize_method`  | `String`  | Определяет метод, используемый при сворачивании процесса с помощью горячих клавиш. Доступные значения: `"minimize"` (стандартное сворачивание Windows), `"hide"` (полностью скрывает окно) или `"reposition"` (перемещает окно за пределы экрана). | `"reposition"`       | `"minimize"` |
+| `enable_process_suspend_hotkeys`  | `Number`  | Включает (`1`) горячие клавиши для приостановки и возобновления процесса, а именно: `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended` и `toggle_current_process_suspend_state`. Горячие клавиши `toggle_current_process_minimized_state` и `resume_all_suspended_processes` будут продолжать работать, даже если это свойство установлено на `0`. | `1`       | `0` |
 | `toggle_current_process_minimized_state` | `String` | Переключить текущее окно между свернутым и развернутым состояниями. Если окно нормальное → сворачивает его. Если окно свернуто → разворачивает его. | `"!+sc002"` (`Shift+Alt+1`) | - |
 | `toggle_current_process_suspend_state` | `String` | Переключить текущий процесс между приостановленным и возобновленным состояниями. Если процесс запущен → приостанавливает его. Если процесс приостановлен → возобновляет его. | `"!+sc003"` (`Shift+Alt+2`) | - |
 | `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+sc004"` (`Shift+Alt+3`) | - |
