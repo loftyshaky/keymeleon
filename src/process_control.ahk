@@ -19,7 +19,7 @@ toggle_current_process_minimized_state() {
             last_minimized_exe := currently_focused_exe
 
             simulate_print_screen("pre_minimize_screenshot")
-            hide_window(target_exe_name)
+            minimize_window(target_exe_name)
         } else {
             last_minimized_exe := ""
 
@@ -28,26 +28,57 @@ toggle_current_process_minimized_state() {
     }
 }
 
-hide_window(target_exe_name) {
+minimize_window(target_exe_name) {
     target_exe := "ahk_exe " target_exe_name ".exe"
 
     if (currently_focused_exe != "" && WinExist(target_exe)) {
-        move_window_off_screen(target_exe_name)
+        process_minimize_method := config_get(["hotkeys", "context_remap", "exe", target_exe_name,
+            "process_minimize_method"])
+
+        if (!n(process_minimize_method) || process_minimize_method == "minimize") {
+            WinMinimize(target_exe)
+        } else if (process_minimize_method == "hide") {
+            hide_window(target_exe)
+        } else if (process_minimize_method == "reposition") {
+            move_window_off_screen(target_exe_name)
+        }
     }
 }
 
-show_window(target_exe_name) {
+show_window(target_exe_name, force := false) {
     target_exe := "ahk_exe " target_exe_name ".exe"
 
-    if (currently_focused_exe != "") {
-        if (WinExist(target_exe)) {
-            restore_window_position(target_exe_name)
-        }
+    if (currently_focused_exe != "" || force) {
+        process_minimize_method := config_get(["hotkeys", "context_remap", "exe", target_exe_name,
+            "process_minimize_method"])
+        shown_window := false
 
         if (WinExist(target_exe)) {
+            if (!n(process_minimize_method) || process_minimize_method == "minimize") {
+                WinMaximize(target_exe)
+
+                shown_window := true
+            } else if (process_minimize_method == "hide") {
+                WinShow(target_exe)
+
+                shown_window := true
+            } else if (process_minimize_method == "reposition") {
+                restore_window_position(target_exe_name)
+
+                shown_window := true
+            }
+        }
+
+        if (shown_window && WinExist(target_exe)) {
             WinActivate(target_exe)
         }
     }
+}
+
+hide_window(target_exe) {
+    WinHide(target_exe)
+
+    focus_on_desktop()
 }
 
 move_window_off_screen(target_exe_name) {
@@ -157,6 +188,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
         if (WinExist(last_suspended_exe_title) && (mode == "minimize_and_suspend" || mode ==
             "resume_current_process_suspended")) {
             Sleep(resume_pre_focus_delay)
+
             show_window(last_suspended_exe)
         }
 
@@ -195,7 +227,7 @@ toggle_process_suspend_state(mode, new_is_suspended_state := unset, is_focused_l
             "resume_current_process_suspended_recursive" && is_focused_last)) {
             suspend_post_minimize_delay := get_delay('suspend_post_minimize')
 
-            hide_window(currently_focused_exe_copy)
+            minimize_window(currently_focused_exe_copy)
             Sleep(suspend_post_minimize_delay)
         }
 
@@ -230,7 +262,8 @@ resume_all_suspended_processes() {
     if (n(target_processes) && is_arr(target_processes)) {
         for (i, exe_name in target_processes) {
             toggle_process_suspend_state_inner(false, exe_name)
-            restore_window_position(exe_name)
+
+            show_window(exe_name, true)
 
             is_suspended[exe_name] := false
         }

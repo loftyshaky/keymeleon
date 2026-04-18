@@ -5,6 +5,7 @@
 ProcessSetPriority "Realtime"
 SetWorkingDir(A_ScriptDir)
 SetKeyDelay(0)
+DetectHiddenWindows(true)
 
 #Include %A_ScriptDir%\lib\_JXON.ahk
 
