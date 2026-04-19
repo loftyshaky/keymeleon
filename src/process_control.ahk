@@ -55,7 +55,7 @@ show_window(target_exe_name, force := false) {
 
         if (WinExist(target_exe)) {
             if (!n(process_minimize_method) || process_minimize_method == "minimize") {
-                WinMaximize(target_exe)
+                WinRestore(target_exe)
 
                 shown_window := true
             } else if (process_minimize_method == "hide") {
