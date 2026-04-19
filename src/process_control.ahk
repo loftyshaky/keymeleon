@@ -461,9 +461,11 @@ make_window_borderless() {
             style := WinGetStyle(window_id)
             is_borderless := (style & 0xC00000) == 0
 
-            ;WinSetAlwaysOnTop(1, window_id)
-            WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, window_id)
-            WinSetStyle("-0xC00000", window_id)
+            if (!is_borderless) {
+                ;WinSetAlwaysOnTop(1, window_id)
+                WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, window_id)
+                WinSetStyle("-0xC00000", window_id)
+            }
         }
     }
 }
