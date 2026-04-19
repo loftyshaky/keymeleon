@@ -353,6 +353,8 @@ listen_for_focus_change() {
                     bind_process_control_hotkeys_to_function()
                 }
             }
+
+            make_window_borderless()
         }
     }
 }
@@ -427,6 +429,25 @@ bind_process_control_hotkeys_to_function(focused_exe_name := "") {
             } else {
                 bind_hotkey_to_function(["hotkeys", action], hotkey_actions_functions[i], true)
             }
+        }
+    }
+}
+
+make_window_borderless() {
+    global currently_focused_exe
+
+    target_processes := config_get(["process_control", "target_processes"])
+    borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "borderless_window"])
+    hwnd := WinExist(currently_focused_exe)
+
+    if (borderless_window && hwnd && n(find_i_in_array(currently_focused_exe, target_processes))) {
+        try {
+            style := WinGetStyle(hwnd)
+            is_borderless := (style & 0xC00000) == 0
+
+            ;WinSetAlwaysOnTop(1, hwnd)
+            WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, hwnd)
+            WinSetStyle("-0xC00000", hwnd)
         }
     }
 }
