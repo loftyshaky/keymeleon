@@ -29,16 +29,16 @@ toggle_current_process_minimized_state() {
 }
 
 minimize_window(target_exe_name) {
-    target_exe := "ahk_exe " target_exe_name ".exe"
+    target_exe_window_id := get_window_id(target_exe_name)
 
-    if (currently_focused_exe != "" && WinExist(target_exe)) {
+    if (currently_focused_exe != "" && WinExist(target_exe_window_id)) {
         process_minimize_method := config_get(["hotkeys", "context_remap", "exe", target_exe_name,
             "process_minimize_method"])
 
         if (!n(process_minimize_method) || process_minimize_method == "minimize") {
-            WinMinimize(target_exe)
+            minimize_window_inner(target_exe_window_id)
         } else if (process_minimize_method == "hide") {
-            hide_window(target_exe)
+            hide_window(target_exe_window_id)
         } else if (process_minimize_method == "reposition") {
             move_window_off_screen(target_exe_name)
         }
@@ -46,67 +46,83 @@ minimize_window(target_exe_name) {
 }
 
 show_window(target_exe_name, force := false) {
-    target_exe := "ahk_exe " target_exe_name ".exe"
+    target_exe_window_id := get_window_id(target_exe_name)
 
     if (currently_focused_exe != "" || force) {
         process_minimize_method := config_get(["hotkeys", "context_remap", "exe", target_exe_name,
             "process_minimize_method"])
-        shown_window := false
+        activate_window := false
 
-        if (WinExist(target_exe)) {
+        if (WinExist(target_exe_window_id)) {
             if (!n(process_minimize_method) || process_minimize_method == "minimize") {
-                WinRestore(target_exe)
+                restore_window(target_exe_window_id)
 
-                shown_window := true
+                activate_window := true
             } else if (process_minimize_method == "hide") {
-                WinShow(target_exe)
+                show_window_inner(target_exe_window_id)
 
-                shown_window := true
+                activate_window := true
             } else if (process_minimize_method == "reposition") {
                 restore_window_position(target_exe_name)
 
-                shown_window := true
+                activate_window := true
             }
         }
 
-        if (shown_window && WinExist(target_exe)) {
-            WinActivate(target_exe)
+        if (activate_window && WinExist(target_exe_window_id)) {
+            WinActivate(target_exe_window_id)
         }
     }
 }
 
-hide_window(target_exe) {
-    WinHide(target_exe)
+dll_show_window(window_id, action_code) {
+    if (window_id && WinExist(window_id)) {
+        DllCall("ShowWindow", "Ptr", window_id, "Int", action_code)
+    }
+}
+
+minimize_window_inner(window_id) {
+    dll_show_window(window_id, 6)
+}
+
+restore_window(window_id) {
+    dll_show_window(window_id, 9)
+}
+
+hide_window(window_id) {
+    dll_show_window(window_id, 0)
 
     focus_on_desktop()
+}
+
+show_window_inner(window_id) {
+    dll_show_window(window_id, 5)
 }
 
 move_window_off_screen(target_exe_name) {
     global exe_dims
 
-    target_exe := "ahk_exe " target_exe_name ".exe"
-    hwnd := WinExist(target_exe)
+    window_id := get_window_id(target_exe_name)
 
-    if (hwnd) {
+    if (window_id) {
         set_exe_window_original_dims(target_exe_name)
 
-        WinMove(99999, 99999, , , hwnd)
+        WinMove(99999, 99999, , , window_id)
 
         focus_on_desktop()
-        toggle_taskbar_and_alt_tab_itmes(false, hwnd)
+        toggle_taskbar_and_alt_tab_itmes(false, window_id)
     }
 }
 
 restore_window_position(target_exe_name) {
     global exe_dims
 
-    target_exe := "ahk_exe " target_exe_name ".exe"
-    hwnd := WinExist(target_exe)
+    window_id := get_window_id(target_exe_name)
 
-    if (hwnd) {
-        WinMove(exe_dims[target_exe_name]["original_x"], exe_dims[target_exe_name]["original_y"], , , hwnd)
+    if (window_id) {
+        WinMove(exe_dims[target_exe_name]["original_x"], exe_dims[target_exe_name]["original_y"], , , window_id)
 
-        toggle_taskbar_and_alt_tab_itmes(true, hwnd)
+        toggle_taskbar_and_alt_tab_itmes(true, window_id)
     }
 }
 
@@ -438,16 +454,38 @@ make_window_borderless() {
 
     target_processes := config_get(["process_control", "target_processes"])
     borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "borderless_window"])
-    hwnd := WinExist(currently_focused_exe)
+    window_id := get_window_id(currently_focused_exe)
 
-    if (borderless_window && hwnd && n(find_i_in_array(currently_focused_exe, target_processes))) {
+    if (borderless_window && window_id && n(find_i_in_array(currently_focused_exe, target_processes))) {
         try {
-            style := WinGetStyle(hwnd)
+            style := WinGetStyle(window_id)
             is_borderless := (style & 0xC00000) == 0
 
-            ;WinSetAlwaysOnTop(1, hwnd)
-            WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, hwnd)
-            WinSetStyle("-0xC00000", hwnd)
+            ;WinSetAlwaysOnTop(1, window_id)
+            WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, window_id)
+            WinSetStyle("-0xC00000", window_id)
         }
     }
+}
+
+get_window_title(target_exe_name) {
+    window_title := config_get(["hotkeys", "context_remap", "exe", target_exe_name, "window_title"])
+
+    if (n(window_title)) {
+        return window_title
+    }
+
+    return ""
+}
+
+get_window_selector(target_exe_name) {
+    return get_window_title(target_exe_name) " ahk_exe " target_exe_name ".exe"
+}
+
+get_window_id(target_exe_name) {
+    try {
+        return WinGetID(get_window_selector(target_exe_name))
+    }
+
+    return ""
 }
