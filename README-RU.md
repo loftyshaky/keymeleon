@@ -101,6 +101,7 @@ Keymeleon — это мощный скрипт AutoHotkey, который кар
     - [Руководство по настройке](#руководство-по-настройке-1)
 - [Сворачивание и приостановка процессов](#сворачивание-и-приостановка-процессов)
   - [Конфигурация](#конфигурация)
+- [Безрамочный оконный режим](#безрамочный-оконный-режим)
 - [Справочник](#справочник)
   - [Объект `layouts`](#объект-layouts)
   - [Объект `hotkeys`](#объект-hotkeys)
@@ -109,7 +110,7 @@ Keymeleon — это мощный скрипт AutoHotkey, который кар
   - [Объект `process_control`](#объект-process_control)
   - [Объект `context_remap` (внутри `hotkeys`)](#объект-context_remap-внутри-hotkeys)
   - [Объект `exe` (внутри `context_remap`)](#объект-exe-внутри-context_remap)
-  - [Объект `[имя exe приложения]` (внутри объектов `exe`)](#объект-имя-exe-приложения-внутри-объектов-exe)
+  - [Объект `[имя exe приложения]` (внутри объекта `exe`)](#объект-имя-exe-приложения-внутри-объекта-exe)
   - [Объект `input_bindings` (внутри `context_remap`)](#объект-input_bindings-внутри-context_remap)
   - [Объект `key_bindings` (внутри `[имя exe приложения]`)](#объект-key_bindings-внутри-имя-exe-приложения)
   - [Объект `[пользовательское имя привязки]` (внутри `key_bindings`)](#объект-пользовательское-имя-привязки-внутри-key_bindings)
@@ -497,12 +498,14 @@ Keymeleon может автоматически переключать раск�
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -527,7 +530,7 @@ Keymeleon идентифицирует приложения по имени их
 
 Вы можете добавить любое приложение, указав имя его исполняемого файла без расширения `.exe`. Контекст `default` применяется ко всем остальным приложениям, не указанным в настройках.
 
-[Подробнее об объекте `[имя exe приложения] (внутри объектов exe)`](#имя-exe-приложения-внутри-объектов-exe)
+[Подробнее об объекте `[имя exe приложения] (внутри объекта exe)`](#объект-имя-exe-приложения-внутри-объекта-exe)
 
 ## Контекстное переназначение клавиш
 
@@ -543,6 +546,7 @@ Keymeleon поддерживает контекстно-зависимое пе�
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
@@ -554,7 +558,8 @@ Keymeleon поддерживает контекстно-зависимое пе�
                         }
                     },
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -714,6 +719,7 @@ Keymeleon может выполнять горячие клавиши с кла�
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
@@ -729,7 +735,8 @@ Keymeleon может выполнять горячие клавиши с кла�
                         }
                     },
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1061,6 +1068,7 @@ Keymeleon позволяет использовать дополнительны
     "context_remap": {
         "exe": {
             "Fallout4": {
+                "borderless_window": 1,
                 "enable_layout_switching_audio": 1,
                 "enable_layout_switching_audio_for_automatic_layout_change": 1,
                 "enable_process_suspend_hotkeys": 1,
@@ -1136,7 +1144,8 @@ Keymeleon позволяет использовать дополнительны
                     }
                 },
                 "layout": "en-US",
-                "process_minimize_method": "minimize"
+                "process_minimize_method": "minimize",
+                "window_title": "Fallout4"
             },
             "default": {
                 "enable_layout_switching_audio": 1,
@@ -1371,12 +1380,14 @@ Keymeleon позволяет использовать дополнительны
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1393,7 +1404,13 @@ Keymeleon позволяет использовать дополнительны
 
 [Подробнее об объекте `process_control`](#объект-process_control)<br>
 [Подробнее об объекте `hotkeys`](#объект-hotkeys)<br>
-[Подробнее об объекте `[имя exe приложения] (внутри объектов exe)`](#имя-exe-приложения-внутри-объектов-exe)
+[Подробнее об объекте `[имя exe приложения] (внутри объекта exe)`](#объект-имя-exe-приложения-внутри-объекта-exe)
+
+## Безрамочный оконный режим
+
+Чтобы включить безрамочный оконный режим, сначала настройте игру на запуск в оконном режиме через её собственные внутриигровые настройки. После активации оконного режима добавьте `"borderless_window": 1` в объект `[app exe name] `(внутри объекта `exe`).
+
+[Подробнее об объекте `[имя exe приложения] (внутри объекта exe)`](#объект-имя-exe-приложения-внутри-объекта-exe)
 
 ## Справочник
 
@@ -1478,7 +1495,7 @@ Keymeleon позволяет использовать дополнительны
 | `[Имя exe приложения]` | `Object` | Конфигурация для конкретного приложения (используйте имя файла .exe без расширения). | `"Fallout4"` | -       |
 | `default`         | `Object` | Конфигурация, применяемая ко всем неуказанным приложениям. | -       | -       |
 
-### Объект `[имя exe приложения]` (внутри объектов `exe`)
+### Объект `[имя exe приложения]` (внутри объекта `exe`)
 
 | Свойство                                                    | Тип   | Описание                                                                 | Пример | По умолчанию   |
 | :--------------------------------------------------------- | :----- | :-------------------------------------------------------------------------- | :------ | :-------- |
@@ -1496,6 +1513,8 @@ Keymeleon позволяет использовать дополнительны
 | `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+sc004"` (`Shift+Alt+3`) | - |
 | `resume_current_process_suspended` | `String` | Возобновить и развернуть текущий приостановленный процесс, затем снова приостановить его. Если окно уже активно, работает так же, как `toggle_current_process_minimize_and_suspend_state`. | `"!+sc005"` (`Shift+Alt+4`) | - |
 | `resume_all_suspended_processes` | `String` | Возобновить все процессы, перечисленные в `target_processes`. Работает независимо от активного окна. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `borderless_window` | `Number` | Убирает стандартные границы окна и строку заголовка. | `1` | `0` |
+| `window_title` | `String` | Указывает точный текст заголовка окна. Необходимо для корректного сворачивания и восстановления окна, если приложение создает несколько окон. | `"Fallout4"` | `""` |
 
 ### Объект `input_bindings` (внутри `context_remap`)
 

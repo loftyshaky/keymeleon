@@ -15,6 +15,7 @@
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "binding_disabled_layouts": [
                         "en-DVORAK",
                         "es-ES",
@@ -103,7 +104,8 @@
                         }
                     },
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": "default",

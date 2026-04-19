@@ -101,6 +101,7 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
     - [Setup guide](#setup-guide-1)
 - [Process minimize and suspend](#process-minimize-and-suspend)
   - [Configuration](#configuration)
+- [Borderless window mode](#borderless-window-mode)
 - [Reference](#reference)
   - [`layouts` object](#layouts-object)
   - [`hotkeys` object](#hotkeys-object)
@@ -109,7 +110,7 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
   - [`process_control` object](#process_control-object)
   - [`context_remap` object (within `hotkeys`)](#context_remap-object-within-hotkeys)
   - [`exe` object (within `context_remap`)](#exe-object-within-context_remap)
-  - [`[app exe name]` (within `exe` objects)](#app-exe-name-within-exe-objects)
+  - [`[app exe name]` (within `exe` object)](#app-exe-name-within-exe-object)
   - [`input_bindings` object (within `context_remap`)](#input_bindings-object-within-context_remap)
   - [`key_bindings` object (within `[app exe name]`)](#key_bindings-object-within-app-exe-name)
   - [`[custom binding name]` object (within `key_bindings`)](#custom-binding-name-object-within-key_bindings)
@@ -499,12 +500,14 @@ Automatically switch layouts when specific apps are focused:
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -529,7 +532,7 @@ Keymeleon identifies apps by their executable filename (without the `.exe` exten
 
 You can add any app - just use its executable filename without the `.exe` extension. The `default` context serves as a catch-all for any app not explicitly listed.
 
-[`[app exe name] (within exe objects)` object reference](#app-exe-name-within-exe-objects)
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
 
 ## Context key remapping
 Keymeleon enables context-sensitive key remapping, allowing you to bind keys to perform different actions depending on which app has focus.
@@ -544,6 +547,7 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
@@ -555,7 +559,8 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
                         }
                     },
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -715,6 +720,7 @@ To properly bind this to `F2`, we need the script to wait for key release:
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
@@ -730,7 +736,8 @@ To properly bind this to `F2`, we need the script to wait for key release:
                         }
                     },
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1063,6 +1070,7 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
     "context_remap": {
         "exe": {
             "Fallout4": {
+                "borderless_window": 1,
                 "enable_layout_switching_audio": 1,
                 "enable_layout_switching_audio_for_automatic_layout_change": 1,
                 "enable_process_suspend_hotkeys": 1,
@@ -1138,7 +1146,8 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
                     }
                 },
                 "layout": "en-US",
-                "process_minimize_method": "minimize"
+                "process_minimize_method": "minimize",
+                "window_title": "Fallout4"
             },
             "default": {
                 "enable_layout_switching_audio": 1,
@@ -1370,12 +1379,14 @@ Then, add `"enable_process_suspend_hotkeys": 1` and `"process_minimize_method": 
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
                     "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "layout": "en-US",
-                    "process_minimize_method": "minimize"
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -1388,11 +1399,17 @@ Then, add `"enable_process_suspend_hotkeys": 1` and `"process_minimize_method": 
 }
 ```
 
-Now you can use one of the hotkeys specified above. If the hotkeys aren't minimizing the window, try changing the `process_minimize_method` property to `"hide"` or `"reposition"`. You can also add these hotkey properties to an `[app exe name]` object (within the `exe` object) to override the global hotkeys for a specific app.
+Now you can use one of the hotkeys specified above. If the hotkeys aren't minimizing the window, try changing the `process_minimize_method` property to `"hide"` or `"reposition"`. You can also add these hotkey properties to the `[app exe name]` object (within the `exe` object) to override the global hotkeys for a specific app.
 
 [`process_control` object reference](#process_control-object)<br>
 [`hotkeys` object reference](#hotkeys-object)<br>
-[`[app exe name] (within exe objects)` object reference](#app-exe-name-within-exe-objects)
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
+
+## Borderless window mode
+
+To enable borderless windowed mode, first configure the game to run in windowed mode via its own in‑game settings. Once windowed mode is active, add `"borderless_window": 1` to the `[app exe name]` object (within the `exe` object).
+
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
 
 ## Reference
 
@@ -1477,7 +1494,7 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `[App exe name]` | `Object` | Configuration for specific application (use .exe filename without extension). | `"Fallout4"` | -       |
 | `default`         | `Object` | Configuration applied to all unspecified applications.                      | -       | -       |
 
-### `[app exe name]` (within `exe` objects)
+### `[app exe name]` (within `exe` object)
 
 | Property                                                    | Type   | Description                                                                                                                                     | Example | Default   |
 | :--------------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :-------- |
@@ -1495,6 +1512,9 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |
 | `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+sc005"` (`Shift+Alt+4`)                  | -       |
 | `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `borderless_window` | `Number` | Removes the standard window borders and title bar. | `1` | `0` |
+| `window_title` | `String` | Specifies the exact window title text. Needed to correctly minimize/restore the window when the application spawns multiple windows. | `"Fallout4"` | `""` |
+
 
 ### `input_bindings` object (within `context_remap`)
 
