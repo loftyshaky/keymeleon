@@ -28,6 +28,8 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
 
 **Process minimize and suspend** - Minimize unminimizable windows and pause unpausable games with dedicated hotkeys. Suspend any running process, or combine both actions to minimize and suspend with a single keystroke.
 
+**Borderless window** – Remove borders from any window, making it borderless.
+
 ## Table of Contents
 
 - [System requirements](#system-requirements)
