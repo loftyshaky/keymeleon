@@ -12,7 +12,7 @@ class Class {
 
     [key: string]: any;
 
-    public static_sections: string[] = ['features', 'layouts', 'hotkeys'];
+    public static_sections: string[] = ['features', 'layouts', 'hotkeys', 'process_control'];
 
     public sections: i_sections.Sections = {
         features: [
@@ -156,6 +156,78 @@ class Class {
                 val_type: 'string',
                 placeholder: '^!+SC032',
             },
+            {
+                name: 'toggle_current_process_minimized_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+1',
+            },
+            {
+                name: 'toggle_current_process_suspend_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+2',
+            },
+            {
+                name: 'toggle_current_process_minimize_and_suspend_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+3',
+            },
+            {
+                name: 'resume_current_process_suspended',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+4',
+            },
+            {
+                name: 'resume_all_suspended_processes',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+5',
+            },
+        ],
+        process_control: [
+            {
+                name: 'target_processes',
+                type: 'text',
+                val_type: 'array',
+                placeholder: 'Fallout4,KingdomCome',
+            },
+            {
+                name: 'suspend_post_minimize_delay',
+                type: 'number',
+                val_type: 'number',
+                placeholder: '100',
+            },
+            {
+                name: 'resume_pre_unminimize_delay',
+                type: 'number',
+                val_type: 'number',
+                placeholder: '100',
+            },
+            {
+                name: 'pre_screenshot_delay',
+                type: 'number',
+                val_type: 'number',
+                placeholder: '100',
+            },
+            {
+                name: 'post_screenshot_delay',
+                type: 'number',
+                val_type: 'number',
+                placeholder: '100',
+            },
+            {
+                name: 'pre_minimize_screenshot',
+                type: 'checkbox',
+                default_val: false,
+            },
+            {
+                name: 'pre_suspend_screenshot',
+                type: 'checkbox',
+                default_val: false,
+            },
         ],
         input_bindings: [],
         exe: [
@@ -191,6 +263,58 @@ class Class {
                 type: 'number',
                 val_type: 'number',
                 placeholder: '1000',
+            },
+            {
+                name: 'borderless_window',
+                type: 'checkbox',
+                default_val: false,
+            },
+            {
+                name: 'enable_process_suspend_hotkeys',
+                type: 'checkbox',
+                default_val: false,
+            },
+            {
+                name: 'process_minimize_method',
+                type: 'select',
+                val_type: 'string',
+                default_val: 'minimize',
+            },
+            {
+                name: 'window_title',
+                type: 'text',
+                val_type: 'string',
+                placeholder: 'Fallout4',
+            },
+            {
+                name: 'toggle_current_process_minimized_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+1',
+            },
+            {
+                name: 'toggle_current_process_suspend_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+2',
+            },
+            {
+                name: 'toggle_current_process_minimize_and_suspend_state',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+3',
+            },
+            {
+                name: 'resume_current_process_suspended',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+4',
+            },
+            {
+                name: 'resume_all_suspended_processes',
+                type: 'text',
+                val_type: 'string',
+                placeholder: '!+5',
             },
             {
                 name: 'key_bindings',

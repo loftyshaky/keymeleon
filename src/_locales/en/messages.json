@@ -11,6 +11,15 @@
     "send_option_text": {
         "message": "Send"
     },
+    "minimize_option_text": {
+        "message": "Minimize"
+    },
+    "hide_option_text": {
+        "message": "Hide"
+    },
+    "reposition_option_text": {
+        "message": "Reposition"
+    },
     "send_input_option_text": {
         "message": "SendInput"
     },

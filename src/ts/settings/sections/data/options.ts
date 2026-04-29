@@ -12,6 +12,11 @@ class Class {
     public init = (): void =>
         err(() => {
             this.options = {
+                process_minimize_method: [
+                    new o_inputs.Option({ name: 'minimize' }),
+                    new o_inputs.Option({ name: 'hide' }),
+                    new o_inputs.Option({ name: 'reposition' }),
+                ],
                 val_type: [
                     new o_inputs.Option({ name: 'string' }),
                     new o_inputs.Option({ name: 'object' }),
