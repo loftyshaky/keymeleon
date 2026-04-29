@@ -210,15 +210,15 @@ Here's a comprehensive configuration example:
     },
     "hotkeys": {
         "dedicated_layout_hotkeys": ["^+F8", "^+F9", "^+F10", "^+F11"],
-        "resume_all_suspended_processes": "!+sc006",
-        "resume_current_process_suspended": "!+sc005",
+        "resume_all_suspended_processes": "!+5",
+        "resume_current_process_suspended": "!+4",
         "display_current_layout_id": "^!+sc017",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
         "toggle_all_bindings": "^!+sc035",
-        "toggle_current_process_minimize_and_suspend_state": "!+sc004",
-        "toggle_current_process_minimized_state": "!+sc002",
-        "toggle_current_process_suspend_state": "!+sc003",
+        "toggle_current_process_minimize_and_suspend_state": "!+3",
+        "toggle_current_process_minimized_state": "!+1",
+        "toggle_current_process_suspend_state": "!+2",
         "toggle_dedicated_layout_switching": "^!+sc01A",
         "toggle_feature_state_audio": "^!+sc032",
         "toggle_layout_switching_audio": "^!+sc034",
@@ -1441,11 +1441,11 @@ To enable borderless windowed mode, first configure the game to run in windowed 
 | `toggle_layout_switching_audio` | `String` | Hotkey to toggle layout switching audio. | `"^!+sc034"` (`Ctrl+Shift+Alt+.`) | - |
 | `toggle_typing_audio` | `String` | Hotkey to toggle typing audio. | `"^!+sc033"` (`Ctrl+Shift+Alt+,`) | - |
 | `enable_all_bindings` | `String` | Hotkey to toggle all custom key bindings. | `"^!+sc035"` (`Ctrl+Shift+Alt+/`) | - |
-| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+sc002"` (`Shift+Alt+1`)       |
-| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+sc003"` `(Shift+Alt+2)`                                      | -       |
-| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |
-| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+sc005"` (`Shift+Alt+4`)                  | -       |
-| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+1"` (`Shift+Alt+1`)       |
+| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+2"` `(Shift+Alt+2)`                                      | -       |
+| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+3"` (`Shift+Alt+3`)                                            | -       |
+| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+4"` (`Shift+Alt+4`)                  | -       |
+| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+5"` (`Shift+Alt+5`) | - |
 
 ### `features` object
 
@@ -1509,11 +1509,11 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `binding_disabled_layouts`                                 | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
 | `process_minimize_method`  | `String`  | Defines the method used when minimizing a process via hotkeys. Available values: `"minimize"` (standard Windows minimize), `"hide"` (completely hides the window), or `"reposition"` (moves the window off‑screen). | `"reposition"`       | `"minimize"` |
 | `enable_process_suspend_hotkeys`  | `Number`  | Enables (`1`) hotkeys for suspending and resuming a process, specifically `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended`, and `toggle_current_process_suspend_state`. The `toggle_current_process_minimized_state` and `resume_all_suspended_processes` hotkeys will continue to work even when this property is set to `0`. | `1`       | `0` |
-| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+sc002"` (`Shift+Alt+1`)       |
-| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+sc003"` `(Shift+Alt+2)`                                      | -       |
-| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |
-| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+sc005"` (`Shift+Alt+4`)                  | -       |
-| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+1"` (`Shift+Alt+1`)       |
+| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+2"` `(Shift+Alt+2)`                                      | -       |
+| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+3"` (`Shift+Alt+3`)                                            | -       |
+| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+4"` (`Shift+Alt+4`)                  | -       |
+| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+5"` (`Shift+Alt+5`) | - |
 | `borderless_window` | `Number` | Removes the standard window borders and title bar. | `1` | `0` |
 | `window_title` | `String` | Specifies the exact window title text. Needed to correctly minimize/restore the window when the application spawns multiple windows. | `"Fallout4"` | `""` |
 
