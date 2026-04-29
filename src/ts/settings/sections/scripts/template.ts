@@ -323,13 +323,30 @@ class Class {
         ],
     };
 
-    public custom_binding_name_string: i_sections.SectionTemplateItem[] = [
+    private val_type: i_sections.SectionTemplateItem[] = [
         {
             name: 'val_type',
             type: 'select',
             val_type: 'string',
-            default_val: 'string',
+            default_val: 'string_key',
         },
+    ];
+
+    private allow_native_function_and_ignore_extra_modifiers: i_sections.SectionTemplateItem[] = [
+        {
+            name: 'allow_native_function',
+            type: 'checkbox',
+            default_val: false,
+        },
+        {
+            name: 'ignore_extra_modifiers',
+            type: 'checkbox',
+            default_val: false,
+        },
+    ];
+
+    public custom_binding_name_string_key: i_sections.SectionTemplateItem[] = [
+        ...this.val_type,
         {
             name: 'key',
             type: 'text',
@@ -338,8 +355,8 @@ class Class {
         },
     ];
 
-    public custom_binding_name_object: i_sections.SectionTemplateItem[] = [
-        ...this.custom_binding_name_string,
+    public custom_binding_name_object_key: i_sections.SectionTemplateItem[] = [
+        ...this.custom_binding_name_string_key,
         {
             name: 'delay_before',
             type: 'number',
@@ -381,16 +398,7 @@ class Class {
             val_type: 'array',
             placeholder: 'Ctrl,Shift',
         },
-        {
-            name: 'allow_native_function',
-            type: 'checkbox',
-            default_val: false,
-        },
-        {
-            name: 'ignore_extra_modifiers',
-            type: 'checkbox',
-            default_val: false,
-        },
+        ...this.allow_native_function_and_ignore_extra_modifiers,
         {
             name: 'blind',
             type: 'checkbox',
@@ -408,6 +416,25 @@ class Class {
             val_type: 'number',
             placeholder: '300',
         },
+    ];
+
+    public custom_binding_name_array_macro: i_sections.SectionTemplateItem[] = [
+        ...this.val_type,
+        {
+            name: 'macro',
+            type: 'textarea',
+            val_type: 'macro',
+        },
+    ];
+
+    public custom_binding_name_object_macro: i_sections.SectionTemplateItem[] = [
+        ...this.val_type,
+        {
+            name: 'macro',
+            type: 'textarea',
+            val_type: 'macro',
+        },
+        ...this.allow_native_function_and_ignore_extra_modifiers,
         {
             name: 'repeat_count',
             type: 'number',

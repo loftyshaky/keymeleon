@@ -30,6 +30,16 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
                 return <c_inputs.IconBtn input={input as o_inputs.IconBtn} />;
             }
 
+            if (section_item.type === 'textarea') {
+                return (
+                    <c_inputs.Textarea
+                        input={input as o_inputs.Textarea}
+                        include_label
+                        calculate_width
+                    />
+                );
+            }
+
             return <c_inputs.Text input={input as o_inputs.Text} include_label calculate_width />;
         }, [section_item.type, input]);
     },

@@ -6,9 +6,11 @@ import toPairs from 'lodash/toPairs';
 import unset from 'lodash/unset';
 import set from 'lodash/set';
 import get from 'lodash/get';
+import map from 'lodash/map';
+import trim from 'lodash/trim';
 import { makeObservable, action, toJS } from 'mobx';
 
-import { s_theme, i_data } from '@loftyshaky/shared-app/shared';
+import { t, s_theme, i_data } from '@loftyshaky/shared-app/shared';
 import { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 
@@ -24,11 +26,15 @@ class Class {
             set: action,
             set_val: action,
             unset_val: action,
+            set_transformed: action,
         });
     }
 
+    public data_raw: t.AnyRecord = {};
+
     public set = ({ settings }: { settings: any }): void =>
         err(() => {
+            this.data_raw.settings = settings;
             data.settings = settings;
         }, 'shr_1124');
 
@@ -51,6 +57,8 @@ class Class {
     }): void =>
         err(() => {
             const updated_data = toJS(data);
+
+            set(this.data_raw, val_setter, val);
             set(updated_data, val_setter, val);
 
             data.settings = (
@@ -66,6 +74,7 @@ class Class {
         err(() => {
             const updated_data = toJS(data);
 
+            unset(this.data_raw, val_setter);
             unset(updated_data, val_setter);
 
             data.settings = updated_data.settings;
@@ -115,13 +124,11 @@ class Class {
                     sort,
                 });
 
-                const data_clone = n(val_type) ? toJS(data) : data;
-
                 if (n(val_type)) {
-                    set(data_clone, val_setter, this.transform_val({ val, val_type }));
+                    set(this.data_raw, val_setter, this.transform_val({ val, val_type }));
                 }
 
-                this.write({ config: data_clone.settings });
+                this.write({ config: this.data_raw.settings });
             }
         }, 'shr_1129');
 
@@ -131,7 +138,7 @@ class Class {
                 this.unset_val({
                     val_setter,
                 });
-                this.write({ config: data.settings });
+                this.write({ config: this.data_raw.settings });
             }
         }, 'shr_1130');
 
@@ -155,7 +162,7 @@ class Class {
                     sort,
                 });
             }
-            this.write({ config: data.settings });
+            this.write({ config: this.data_raw });
         }, 'shr_1129');
 
     private deep_obj_sort_by_key = <T>({ obj }: { obj: T }): T =>
@@ -186,16 +193,45 @@ class Class {
                 if (val_type === 'number') {
                     val_final = +val;
                 } else if (val_type === 'array') {
-                    val_final = (val as string).split(',');
+                    val_final = map((val as string).split(','), trim);
 
                     if (val_final.length === 1 && val_final[0] === '') {
                         val_final = [];
                     }
+                } else if (val_type === 'macro') {
+                    val_final = JSON.parse(val as string);
                 }
             }
 
             return val_final;
         }, 'cnt_1288');
+
+    public set_transformed = ({
+        val_type,
+        val_accessor,
+    }: {
+        val_type: i_settings.ValType | undefined;
+        val_accessor: string | undefined;
+    }): void =>
+        err(() => {
+            if (n(val_accessor)) {
+                const val = get(data, val_accessor);
+
+                let transformed_val = '';
+
+                if (n(val) && typeof val !== 'string') {
+                    if (val_type === 'array') {
+                        transformed_val = (val as string[]).join(', ');
+                    } else if (val_type === 'macro') {
+                        transformed_val = JSON.stringify(val, undefined, 4);
+                    }
+
+                    if (transformed_val !== '') {
+                        set(data, val_accessor, transformed_val);
+                    }
+                }
+            }
+        }, 'aer_1082');
 }
 
 export const Settings = Class.get_instance();

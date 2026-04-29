@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { makeObservable, observable, action } from 'mobx';
 
@@ -52,8 +53,11 @@ class Class {
 
                     const key_bindings_item_val_accessor: string = `settings.${val_accesor_join}`;
                     const key_val_accessor: string = `settings.${val_accesor_join}.key`;
-                    const key_bindings_item_val = get(data, key_bindings_item_val_accessor);
-                    const key_val = get(data, key_val_accessor);
+                    const key_bindings_item_val = get(
+                        d_settings.Settings.data_raw,
+                        key_bindings_item_val_accessor,
+                    );
+                    const key_val = get(d_settings.Settings.data_raw, key_val_accessor);
                     let key_bindings_item_val_or_key_val;
                     let new_key_bindings_item_val: string | number | t.AnyRecord = '';
 
@@ -67,14 +71,22 @@ class Class {
                         n(key_bindings_item_val_or_key_val) &&
                         ['string', 'number'].includes(typeof key_bindings_item_val_or_key_val);
 
-                    if (val === 'string') {
+                    if (val === 'string_key') {
                         new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
                             ? key_bindings_item_val_or_key_val.toString()
                             : '';
-                    } else if (val === 'object') {
+                    } else if (val === 'object_key') {
                         new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
                             ? { key: key_bindings_item_val_or_key_val.toString() }
                             : {};
+                    } else if (val === 'array_macro') {
+                        new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
+                            ? [{ key: key_bindings_item_val_or_key_val.toString() }]
+                            : [{ key: '' }];
+                    } else if (val === 'object_macro') {
+                        new_key_bindings_item_val = key_bindings_item_val_or_key_val_is_not_object
+                            ? { macro: [{ key: key_bindings_item_val_or_key_val.toString() }] }
+                            : { macro: [{ key: '' }] };
                     }
 
                     d_settings.Settings.write_change_val({
@@ -131,15 +143,31 @@ class Class {
         }, 'cnt_1287'),
     );
 
-    public compute_val_type_initial_val = ({ val_accessor }: { val_accessor: string }): string =>
+    public compute_val_type_initial_val = ({
+        key_bindings_item,
+        val_accessor = '',
+    }: {
+        key_bindings_item?: string;
+        val_accessor?: string;
+    }): i_sections.KeyBindingsItemType =>
         err(() => {
-            const val = get(data, val_accessor);
+            const val = n(key_bindings_item)
+                ? key_bindings_item
+                : get(d_settings.Settings.data_raw, val_accessor);
 
-            if (isObject(val)) {
-                return 'object';
+            if (isArray(val)) {
+                return 'array_macro';
             }
 
-            return 'string';
+            if (isObject(val)) {
+                if (n((val as any).macro) || n((val as any).repeat_count)) {
+                    return 'object_macro';
+                }
+
+                return 'object_key';
+            }
+
+            return 'string_key';
         }, 'cnt_1291');
 
     public remove_val = ({

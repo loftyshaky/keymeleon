@@ -1,1 +1,1 @@
-export type ValType = 'string' | 'number' | 'array' | 'object';
+export type ValType = 'string' | 'number' | 'array' | 'object' | 'macro';

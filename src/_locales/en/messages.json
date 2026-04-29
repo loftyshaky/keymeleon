@@ -32,10 +32,19 @@
     "send_event_option_text": {
         "message": "SendEvent"
     },
-    "string_option_text": {
-        "message": "String"
+    "string_key_option_text": {
+        "message": "Key"
     },
-    "object_option_text": {
-        "message": "Object"
+    "object_key_option_text": {
+        "message": "Key with properties"
+    },
+    "array_macro_option_text": {
+        "message": "Macro"
+    },
+    "object_macro_option_text": {
+        "message": "Macro with properties"
+    },
+    "macro_btn_text": {
+        "message": "Macro"
     }
 }

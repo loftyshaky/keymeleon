@@ -18,8 +18,10 @@ class Class {
                     new o_inputs.Option({ name: 'reposition' }),
                 ],
                 val_type: [
-                    new o_inputs.Option({ name: 'string' }),
-                    new o_inputs.Option({ name: 'object' }),
+                    new o_inputs.Option({ name: 'string_key' }),
+                    new o_inputs.Option({ name: 'object_key' }),
+                    new o_inputs.Option({ name: 'array_macro' }),
+                    new o_inputs.Option({ name: 'object_macro' }),
                 ],
                 send_mode: [
                     new o_inputs.Option({ name: 'send', val: 'Send' }),

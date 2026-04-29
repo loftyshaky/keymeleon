@@ -1,10 +1,12 @@
 import get from 'lodash/get';
 import set from 'lodash/set';
+import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import React from 'react';
 import { observer } from 'mobx-react';
 
 import { i_inputs } from '@loftyshaky/shared-app/inputs';
+import { d_settings, i_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
 
 export const Section: React.FunctionComponent = observer(() => {
@@ -86,9 +88,15 @@ export const Section: React.FunctionComponent = observer(() => {
                             err(() => {
                                 const input_path: string = `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}`;
                                 const is_visible_input_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}.is_visible`;
-                                const key_bindings_item = get(data, input_path);
-                                const key_bindings_item_is_object: boolean =
-                                    isObject(key_bindings_item);
+                                const key_bindings_item = get(
+                                    d_settings.Settings.data_raw,
+                                    input_path,
+                                );
+
+                                const key_bindings_item_type: i_sections.KeyBindingsItemType =
+                                    d_sections.Val.compute_val_type_initial_val({
+                                        key_bindings_item,
+                                    });
                                 const side_btns: i_inputs.SideBtn[] =
                                     d_sections.Sections.generate_side_btns({
                                         side_btns_to_generate: [
@@ -111,7 +119,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                         ? generate_exe_group_level_3_inputs({
                                               exe_name,
                                               key_binding_name: input_name,
-                                              key_bindings_item_is_object,
+                                              key_bindings_item_type,
                                           })
                                         : [],
                                 });
@@ -123,25 +131,30 @@ export const Section: React.FunctionComponent = observer(() => {
                             exe_name,
                             key_binding_name,
                             section_item,
-                            key_bindings_item_is_object,
+                            key_bindings_item_type,
                         }: {
                             exe_name: string;
                             key_binding_name: string;
                             section_item: i_sections.SectionTemplateItem;
-                            key_bindings_item_is_object: boolean;
+                            key_bindings_item_type: i_sections.KeyBindingsItemType;
                         }): i_inputs.Input =>
                             err(() => {
                                 const is_val_type_input: boolean = section_item.name === 'val_type';
-                                const val_accessor: string = `${is_val_type_input ? 'ui' : 'settings'}.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}${(section_item.name === 'key' && key_bindings_item_is_object) || section_item.name !== 'key' ? `.${section_item.name}` : ''}`;
+                                const val_accessor: string = `${is_val_type_input ? 'ui' : 'settings'}.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}${(section_item.name === 'key' && key_bindings_item_type === 'object_key') || (section_item.name === 'macro' && key_bindings_item_type === 'object_macro') || !['key', 'macro'].includes(section_item.name) ? `.${section_item.name}` : ''}`;
+
                                 const input_bindings_item_val = get(
                                     data,
                                     `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}`,
                                 );
+
                                 const generate_remove_property_side_btn: boolean =
-                                    isObject(input_bindings_item_val);
+                                    typeof input_bindings_item_val !== 'string' &&
+                                    ((isObject(input_bindings_item_val) &&
+                                        !isArray(input_bindings_item_val)) ||
+                                        !isArray(input_bindings_item_val));
 
                                 if (is_val_type_input) {
-                                    const val_type_initial_val: string =
+                                    const val_type_initial_val: i_sections.KeyBindingsItemType =
                                         d_sections.Val.compute_val_type_initial_val({
                                             val_accessor: `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}`,
                                         });
@@ -243,11 +256,11 @@ export const Section: React.FunctionComponent = observer(() => {
                         const generate_exe_group_level_3_inputs = ({
                             exe_name,
                             key_binding_name,
-                            key_bindings_item_is_object,
+                            key_bindings_item_type,
                         }: {
                             exe_name: string;
                             key_binding_name: string;
-                            key_bindings_item_is_object: boolean;
+                            key_bindings_item_type: i_sections.KeyBindingsItemType;
                         }): i_inputs.Inputs =>
                             err(() => {
                                 const generate_input = ({
@@ -261,13 +274,13 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 exe_name,
                                                 key_binding_name,
                                                 section_item,
-                                                key_bindings_item_is_object,
+                                                key_bindings_item_type,
                                             }),
                                         'cnt_4356',
                                     );
 
                                 return s_sections.Template[
-                                    `custom_binding_name_${key_bindings_item_is_object ? 'object' : 'string'}`
+                                    `custom_binding_name_${key_bindings_item_type}`
                                 ].map(
                                     (
                                         section_item: i_sections.SectionTemplateItem,

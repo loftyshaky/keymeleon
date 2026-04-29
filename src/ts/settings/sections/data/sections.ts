@@ -1,6 +1,6 @@
 import { o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_sections, i_sections } from 'settings/internal';
-import { svg } from 'shared/internal';
+import { svg, d_settings } from 'shared/internal';
 
 class Class {
     private static instance: Class;
@@ -36,6 +36,11 @@ class Class {
         inputs?: i_inputs.Inputs;
     }): i_inputs.Input =>
         err(() => {
+            d_settings.Settings.set_transformed({
+                val_type: section_item.val_type,
+                val_accessor,
+            });
+
             if (section_item.type === 'group') {
                 return new o_inputs.Group({
                     name: section_item.name,
@@ -76,6 +81,22 @@ class Class {
                             input,
                             section_item,
                         }),
+                    ...(n(side_btns) && { side_btns }),
+                });
+            }
+
+            if (section_item.type === 'textarea') {
+                return new o_inputs.Textarea({
+                    name: section_item.name,
+                    default_val: section_item.default_val,
+                    val_accessor,
+                    label_is_visible,
+                    event_callback: ({ input }: { input: i_inputs.Input }) =>
+                        d_sections.Val.change({
+                            input,
+                            section_item,
+                        }),
+                    warn_state_checker: () => false,
                     ...(n(side_btns) && { side_btns }),
                 });
             }
