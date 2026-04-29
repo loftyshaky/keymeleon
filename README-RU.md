@@ -210,15 +210,15 @@ Keymeleon использует два отдельных JSON файла кон�
     },
     "hotkeys": {
         "dedicated_layout_hotkeys": ["^+F8", "^+F9", "^+F10", "^+F11"],
-        "resume_all_suspended_processes": "!+sc006",
-        "resume_current_process_suspended": "!+sc005",
+        "resume_all_suspended_processes": "!+5",
+        "resume_current_process_suspended": "!+4",
         "display_current_layout_id": "^!+sc017",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
         "toggle_all_bindings": "^!+sc035",
-        "toggle_current_process_minimize_and_suspend_state": "!+sc004",
-        "toggle_current_process_minimized_state": "!+sc002",
-        "toggle_current_process_suspend_state": "!+sc003",
+        "toggle_current_process_minimize_and_suspend_state": "!+3",
+        "toggle_current_process_minimized_state": "!+1",
+        "toggle_current_process_suspend_state": "!+2",
         "toggle_dedicated_layout_switching": "^!+sc01A",
         "toggle_feature_state_audio": "^!+sc032",
         "toggle_layout_switching_audio": "^!+sc034",
@@ -1442,11 +1442,11 @@ Keymeleon позволяет использовать дополнительны
 | `toggle_layout_switching_audio` | `String` | Горячая клавиша для переключения звука переключения раскладок. | `"^!+sc034"` (`Ctrl+Shift+Alt+.`) | - |
 | `toggle_typing_audio` | `String` | Горячая клавиша для переключения звука печати. | `"^!+sc033"` (`Ctrl+Shift+Alt+,`) | - |
 | `enable_all_bindings` | `String` | Горячая клавиша для включения/выключения всех пользовательских привязок клавиш. | `"^!+sc035"` (`Ctrl+Shift+Alt+/`) | - |
-| `toggle_current_process_minimized_state` | `String` | Переключить текущее окно между свернутым и развернутым состояниями. Если окно нормальное → сворачивает его. Если окно свернуто → разворачивает его. | `"!+sc002"` (`Shift+Alt+1`) | - |
-| `toggle_current_process_suspend_state` | `String` | Переключить текущий процесс между приостановленным и возобновленным состояниями. Если процесс запущен → приостанавливает его. Если процесс приостановлен → возобновляет его. | `"!+sc003"` (`Shift+Alt+2`) | - |
-| `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+sc004"` (`Shift+Alt+3`) | - |
-| `resume_current_process_suspended` | `String` | Возобновить и развернуть текущий приостановленный процесс, затем снова приостановить его. Если окно уже активно, работает так же, как `toggle_current_process_minimize_and_suspend_state`. | `"!+sc005"` (`Shift+Alt+4`) | - |
-| `resume_all_suspended_processes` | `String` | Возобновить все процессы, перечисленные в `target_processes`. Работает независимо от активного окна. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `toggle_current_process_minimized_state` | `String` | Переключить текущее окно между свернутым и развернутым состояниями. Если окно нормальное → сворачивает его. Если окно свернуто → разворачивает его. | `"!+1"` (`Shift+Alt+1`) | - |
+| `toggle_current_process_suspend_state` | `String` | Переключить текущий процесс между приостановленным и возобновленным состояниями. Если процесс запущен → приостанавливает его. Если процесс приостановлен → возобновляет его. | `"!+2"` (`Shift+Alt+2`) | - |
+| `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+3"` (`Shift+Alt+3`) | - |
+| `resume_current_process_suspended` | `String` | Возобновить и развернуть текущий приостановленный процесс, затем снова приостановить его. Если окно уже активно, работает так же, как `toggle_current_process_minimize_and_suspend_state`. | `"!+4"` (`Shift+Alt+4`) | - |
+| `resume_all_suspended_processes` | `String` | Возобновить все процессы, перечисленные в `target_processes`. Работает независимо от активного окна. | `"!+5"` (`Shift+Alt+5`) | - |
 
 ### Объект `features`
 
@@ -1510,11 +1510,11 @@ Keymeleon позволяет использовать дополнительны
 | `binding_disabled_layouts`                                 | `Array` | Исключающий список для контекстно-зависимой системы привязки клавиш. При переключении на любую раскладку, указанную в этом массиве, система будет игнорировать все записи в `key_bindings` для текущего контекста приложения, фактически отключая пользовательские сопоставления. Названия раскладок должны соответствовать записи в `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
 | `process_minimize_method`  | `String`  | Определяет метод, используемый при сворачивании процесса с помощью горячих клавиш. Доступные значения: `"minimize"` (стандартное сворачивание Windows), `"hide"` (полностью скрывает окно) или `"reposition"` (перемещает окно за пределы экрана). | `"reposition"`       | `"minimize"` |
 | `enable_process_suspend_hotkeys`  | `Number`  | Включает (`1`) горячие клавиши для приостановки и возобновления процесса, а именно: `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended` и `toggle_current_process_suspend_state`. Горячие клавиши `toggle_current_process_minimized_state` и `resume_all_suspended_processes` будут продолжать работать, даже если это свойство установлено на `0`. | `1`       | `0` |
-| `toggle_current_process_minimized_state` | `String` | Переключить текущее окно между свернутым и развернутым состояниями. Если окно нормальное → сворачивает его. Если окно свернуто → разворачивает его. | `"!+sc002"` (`Shift+Alt+1`) | - |
-| `toggle_current_process_suspend_state` | `String` | Переключить текущий процесс между приостановленным и возобновленным состояниями. Если процесс запущен → приостанавливает его. Если процесс приостановлен → возобновляет его. | `"!+sc003"` (`Shift+Alt+2`) | - |
-| `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+sc004"` (`Shift+Alt+3`) | - |
-| `resume_current_process_suspended` | `String` | Возобновить и развернуть текущий приостановленный процесс, затем снова приостановить его. Если окно уже активно, работает так же, как `toggle_current_process_minimize_and_suspend_state`. | `"!+sc005"` (`Shift+Alt+4`) | - |
-| `resume_all_suspended_processes` | `String` | Возобновить все процессы, перечисленные в `target_processes`. Работает независимо от активного окна. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `toggle_current_process_minimized_state` | `String` | Переключить текущее окно между свернутым и развернутым состояниями. Если окно нормальное → сворачивает его. Если окно свернуто → разворачивает его. | `"!+1"` (`Shift+Alt+1`) | - |
+| `toggle_current_process_suspend_state` | `String` | Переключить текущий процесс между приостановленным и возобновленным состояниями. Если процесс запущен → приостанавливает его. Если процесс приостановлен → возобновляет его. | `"!+2"` (`Shift+Alt+2`) | - |
+| `toggle_current_process_minimize_and_suspend_state` | `String` | Переключить между состояниями свернут+приостановлен и развернут+возобновлен. Если окно нормальное → сворачивает затем приостанавливает. Если окно свернуто → возобновляет затем разворачивает. | `"!+3"` (`Shift+Alt+3`) | - |
+| `resume_current_process_suspended` | `String` | Возобновить и развернуть текущий приостановленный процесс, затем снова приостановить его. Если окно уже активно, работает так же, как `toggle_current_process_minimize_and_suspend_state`. | `"!+4"` (`Shift+Alt+4`) | - |
+| `resume_all_suspended_processes` | `String` | Возобновить все процессы, перечисленные в `target_processes`. Работает независимо от активного окна. | `"!+5"` (`Shift+Alt+5`) | - |
 | `borderless_window` | `Number` | Убирает стандартные границы окна и строку заголовка. | `1` | `0` |
 | `window_title` | `String` | Указывает точный текст заголовка окна. Необходимо для корректного сворачивания и восстановления окна, если приложение создает несколько окон. | `"Fallout4"` | `""` |
 
