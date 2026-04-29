@@ -1,10 +1,13 @@
 last_switched_layout := ""
 layout_change_step := 0
 switching_layout_with_dedicated_hotkey := false
+last_window_class := ""
 last_exe := ""
 last_exe_was_present_in_conditional_exe_list := false
 all_layouts_in_switch_order := n(config_get(["layouts", "secondary_layouts"])) ? config_get(["layouts",
     "secondary_layouts"]).clone() : false
+taskbar_was_clicked := false ; For example: start menu button
+switch_layout_on_exe_change_run_times := 0
 
 generate_all_layouts_in_switch_order_arr() {
     global all_layouts_in_switch_order
@@ -28,40 +31,48 @@ switch_layout(new_layout, is_automatic_layout_switching) {
     if ((!switching_layout_with_dedicated_hotkey && n(enable_sequential_layout_switching) &&
     enable_sequential_layout_switching) || (switching_layout_with_dedicated_hotkey && n(
         enable_dedicated_layout_switching) && enable_dedicated_layout_switching)) {
-        classes_of_windows_that_wont_let_you_change_layout_with_windows_api := ["Progman", "Shell_TrayWnd",
-            "Windows.UI.Core.CoreWindow"] ; Desktop, Taskbar (when you clicked on the taskbar), Start menu
-        window_class := WinGetClass("A")
-        can_change_layout_with_windows_api := !find_i_in_array(window_class ? window_class : "",
-            classes_of_windows_that_wont_let_you_change_layout_with_windows_api)
-
-        found_fallback_layout_switching_exe := false
-
         try {
-            pid := WinGetPID("A")
-            process_name := WinGetProcessName("ahk_pid " pid)
-            exe_name := StrReplace(process_name, ".exe", "")
+            classes_of_windows_that_wont_let_you_change_layout_with_windows_api := ["Progman", "Shell_TrayWnd",
+                "Windows.UI.Core.CoreWindow"] ; Desktop, Taskbar (when you clicked on the taskbar), Start menu
+            window_class := WinGetClass("A")
+            can_change_layout_with_windows_api := !find_i_in_array(window_class ? window_class : "",
+                classes_of_windows_that_wont_let_you_change_layout_with_windows_api)
 
-            found_fallback_layout_switching_exe := n(fallback_layout_switching_exes) && n(find_i_in_array(exe_name,
-                fallback_layout_switching_exes))
-        }
+            found_fallback_layout_switching_exe := false
 
-        if (n(enable_windows_api_layout_switching) && enable_windows_api_layout_switching &&
-        can_change_layout_with_windows_api && !found_fallback_layout_switching_exe) {
-            set_layout_using_windows_api(new_layout, is_automatic_layout_switching)
-        } else {
-            set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching)
-        }
+            try {
+                pid := WinGetPID("A")
+                process_name := WinGetProcessName("ahk_pid " pid)
+                exe_name := StrReplace(process_name, ".exe", "")
 
-        last_switched_layout := new_layout
+                found_fallback_layout_switching_exe := n(fallback_layout_switching_exes) && n(find_i_in_array(exe_name,
+                    fallback_layout_switching_exes))
+            }
 
-        if (!is_automatic_layout_switching) {
-            bind_unbind_context_hotkeys(last_switched_layout)
+            if (n(enable_windows_api_layout_switching) && enable_windows_api_layout_switching &&
+            can_change_layout_with_windows_api && !found_fallback_layout_switching_exe) {
+                set_layout_using_windows_api(new_layout, is_automatic_layout_switching)
+            } else {
+                set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching)
+            }
+
+            last_switched_layout := new_layout
+
+            if (!is_automatic_layout_switching) {
+                bind_unbind_context_hotkeys(last_switched_layout)
+            }
         }
     }
 }
 
 set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching) {
     global layout_change_step
+
+    KeyWait("Ctrl")
+    KeyWait("Alt")
+    KeyWait("Shift")
+    KeyWait("LWin")
+    KeyWait("RWin")
 
     step_is_0 := layout_change_step = 0
 
@@ -319,43 +330,104 @@ get_next_current_secondary_layout_i() {
     }
 }
 
-switch_layout_on_exe_change() {
+switch_layout_on_exe_change(recursive := false) {
     global switching_layout_with_dedicated_hotkey
+    global last_window_class
     global last_exe
     global last_exe_was_present_in_conditional_exe_list
+    global taskbar_was_clicked
+    global switch_layout_on_exe_change_run_times
 
-    try {
-        window_class := WinGetClass("A")
-        new_exe := WinGetProcessName("A")
+    if (!recursive) {
+        switch_layout_on_exe_change_run_times := 0
+    }
+
+    if (switch_layout_on_exe_change_run_times < 10) {
+        window_class := ""
+        new_exe := ""
+
+        try {
+            window_class := WinGetClass("A")
+            new_exe := WinGetProcessName("A")
+        }
+
         new_exe_name := StrReplace(new_exe, ".exe", "")
         new_exe_is_present_in_conditional_exe_list := n(config_get([new_exe_name], get_exe_obj()))
+        switched_from_any_app_to_file_explorer := (new_exe == "explorer.exe" && new_exe == last_exe && window_class ==
+            "CabinetWClass") ; CabinetWClass = File explorer.
+        is_taskbar := window_class == "Shell_TrayWnd" ; is_taskbar = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar.
+        start_menu_is_closed := !taskbar_was_clicked && window_class ==
+            "Windows.UI.Core.CoreWindow" ; When you go from fullsreen app to start menu by pressing Win key and then click on start menu button, this prevents a double layout change.
+        switched_layout := false
 
-        if (window_class != 'Shell_TrayWnd' && new_exe_name != 'SearchHost' && new_exe != last_exe && (
-            new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) { ; window_class != 'Shell_TrayWnd' = prevent incorrect layout change when user presses Win key in a game, then on desktop clicked on the game icon in taskbar. / new_exe_name != 'SearchHost' = prevent incorrect layout change when user Win.
+        if (taskbar_was_clicked) {
+            return
+        }
+
+        if (!is_taskbar && new_exe != "" && (new_exe != last_exe ||
+            switched_from_any_app_to_file_explorer) && (
+                new_exe_is_present_in_conditional_exe_list || last_exe_was_present_in_conditional_exe_list)) {
+
             last_exe_was_present_in_conditional_exe_list := false
             last_exe := new_exe
             new_layout := get_exe_config_val("layout", false)
-
             switching_layout_with_dedicated_hotkey := true
 
+            if (window_class == "Windows.UI.Core.CoreWindow") {
+                start_menu_automatic_layout_switching_delay := config_get(["layouts",
+                    "start_menu_automatic_layout_switching_delay"])
+                start_menu_automatic_layout_switching_delay_final := n(start_menu_automatic_layout_switching_delay) ?
+                    start_menu_automatic_layout_switching_delay : 200
+
+                Sleep(start_menu_automatic_layout_switching_delay_final) ; When you press Win key and then click anywhere on start menu, the lalout may change to the wrong layout. This delay is intended to prevent this.
+            }
+
             switch_layout(new_layout, true)
+
+            switched_layout := true
         }
 
         if (new_exe_is_present_in_conditional_exe_list) {
             last_exe_was_present_in_conditional_exe_list := true
         }
 
+        last_window_class := window_class
         last_exe := new_exe
+
+        if (switched_layout) {
+            switch_layout_on_exe_change_run_times := 0
+        } else {
+            switch_layout_on_exe_change_run_times += 1
+
+            SetTimer(() => switch_layout_on_exe_change(true), -100) ; Runs asynchroniously unlike a loop, so preventing context menu appearing delay
+        }
+    } else {
+        switch_layout_on_exe_change_run_times := 0
     }
 }
 
 on_exe_change() {
-    watch_any_window_activation(exe_change_handler)
-}
+    global EVENT_SYSTEM_FOREGROUND
+    global taskbar_was_clicked
 
-exe_change_handler(*) {
-    global last_switched_layout
+    exe_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
+        if (check_if_changed_active_window(event)) {
+            global last_switched_layout
 
-    switch_layout_on_exe_change()
-    bind_unbind_context_hotkeys(last_switched_layout)
+            taskbar_was_clicked := false
+
+            try {
+                window_class := WinGetClass("ahk_id " hwnd)
+
+                if (window_class == "Shell_TrayWnd") {
+                    taskbar_was_clicked := true
+                }
+            }
+
+            switch_layout_on_exe_change()
+            bind_unbind_context_hotkeys(last_switched_layout)
+        }
+    }
+
+    register_shell_hook(exe_change_handler, EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND)
 }

@@ -3,7 +3,7 @@
 
 Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard layout management. It eliminates the frustration of manual layout switching by providing intelligent automation, customizable hotkeys, and rich audio feedback.
 
-<h2 id="links">Links</h2>
+## Links
 
 [Latest release](https://github.com/loftyshaky/keymeleon/releases/latest)<br>
 [README.md на русском](README-RU.md)<br>
@@ -26,29 +26,104 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
 
 **Advanced macros** - Create complex key sequences with precise timing control.
 
-<h2 id="table_of_contents">Table of Contents</h2>
+**Process minimize and suspend** - Minimize unminimizable windows and pause unpausable games with dedicated hotkeys. Suspend any running process, or combine both actions to minimize and suspend with a single keystroke.
 
-- [System requirements](#system_requirements)
-- [Quick Start](#quick_start)
-- [User directory and configuration files](#user_directory_and_configuration_files)
-- [Configuration example](#configuration_example)
-- [Layout switching methods](#layout_switching_methods)
-- [Layout switching techniques](#layout_switching_techniques)
-- [Audio feedback](#audio_feedback)
-- [Features](#features_reference)
-- [Conditional layouts](#conditional_layouts)
-- [Context key remapping](#context_key_remapping)
+**Borderless window** – Remove borders from any window, making it borderless.
+
+## Table of Contents
+
+- [System requirements](#system-requirements)
+- [Quick Start](#quick-start)
+- [User directory and configuration files](#user-directory-and-configuration-files)
+  - [User directory structure](#user-directory-structure)
+  - [User directory location config](#user-directory-location-config)
+  - [Main config](#main-config)
+  - [Customizing user directory location](#customizing-user-directory-location)
+    - [Important notes](#important-notes)
+- [Configuration example](#configuration-example)
+  - [Real-world example](#real-world-example)
+- [Layout switching methods](#layout-switching-methods)
+  - [Switching methods](#switching-methods)
+  - [Setup guide](#setup-guide)
+    - [Step 1: Define your layouts](#step-1-define-your-layouts)
+    - [Step 2: Configure hotkeys](#step-2-configure-hotkeys)
+  - [How it works](#how-it-works)
+  - [Getting layout IDs](#getting-layout-ids)
+- [Layout switching techniques](#layout-switching-techniques)
+  - [Switching techniques](#switching-techniques)
+  - [Usage](#usage)
+  - [Technical details](#technical-details)
+    - [Windows API technique](#windows-api-technique)
+    - [Win+Space simulation](#winspace-simulation)
+  - [Automatic behavior](#automatic-behavior)
+  - [Timing configuration](#timing-configuration)
+- [Audio feedback](#audio-feedback)
+  - [Overview](#overview)
+  - [File structure](#file-structure)
+  - [Basic Setup](#basic-setup)
+    - [Layout & typing sounds](#layout--typing-sounds)
+    - [Feature toggle sounds](#feature-toggle-sounds)
+  - [Advanced customization](#advanced-customization)
+- [Features](#features-1)
+  - [Feature Configuration](#feature-configuration)
+- [Conditional layouts](#conditional-layouts)
+  - [Basic Example: Game vs. Desktop Layouts](#basic-example-game-vs-desktop-layouts)
+  - [App detection](#app-detection)
+- [Context key remapping](#context-key-remapping)
+  - [Basic example: App-specific key binding](#basic-example-app-specific-key-binding)
+  - [How it works](#how-it-works-1)
+    - [Input bindings](#input-bindings)
+    - [Key bindings](#key-bindings)
+    - [How it works](#how-it-works-2)
+    - [Action execution](#action-execution)
+  - [Hotkeys with modifiers](#hotkeys-with-modifiers)
+    - [Usage notes](#usage-notes)
+  - [Allow native key function](#allow-native-key-function)
+  - [Ignore extra modifiers](#ignore-extra-modifiers)
+  - [Wait until key release](#wait-until-key-release)
+    - [Example: Reload with hold-to-holster functionality](#example-reload-with-hold-to-holster-functionality)
+    - [How it works](#how-it-works-3)
+  - [Modifiers release timeout](#modifiers-release-timeout)
+    - [Problem Scenario](#problem-scenario)
+    - [Example](#example)
+    - [Solution: modifiers_release_timeout](#solution-modifiers_release_timeout)
+    - [How it works](#how-it-works-4)
+    - [Configuration Example](#configuration-example-1)
 - [Macros](#macros)
-- [Mouse button support](#mouse_button_support)
-- [Remapping keyboard keys and hotkeys](#remapping_keyboard_keys_and_hotkeys)
+  - [Example 1: Typing with progressive delays](#example-1-typing-with-progressive-delays)
+  - [Example 2: Select all and paste](#example-2-select-all-and-paste)
+  - [Macros with advanced properties](#macros-with-advanced-properties)
+- [Mouse button support](#mouse-button-support)
+  - [Setup process](#setup-process)
+  - [Example: MMO mouse configuration](#example-mmo-mouse-configuration)
+  - [How it works](#how-it-works-5)
+- [Remapping keyboard keys and hotkeys](#remapping-keyboard-keys-and-hotkeys)
+  - [Basic example](#basic-example)
+  - [Layout-universal keyboard shortcuts](#layout-universal-keyboard-shortcuts)
+    - [Setup guide](#setup-guide-1)
+- [Process minimize and suspend](#process-minimize-and-suspend)
+  - [Configuration](#configuration)
+- [Borderless window mode](#borderless-window-mode)
 - [Reference](#reference)
+  - [`layouts` object](#layouts-object)
+  - [`hotkeys` object](#hotkeys-object)
+  - [`features` object](#features-object)
+  - [`audio` object](#audio-object)
+  - [`process_control` object](#process_control-object)
+  - [`context_remap` object (within `hotkeys`)](#context_remap-object-within-hotkeys)
+  - [`exe` object (within `context_remap`)](#exe-object-within-context_remap)
+  - [`[app exe name]` (within `exe` object)](#app-exe-name-within-exe-object)
+  - [`input_bindings` object (within `context_remap`)](#input_bindings-object-within-context_remap)
+  - [`key_bindings` object (within `[app exe name]`)](#key_bindings-object-within-app-exe-name)
+  - [`[custom binding name]` object (within `key_bindings`)](#custom-binding-name-object-within-key_bindings)
+  - [Macro item](#macro-item)
 
-<h2 id="system_requirements">System requirements</h2>
+## System requirements
 
 - Windows 10/11
 - [AutoHotkey v2.0+](https://www.autohotkey.com)
 
-<h2 id="quick_start">Quick Start</h2>
+## Quick Start
 
 1. Install [AutoHotkey v2.0](https://www.autohotkey.com) if you haven't already.
 
@@ -56,7 +131,7 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
 
 3. Run `keymeleon.ahk` as an administrator to start the script.
 
-<h2 id="user_directory_and_configuration_files">User directory and configuration files</h2>
+## User directory and configuration files
 
 ### User directory structure
 
@@ -115,7 +190,7 @@ To change location of the user directory, create a `config.json` file in the scr
 
 - After setting this, the full user directory structure will be created at your custom location when you run Keymeleon.
 
-<h2 id="configuration_example">Configuration example</h2>
+## Configuration example
 
 Here's a comprehensive configuration example:
 
@@ -135,16 +210,22 @@ Here's a comprehensive configuration example:
     },
     "hotkeys": {
         "dedicated_layout_hotkeys": ["^+F8", "^+F9", "^+F10", "^+F11"],
+        "resume_all_suspended_processes": "!+sc006",
+        "resume_current_process_suspended": "!+sc005",
         "display_current_layout_id": "^!+sc017",
         "set_primary_layout": "ScrollLock",
         "set_secondary_layout": "Pause",
         "toggle_all_bindings": "^!+sc035",
+        "toggle_current_process_minimize_and_suspend_state": "!+sc004",
+        "toggle_current_process_minimized_state": "!+sc002",
+        "toggle_current_process_suspend_state": "!+sc003",
         "toggle_dedicated_layout_switching": "^!+sc01A",
         "toggle_feature_state_audio": "^!+sc032",
         "toggle_layout_switching_audio": "^!+sc034",
         "toggle_sequential_layout_switching": "^!+sc01B",
         "toggle_typing_audio": "^!+sc033",
         "toggle_windows_api_layout_switching": "^!+sc019"
+
     },
     "layouts": {
         "all_layouts_ordered": ["en-DVORAK", "en-US", "es-ES", "de-DE"],
@@ -153,6 +234,15 @@ Here's a comprehensive configuration example:
         "layout_switching_delay": 30,
         "primary_layout": "en-DVORAK",
         "secondary_layouts": ["en-US", "es-ES", "de-DE"]
+    },
+    "process_control": {
+        "target_processes": ["Fallout4", "KingdomCome"],
+        "suspend_post_minimize_delay": 10,
+        "resume_pre_unminimize_delay": 10,
+        "pre_screenshot_delay": 50,
+        "post_screenshot_delay": 50,
+        "pre_minimize_screenshot": 1,
+        "pre_suspend_screenshot": 1
     }
 }
 ```
@@ -161,7 +251,7 @@ Here's a comprehensive configuration example:
 
 For advanced configurations including application-specific layouts, key bindings, and mouse button mappings, explore the complete example in the [example-config](example-config/) folder.
 
-<h2 id="layout_switching_methods">Layout switching methods</h2>
+## Layout switching methods
 
 Keymeleon provides two powerful methods for switching between keyboard layouts, giving you both quick cycling and instant access to any layout.
 
@@ -175,19 +265,6 @@ Keymeleon provides two powerful methods for switching between keyboard layouts, 
 Sequential switching lets you press one key (e.g., `ScrollLock`) to jump to your primary layout (like Dvorak) from any layout, and another key (e.g., `Pause`) to cycle through your secondary layouts (like QWERTY, Spanish, German).
 
 Dedicated hotkey switching gives each layout its own keyboard shortcut (e.g., `Ctrl+Shift+F8` for Dvorak, `Ctrl+Shift+F9` for QWERTY) for one-press access.
-
-### Configuration settings
-
-| Setting                     | Object    | Type     | Description                                                                                     | Example                                              |
-| :-------------------------- | :-------- | :------- | :---------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
-| `all_layouts_ordered`       | `layouts` | `Array`  | Names of all layouts in exact Windows language bar order. Names must be unique.                 | `["en-DVORAK", "en-US", "es-ES", "de-DE"]`           |
-| `layout_ids`                | `layouts` | `Array`  | Layout IDs corresponding to `all_layouts_ordered`. Get IDs with `Ctrl+Shift+Alt+I`.             | `["-268303351", "67699721", "67767306", "67568647"]` |
-| `primary_layout`            | `layouts` | `String` | Your default layout name from `all_layouts_ordered`.                                            | `"en-DVORAK"`                                        |
-| `secondary_layouts`         | `layouts` | `Array`  | Other layouts for cycling, in desired order.                                                    | `["en-US", "es-ES", "de-DE"]`                        |
-| `dedicated_layout_hotkeys`  | `hotkeys` | `Array`  | Hotkeys for direct layout switching. First hotkey = `primary_layout`, rest = `secondary_layouts` in order. | `["^+F8", "^+F9", "^+F10", "^+F11"]`                 |
-| `set_primary_layout`        | `hotkeys` | `String` | Hotkey to switch to primary layout.                                                             | `"ScrollLock"`                                       |
-| `set_secondary_layout`      | `hotkeys` | `String` | Hotkey to cycle through secondary layouts.                                                      | `"Pause"`                                            |
-| `display_current_layout_id` | `hotkeys` | `String` | Hotkey to show current layout ID.                                                               | `"^!+sc017"` (`Ctrl+Shift+Alt+I`)                    |
 
 ### Setup guide
 
@@ -232,7 +309,10 @@ Dedicated: Press `Ctrl+Shift+F8` for Dvorak, `Ctrl+Shift+F9` for QWERTY, `Ctrl+S
 
 Note: Order is critical - the first ID in `layout_ids` must match the first layout in `all_layouts_ordered`, and so on.
 
-<h2 id="layout_switching_techniques">Layout switching techniques</h2>
+[`hotkeys` object reference](#hotkeys-object)<br>
+[`layouts` object reference](#layouts-object)
+
+## Layout switching techniques
 
 ### Switching techniques
 
@@ -240,15 +320,6 @@ Note: Order is critical - the first ID in `layout_ids` must match the first layo
 | :--------------------- | :-------------- | :------------------------------------------------------------- | :------------------------------ |
 | Windows API            | Blue            | Uses internal Windows functions for instant layout switching.  | Most apps, general use.         |
 | `Win+Space` simulation | Green           | Simulates physical keyboard presses for maximum compatibility. | Problematic apps, system areas. |
-
-#### Configuration settings
-
-| Setting                               | Object     | Type   | Description                                          | Default                           |
-| :------------------------------------ | :--------- | :----- | :--------------------------------------------------- | :-------------------------------- |
-| `enable_windows_api_layout_switching` | `features` | `Number` | Enable (`1`) or disable (`0`) Windows API switching. | `1`                               |
-| `toggle_windows_api_layout_switching` | `hotkeys`  | `String` | Hotkey to toggle between techniques.                    | `"^!+sc019"` (`Ctrl+Shift+Alt+P`) |
-| `layout_switching_delay`              | `layouts`  | `Number` | Delay in milliseconds for `Win+Space` technique.        | `0`                               |
-| `fallback_layout_switching_exes`      | `layouts`  | `Array`  | Apps that should always use `Win+Space` simulation.  | -                              |
 
 ### Usage
 
@@ -310,7 +381,12 @@ Recommended: 30-50 milliseconds for most systems.
     }
 }
 ```
-<h2 id="audio_feedback">Audio feedback</h2>
+
+[`features` object reference](#features-object)<br>
+[`hotkeys` object reference](#hotkeys-object)<br>
+[`layouts` object reference](#layouts-object)
+
+## Audio feedback
 
 Keymeleon provides rich audio feedback to give you immediate auditory confirmation of your current layout and settings changes.
 
@@ -399,16 +475,9 @@ For custom file names or different audio formats, specify them in your audio con
 }
 ```
 
-#### Configuration reference
+[`audio` object reference](#audio-object)
 
-| Setting                  | Type   | Description                                 | Default |
-| :----------------------- | :----- | :------------------------------------------ | :------ |
-| `default_file_extension` | `String` | Default audio format for unspecified files. | `wav`   |
-| `layout_switching`       | `Object` | Layout switching sounds with custom filenames       | `{}`    |
-| `feature_state`          | `Object` | Feature toggle sounds with custom filenames.       | `{}`    |
-| `typing`                 | `Object` | Typing sounds with custom filenames.                | `{}`    |
-
-<h2 id="features_reference">Features</h2>
+## Features
 
 ### Feature Configuration
 
@@ -416,34 +485,10 @@ The `features` object controls which Keymeleon functions are active. Use `1` to 
 
 **Example:** The `enable_dedicated_layout_switching` feature is controlled by the hotkey specified in `toggle_dedicated_layout_switching`.
 
-### Available Features
+[`features` object reference](#features-object)<br>
+[`hotkeys` object reference](#hotkeys-object)
 
-| Feature                               | Description                                                                                                                |
-| :------------------------------------ | :------------------------------------------------------------------------------------------------------------------------- |
-| `enable_dedicated_layout_switching`   | Enable dedicated hotkeys for direct layout switching (e.g., `Ctrl+Shift+F8` for `en-DVORAK`, `Ctrl+Shift+F9` for `en-US`). |
-| `enable_sequential_layout_switching`  | Enable cycling between primary and secondary layouts using sequential switching.                                           |
-| `enable_windows_api_layout_switching` | Use instant Windows API layout switching instead of `Win+Space` simulation.                                                |
-| `enable_feature_state_audio`          | Play sounds when enabling or disabling features via hotkeys.                                                               |
-| `enable_layout_switching_audio`       | Play unique sounds when switching between layouts.                                                                         |
-| `enable_typing_audio`                 | Play unique typing sounds for different keyboard layouts.                                                                  |
-| `enable_all_bindings`                 | Enable all custom key bindings.                                                                  |
-
-### Default Hotkey Reference
-
-| Function                              | Hotkey             |
-| :------------------------------------ | :----------------- |
-| `display_current_layout_id`           | `Ctrl+Shift+Alt+I` |
-| `toggle_dedicated_layout_switching`   | `Ctrl+Shift+Alt+[` |
-| `toggle_sequential_layout_switching`  | `Ctrl+Shift+Alt+]` |
-| `toggle_windows_api_layout_switching` | `Ctrl+Shift+Alt+P` |
-| `toggle_feature_state_audio`          | `Ctrl+Shift+Alt+M` |
-| `toggle_layout_switching_audio`       | `Ctrl+Shift+Alt+.` |
-| `toggle_typing_audio`                 | `Ctrl+Shift+Alt+,` |
-| `toggle_all_bindings`                 | `Ctrl+Shift+Alt+/` |
-
-Note: All hotkeys are customizable in the `hotkeys` object of your configuration.
-
-<h2 id="conditional_layouts">Conditional layouts</h2>
+## Conditional layouts
 
 Keymeleon can automatically switch layouts and remap keys based on the app you're using. It detects the currently focused window by checking the executable (`.exe`) filename and applies your predefined settings for that specific context.
 
@@ -457,10 +502,14 @@ Automatically switch layouts when specific apps are focused:
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -472,6 +521,7 @@ Automatically switch layouts when specific apps are focused:
     }
 }
 ```
+
 Fallout 4 is just one example - you can create conditional layouts for any game or app.
 
 ### App detection
@@ -484,18 +534,9 @@ Keymeleon identifies apps by their executable filename (without the `.exe` exten
 
 You can add any app - just use its executable filename without the `.exe` extension. The `default` context serves as a catch-all for any app not explicitly listed.
 
-### Configuration properties
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
 
-| Property                                                    | Type   | Description                                                                                                                                     | Default   |
-| :---------------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------------------------------------- | :-------- |
-| `layout`                                                    | `String` | Layout to use in this context (from `all_layouts_ordered`).                                                                                     | -         |
-| `enable_layout_switching_audio`                             | `Number` | Play layout switching sounds for manual changes when you're in this context.                                                                       | `default` |
-| `enable_typing_audio`                                       | `Number` | Enable typing sounds in this context.                                                                                                           | `default` |
-| `enable_layout_switching_audio_for_automatic_layout_change` | `Number` | Play sounds for automatic layout changes when entering or leaving this context. Not available for `default` context.                                          | `1`       |
-| `automatic_exe_windows_api_layout_switching_delay`          | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay. | `0`       |
-| `binding_disabled_layouts`          | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | -       |
-
-<h2 id="context_key_remapping">Context key remapping</h2>
+## Context key remapping
 Keymeleon enables context-sensitive key remapping, allowing you to bind keys to perform different actions depending on which app has focus.
 
 ### Basic example: App-specific key binding
@@ -508,8 +549,10 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -517,7 +560,9 @@ Let's configure the `F2` key to execute the "Use" command (`E` key) in Fallout 4
                             "key": "e"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -677,8 +722,10 @@ To properly bind this to `F2`, we need the script to wait for key release:
         "context_remap": {
             "exe": {
                 "Fallout4": {
+                    "borderless_window": 1,
                     "enable_layout_switching_audio": 1,
                     "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
                     "enable_typing_audio": 0,
                     "key_bindings": {
                         "f2": {
@@ -690,7 +737,9 @@ To properly bind this to `F2`, we need the script to wait for key release:
                             "key_wait": "f3"
                         }
                     },
-                    "layout": "en-US"
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
                 },
                 "default": {
                     "enable_layout_switching_audio": 1,
@@ -717,11 +766,12 @@ Standard key names (like `F2`): When you set `"wait": 1`, Keymeleon automaticall
 Scan codes (like `SC03D` for `F3`): Keymeleon cannot automatically detect which physical key corresponds to a scan code. You must explicitly specify `"key_wait": "f3"` to tell the script which physical key to monitor for release.
 
 ### Modifiers release timeout
+
 #### Problem Scenario
 
 When activating a hotkey that uses modifier keys (`Ctrl`, `Shift`, `Alt`), you might inadvertently trigger the wrong command if those modifiers are still physically held down.
 
-#### Example:
+#### Example
 
 You configure a hotkey `Ctrl+Shift+F2` to trigger `Ctrl+V` (paste formatted text).
 
@@ -731,7 +781,7 @@ While holding `Ctrl` and `Shift` to press `F2`, Windows might register `Ctrl+Shi
 
 This property instructs Keymeleon to wait for the specified milliseconds for you to release held modifier keys before executing the target command.
 
-#### How it works:
+#### How it works
 
 1. You press the hotkey (e.g., `Ctrl+Shift+F2`).
 2. Keymeleon detects the `Ctrl` and `Shift` modifiers are still held.
@@ -761,26 +811,9 @@ This property instructs Keymeleon to wait for the specified milliseconds for you
 }
 ```
 
-### Key binding properties
+[`[custom binding name] object (within key_bindings)` object reference](#custom-binding-name-object-within-key_bindings)
 
-| Property                | Type         | Description                                                                                                                                                                                                                                                                          | Default |
-| :---------------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
-| `key`                   | `String`     | The key or keystroke to execute when the binding is triggered.                                                                                                                                                                                                               | -       |
-| `delay_before`                 | `Number`       | The delay in milliseconds that controls the pause between when you press the bound key and when the target action executes. | `0`     |
-| `delay_between`                 | `Number`       | The delay in milliseconds between the simulated `key` `Down` and `Up` states.  While some apps respond instantly, others like Fallout 4 require a brief delay (typically 30-50ms) to register the simulated key press. | `0`     |
-| `pre_key_delay`                 | `Number`       | The Delay in milliseconds between the `modifiers` `Up` and `key` `Down` states. | `0`     |
-| `post_key_delay`                 | `Number`       | The Delay in milliseconds between `key` `Up` and  `modifiers` `Down` states. | `0`     |
-| `wait`                 | `Number`       | Wait for physical key release before sending the `Up` event. | `0`     |
-| `key_wait`                 | `String`       | Physical key name to monitor for release. | -     |
-| `modifiers`             | `Array/String` | Modifier keys to hold.                                                                                                                                                                                                                                                               | -       |
-| `allow_native_function` | `Number`       | Allow (`1`) or block (`0`) the key's original function. For example, set to `0` to prevent the Start Menu from opening when remapping the `Win` key.                                                                                                                                   | `0`     |
-| `ignore_extra_modifiers`      | `Number`       | Ignore (`1`) or respect (`0`) modifier keys already being held when the binding triggers.                                                                                                                                                                                            | `0`     |
-| `blind`      | `Number`       | Send `key` with `{Blind}` (`1`) or without (`0`).                                                                                                                                                                                            | `0`     |
-| `send_mode`      | `Number`       | Send method for executing the hotkey.  Possible values: `Send`,`SendInput`, `SendText`, `SendPlay`, `SendEvent`.                                      | `SendInput` | `SendInput`                                                                                                                                                                                            | `0`     |
-| `modifiers_release_timeout`      | `Number`       | Time in milliseconds that Keymeleon waits for physically held modifier keys to be released before executing the target command. If the timeout expires before modifiers are released, the command executes immediately.                                                                                                                                                                                            | `0`     |
-| `repeat_count`      | `Number`       | Number of times to repeat the entire macro sequence.                                                                                                                                                                                            | `1`     |
-
-<h2 id="macros">Macros</h2>
+## Macros
 Keymeleon supports complex macros—sequences of keys and delays executed with a single hotkey.
 
 ### Example 1: Typing with progressive delays
@@ -1018,7 +1051,10 @@ You can repeat specific portions of a macro independently using nested macro obj
 
 This configuration types "test2" twice, adds a space, then types "test4" four times.
 
-<h2 id="mouse_button_support">Mouse button support</h2>
+[Macro item reference](#macro-item)
+
+## Mouse button support
+
 Keymeleon allows you to bind extra mouse buttons by mapping them through your mouse software first, then configuring them in Keymeleon.
 
 ### Setup process
@@ -1036,8 +1072,10 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
     "context_remap": {
         "exe": {
             "Fallout4": {
+                "borderless_window": 1,
                 "enable_layout_switching_audio": 1,
                 "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                "enable_process_suspend_hotkeys": 1,
                 "enable_typing_audio": 0,
                 "key_bindings": {
                     "button_1": {
@@ -1109,7 +1147,9 @@ This example binds 10 MMO mouse buttons to numeric favorites keys (1-0) in Fallo
                         "wait": 1
                     }
                 },
-                "layout": "en-US"
+                "layout": "en-US",
+                "process_minimize_method": "minimize",
+                "window_title": "Fallout4"
             },
             "default": {
                 "enable_layout_switching_audio": 1,
@@ -1162,7 +1202,7 @@ Mouse buttons 3-10 have no special function on desktop in this configuration.
 
 This approach gives you complete control over your mouse buttons for different apps while maintaining standard functionality elsewhere.
 
-<h2 id="remapping_keyboard_keys_and_hotkeys">Remapping keyboard keys and hotkeys</h2>
+## Remapping keyboard keys and hotkeys
 
 Similar to mouse buttons, you can remap any key or keyboard shortcut to simulate another key or hotkey.
 
@@ -1311,11 +1351,73 @@ The configuration maps physical key positions (using scan codes) to their corres
 
 2. In `key_bindings`, define the actual Windows function to execute. For paste functionality, this would be `V` with `Ctrl` modifier to simulate `Ctrl+V`.
 
-<h2 id="reference">Reference</h2>
+## Process minimize and suspend
+Ever wanted to minimize an unminimizable window. Or pause an unpausable game? The `toggle_current_process_minimized_state`, `toggle_current_process_suspend_state`, `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended` and `resume_all_suspended_processes` hotkeys can do this!
+
+### Configuration
+Add a `process_control` object to the root of your existing config:
+
+```
+{
+    // ... your existing configuration ...
+
+    "process_control": {
+        "target_processes": ["Fallout4", "KingdomCome"],
+        "suspend_post_minimize_delay": 10,
+        "resume_pre_unminimize_delay": 10,
+        "pre_screenshot_delay": 50,
+        "post_screenshot_delay": 50,
+        "pre_minimize_screenshot": 1,
+        "pre_suspend_screenshot": 1
+    }
+}
+```
+
+Then, add `"enable_process_suspend_hotkeys": 1` and `"process_minimize_method": "minimize"` to the `Fallout4` object:
+
+```
+{
+    "hotkeys": {
+        "context_remap": {
+            "exe": {
+                "Fallout4": {
+                    "borderless_window": 1,
+                    "enable_layout_switching_audio": 1,
+                    "enable_layout_switching_audio_for_automatic_layout_change": 1,
+                    "enable_process_suspend_hotkeys": 1,
+                    "enable_typing_audio": 0,
+                    "layout": "en-US",
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
+                },
+                "default": {
+                    "enable_layout_switching_audio": 1,
+                    "enable_typing_audio": 1,
+                    "layout": "en-DVORAK"
+                }
+            }
+        }
+    }
+}
+```
+
+Now you can use one of the hotkeys specified above. If the hotkeys aren't minimizing the window, try changing the `process_minimize_method` property to `"hide"` or `"reposition"`. You can also add these hotkey properties to the `[app exe name]` object (within the `exe` object) to override the global hotkeys for a specific app.
+
+[`process_control` object reference](#process_control-object)<br>
+[`hotkeys` object reference](#hotkeys-object)<br>
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
+
+## Borderless window mode
+
+To enable borderless windowed mode, first configure the game to run in windowed mode via its own in‑game settings. Once windowed mode is active, add `"borderless_window": 1` to the `[app exe name]` object (within the `exe` object).
+
+[`[app exe name] (within exe object)` object reference](#app-exe-name-within-exe-object)
+
+## Reference
 
 ### `layouts` object
 
-| Setting                     | Type     | Description                                                                                     | Example                                              | Default |
+| Property                     | Type     | Description                                                                                     | Example                                              | Default |
 | :-------------------------- | :------- | :---------------------------------------------------------------------------------------------- | :--------------------------------------------------- | :------ |
 | `all_layouts_ordered`       | `Array`  | Names of all layouts in exact Windows language bar order. Names must be unique.                 | `["en-DVORAK", "en-US", "es-ES", "de-DE"]`           | -       |
 | `layout_ids`                | `Array`  | Layout IDs corresponding to `all_layouts_ordered`. Get IDs with `Ctrl+Shift+Alt+I`.             | `["-268303351", "67699721", "67767306", "67568647"]` | -       |
@@ -1326,7 +1428,7 @@ The configuration maps physical key positions (using scan codes) to their corres
 
 ### `hotkeys` object
 
-| Setting                     | Type     | Description                                                                                     | Example                                              | Default |
+| Property                     | Type     | Description                                                                                     | Example                                              | Default |
 | :-------------------------- | :------- | :---------------------------------------------------------------------------------------------- | :--------------------------------------------------- | :------ |
 | `dedicated_layout_hotkeys`  | `Array`  | Hotkeys for direct layout switching. First hotkey = `primary_layout`, rest = `secondary_layouts` in order. | `["^+F8", "^+F9", "^+F10", "^+F11"]` (Ctrl+Shift+F8–F11) | -       |
 | `set_primary_layout`        | `String` | Hotkey to switch to primary layout.                                                             | `"ScrollLock"`                                       | -       |
@@ -1339,12 +1441,17 @@ The configuration maps physical key positions (using scan codes) to their corres
 | `toggle_layout_switching_audio` | `String` | Hotkey to toggle layout switching audio. | `"^!+sc034"` (`Ctrl+Shift+Alt+.`) | - |
 | `toggle_typing_audio` | `String` | Hotkey to toggle typing audio. | `"^!+sc033"` (`Ctrl+Shift+Alt+,`) | - |
 | `enable_all_bindings` | `String` | Hotkey to toggle all custom key bindings. | `"^!+sc035"` (`Ctrl+Shift+Alt+/`) | - |
+| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+sc002"` (`Shift+Alt+1`)       |
+| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+sc003"` `(Shift+Alt+2)`                                      | -       |
+| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |
+| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+sc005"` (`Shift+Alt+4`)                  | -       |
+| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+sc006"` (`Shift+Alt+5`) | - |
 
 ### `features` object
 
 Each property accepts only two values: `1` (enabled) or `0` (disabled).
 
-| Setting                               | Type     | Description                                                                 | Default |
+| Property                               | Type     | Description                                                                 | Default |
 | :------------------------------------ | :------- | :-------------------------------------------------------------------------- | :------ |
 | `enable_dedicated_layout_switching`   | `Number` | Enable dedicated hotkeys for direct layout switching. (e.g., `Ctrl+Shift+F8` for `en-DVORAK`, `Ctrl+Shift+F9` for `en-US`). | `1`     |
 | `enable_sequential_layout_switching`  | `Number` | Enable cycling between primary and secondary layouts using sequential switching. | `1`     |
@@ -1354,9 +1461,30 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `enable_typing_audio`                 | `Number` | Play unique typing sounds for different keyboard layouts.                   | `1`     |
 | `enable_all_bindings`                 | `Number` | Enable all custom key bindings.                   | `1`     |
 
+### `audio` object
+
+| Property | Type | Description | Example | Default |
+| :------- | :--- | :---------- | :------ | :------ |
+| `default_file_extension` | `String` | Default audio format for unspecified files. | `mp3` | `wav` |
+| `layout_switching` | `Object` | Layout switching sounds with custom filenames. | - | `{}` |
+| `feature_state` | `Object` | Feature toggle sounds with custom filenames. | - | `{}` |
+| `typing` | `Object` | Typing sounds with custom filenames. | - | `{}` |
+
+### `process_control` object
+
+| Property                     | Type     | Description                                                                                     | Example                                              | Default |
+| :-------------------------- | :------- | :---------------------------------------------------------------------------------------------- | :--------------------------------------------------- | :------ |
+| `target_processes`  | `Array`  | Process names without `.exe` that can be controlled via hotkeys. When suspending/minimizing, the active window's process must match one of these names. When using resume_all_suspended_processes, all processes in this list will be resumed. | `["Fallout4", "KingdomCome"]` | `[]` |
+| `suspend_post_minimize_delay`        | `Number` | Delay in milliseconds between minimizing a window and suspending its process.                                                           | `10`                                      | `100`       |
+| `resume_pre_unminimize_delay`      | `Number` | Delay in milliseconds between resuming a process and unminimizing its window.                                                | `10`                                            | `100`       |
+| `pre_screenshot_delay` | `Number` | Delay in milliseconds before pressing` PrintScreen`.                                                              | `50`                  | `100`       |
+| `post_screenshot_delay` | `Number` | Delay in milliseconds after pressing `PrintScreen`. | `50` | `100` |
+| `pre_minimize_screenshot` | `Number` | Enable (`1`) or disable (`0`) pressing `PrintScreen` before minimizing the window. | `1` | `0`|
+| `pre_suspend_screenshot` | `Number` | Enable (`1`) or disable (`0`) pressing `PrintScreen` before suspending the process. | `1` | `0` |
+
 ### `context_remap` object (within `hotkeys`)
 
-| Setting           | Type     | Description                                                                 | Default |
+| Property           | Type     | Description                                                                 | Default |
 | :---------------- | :------- | :-------------------------------------------------------------------------- | :------ |
 | `exe`             | `Object` | Application-specific configurations. Contains executable names as keys.     | -       |
 | `input_bindings`  | `Object` | Physical keys to remap, with custom names as keys and hotkeys as values. | -       |
@@ -1368,9 +1496,9 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `[App exe name]` | `Object` | Configuration for specific application (use .exe filename without extension). | `"Fallout4"` | -       |
 | `default`         | `Object` | Configuration applied to all unspecified applications.                      | -       | -       |
 
-### `[app exe name]` (within `exe` objects)
+### `[app exe name]` (within `exe` object)
 
-| Setting                                                    | Type   | Description                                                                                                                                     | Example | Default   |
+| Property                                                    | Type   | Description                                                                                                                                     | Example | Default   |
 | :--------------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :-------- |
 | `layout`                                                   | `String` | Layout to use in this context (from `all_layouts_ordered`).                                                                                     | `"en-US"` | -         |
 | `enable_layout_switching_audio`                            | `Number` | Play layout switching sounds for manual changes when you're in this context.                                                                       | `1` | `default` |
@@ -1379,16 +1507,26 @@ Each property accepts only two values: `1` (enabled) or `0` (disabled).
 | `automatic_exe_windows_api_layout_switching_delay`         | `Number` | Milliseconds to wait after app focus before automatic layout switching. Required for applications where layout switching fails without a delay. | `1000` | `0`       |
 | `key_bindings`                                 | `Object` | Key remappings specific to this application context. | `{"f2": "a"}` | -         |
 | `binding_disabled_layouts`                                 | `Array` | An exclusion list for the context-aware key binding system. When a user switches to any layout specified in this array, the system will ignore all entries in `key_bindings` for the current app context, effectively disabling the custom mappings. Layout names must match an entry in `all_layouts_ordered`. | `["en-DVORAK", "es-ES", "de-DE"]` | -         |
+| `process_minimize_method`  | `String`  | Defines the method used when minimizing a process via hotkeys. Available values: `"minimize"` (standard Windows minimize), `"hide"` (completely hides the window), or `"reposition"` (moves the window off‑screen). | `"reposition"`       | `"minimize"` |
+| `enable_process_suspend_hotkeys`  | `Number`  | Enables (`1`) hotkeys for suspending and resuming a process, specifically `toggle_current_process_minimize_and_suspend_state`, `resume_current_process_suspended`, and `toggle_current_process_suspend_state`. The `toggle_current_process_minimized_state` and `resume_all_suspended_processes` hotkeys will continue to work even when this property is set to `0`. | `1`       | `0` |
+| `toggle_current_process_minimized_state`  | `String`  | Toggle the current window between minimized and unminimized states. If window is normal → minimizes it. If window is minimized → restores it. | `"!+sc002"` (`Shift+Alt+1`)       |
+| `toggle_current_process_suspend_state`        | `String` | Toggle the current process between suspended and resumed states. If process is running → suspends it. If process is suspended → resumes it.                                                           | `"!+sc003"` `(Shift+Alt+2)`                                      | -       |
+| `toggle_current_process_minimize_and_suspend_state`      | `String` | Toggle between minimized+suspended and unminimized+resumed states. If window is normal → minimizes then suspends. If window is minimized → resumes then unminimizes.                                                   | `"!+sc004"` (`Shift+Alt+3`)                                            | -       |
+| `resume_current_process_suspended` | `String` | Resume and unminimize the current suspended process, then suspend it again.  If the window is already active, this behaves the same as `toggle_current_process_minimize_and_suspend_state`                                                            | `"!+sc005"` (`Shift+Alt+4`)                  | -       |
+| `resume_all_suspended_processes` | `String` | Resume all processes listed in `target_processes`. Works regardless of the active window. | `"!+sc006"` (`Shift+Alt+5`) | - |
+| `borderless_window` | `Number` | Removes the standard window borders and title bar. | `1` | `0` |
+| `window_title` | `String` | Specifies the exact window title text. Needed to correctly minimize/restore the window when the application spawns multiple windows. | `"Fallout4"` | `""` |
+
 
 ### `input_bindings` object (within `context_remap`)
 
-| Setting           | Type     | Description                                                                 | Example | Default |
+| Property           | Type     | Description                                                                 | Example | Default |
 | :---------------- | :------- | :-------------------------------------------------------------------------- | :------ | :------ |
 | `[custom binding name]`   | `String` | Custom binding name (can be anything) mapped to hotkey.     | `"f2": "F2 Up"` | -       |
 
 ### `key_bindings` object (within `[app exe name]`)
 
-| Setting                | Type         | Description                                                                 | Example |
+| Property                | Type         | Description                                                                 | Example |
 | :--------------------- | :----------- | :-------------------------------------------------------------------------- | :------ |
 | `[custom binding name]`        | `String/Object` | Action to execute, either as simple string or configuration object.       | `"a"` or `{"key": "e", "delay_between": 30}` |
 

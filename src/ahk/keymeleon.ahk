@@ -5,6 +5,7 @@
 ProcessSetPriority "Realtime"
 SetWorkingDir(A_ScriptDir)
 SetKeyDelay(0)
+DetectHiddenWindows(true)
 
 #Include %A_ScriptDir%\lib\_JXON.ahk
 #Include %A_ScriptDir%\lib\WebView2\WebView2.ahk
@@ -23,6 +24,7 @@ set_up_user_dir()
 #Include %A_ScriptDir%\features.ahk
 #Include %A_ScriptDir%\icon.ahk
 #Include %A_ScriptDir%\layouts.ahk
+#Include %A_ScriptDir%\process_control.ahk
 #Include %A_ScriptDir%\log.ahk
 #Include %A_ScriptDir%\ui\index.ahk
 
@@ -35,6 +37,8 @@ bind_unbind_layout_layout_switching_keys()
 bind_unbind_layout_dedicated_layout_switching_keys()
 on_exe_change()
 bind_unbind_context_hotkeys('none')
+fill_arr_vals()
+listen_for_focus_change()
 
 bind_hotkey_to_function(["hotkeys", "display_current_layout_id"], (*) => display_current_layout_id())
 bind_hotkey_to_function(["hotkeys", "toggle_windows_api_layout_switching"], (*) => toggle_feature(

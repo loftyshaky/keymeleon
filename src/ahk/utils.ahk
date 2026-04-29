@@ -1,3 +1,5 @@
+EVENT_SYSTEM_FOREGROUND := 0x0003      ; Window gets foreground (Alt+Tab)
+
 n(val := "") { ; not empty
     return val != ""
 }
@@ -32,14 +34,20 @@ map_to_string(map) {
     return result
 }
 
-watch_any_window_activation(callback) {
-    on_window_activate(w_param, l_param, msg, hwnd) {
-        if (w_param = 4 || w_param = 32772) { ; HSHELL_WINDOWACTIVATE
-            callback(w_param, l_param, msg, hwnd)
-        }
-    }
+register_shell_hook(callback, event_min, event_max) {
+    callback_ptr := CallbackCreate(callback, "F")
 
-    DllCall("RegisterShellHookWindow", "UInt", A_ScriptHwnd)
-    msg_num := DllCall("RegisterWindowMessage", "Str", "SHELLHOOK")
-    OnMessage(msg_num, on_window_activate)
+    return DllCall("SetWinEventHook", "UInt", event_min, "UInt", event_max, "Ptr", 0, "Ptr", callback_ptr, "UInt", 0,
+        "UInt",
+        0, "UInt", 0, "Ptr")
+}
+
+unregister_shell_hook(shell_hook) {
+    DllCall("UnhookWinEvent", "Ptr", shell_hook)
+}
+
+check_if_changed_active_window(event) { ; Params: h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time
+    global EVENT_SYSTEM_FOREGROUND
+
+    return event == EVENT_SYSTEM_FOREGROUND
 }

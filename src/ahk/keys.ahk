@@ -26,11 +26,11 @@ bind_play_audio_on_key_press() {
     ih.Start()
 }
 
-bind_hotkey_to_function(config_val, function) {
+bind_hotkey_to_function(config_val, function, enable_hotkey := true) {
     config_val := config_get(config_val)
 
     if (n(config_val)) {
-        Hotkey(config_val, function)
+        Hotkey(config_val, function, enable_hotkey ? "On" : "Off")
     }
 }
 
@@ -55,7 +55,8 @@ bind_unbind_layout_dedicated_layout_switching_keys() {
     dedicated_layout_hotkeys := config_get(["hotkeys", "dedicated_layout_hotkeys"])
 
     if (n(enable_dedicated_layout_switching) && n(dedicated_layout_hotkeys) && is_arr(dedicated_layout_hotkeys)) {
-        dedicated_layout_switching_state := n(enable_dedicated_layout_switching) && enable_dedicated_layout_switching ?
+        dedicated_layout_switching_state := n(enable_dedicated_layout_switching) &&
+        enable_dedicated_layout_switching ?
             "On" : "Off"
 
         for (i, dedicated_layout_hotkey in dedicated_layout_hotkeys) {
