@@ -12,7 +12,13 @@ class Class {
 
     [key: string]: any;
 
-    public static_sections: string[] = ['features', 'layouts', 'hotkeys', 'process_control'];
+    public static_sections: string[] = [
+        'features',
+        'layouts',
+        'hotkeys',
+        'audio',
+        'process_control',
+    ];
 
     public sections: i_sections.Sections = {
         features: [
@@ -185,6 +191,14 @@ class Class {
                 type: 'text',
                 val_type: 'string',
                 placeholder: '!+5',
+            },
+        ],
+        audio: [
+            {
+                name: 'default_file_extension',
+                type: 'text',
+                val_type: 'string',
+                placeholder: 'mp3',
             },
         ],
         process_control: [
@@ -442,6 +456,13 @@ class Class {
             placeholder: '3',
         },
     ];
+
+    public feature_state: i_sections.SectionTemplateItem[] = [
+        { name: '0', placeholder: 'feature_off' },
+        { name: '1', placeholder: 'feature_on' },
+    ];
+
+    public language_audio = ['layout_switching', 'typing'];
 
     public sanitize_text_for_class = ({ text }: { text: string }): string =>
         err(() => text.replace(/[^A-Za-z0-9]+/g, '_').replace(/^-|-$/g, ''), 'cnt_3478');

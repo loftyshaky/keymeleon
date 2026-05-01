@@ -6,7 +6,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import { i_inputs } from '@loftyshaky/shared-app/inputs';
-import { d_settings, i_settings } from 'shared/internal';
+import { d_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
 
 export const Section: React.FunctionComponent = observer(() => {
@@ -436,6 +436,118 @@ export const Section: React.FunctionComponent = observer(() => {
                                         );
                                     }, 'cnt_4363'),
                             );
+
+                            if (data.settings.prefs.current_section === 'audio') {
+                                const all_layouts_ordered: string[] = get(
+                                    d_settings.Settings.data_raw,
+                                    'settings.layouts.all_layouts_ordered',
+                                );
+
+                                const generate_audio_input = ({
+                                    i,
+                                    object_name,
+                                    key_name,
+                                    input_label,
+                                    placeholder,
+                                }: {
+                                    i: number;
+                                    object_name: string;
+                                    key_name: string;
+                                    input_label: string;
+                                    placeholder: string;
+                                }): JSX.Element =>
+                                    err(() => {
+                                        const section_item: i_sections.SectionTemplateItem = {
+                                            name: input_label,
+                                            type: 'text',
+                                            val_type: 'string',
+                                            placeholder,
+                                        };
+
+                                        const input = d_sections.Sections.generate_input({
+                                            section_item,
+                                            val_accessor: `settings.audio.${object_name}.${key_name}`,
+                                        });
+
+                                        return (
+                                            <c_sections.Input
+                                                key={`${object_name}_${key_name}_${i}`}
+                                                section_item={section_item}
+                                                input={input}
+                                            />
+                                        );
+                                    }, 'cnt_7238');
+
+                                const genearate_feature_state_inputs = (): JSX.Element[] =>
+                                    err(
+                                        () =>
+                                            s_sections.Template.feature_state.map(
+                                                (
+                                                    section_item: i_sections.SectionTemplateItem,
+                                                    i: number,
+                                                ): JSX.Element =>
+                                                    err(() => {
+                                                        const object_name = 'feature_state';
+
+                                                        return generate_audio_input({
+                                                            i,
+                                                            object_name,
+                                                            key_name: section_item.name,
+                                                            input_label: `${object_name}_${section_item.name === '0' ? 'off' : 'on'}`,
+                                                            placeholder: section_item.placeholder
+                                                                ? `${section_item.placeholder}.mp3`
+                                                                : '',
+                                                        });
+                                                    }, 'cnt_4363'),
+                                            ),
+                                        'cnt_4245',
+                                    );
+
+                                const generate_language_inputs = (): void =>
+                                    err(
+                                        () =>
+                                            s_sections.Template.language_audio.forEach(
+                                                (object_name: string): void =>
+                                                    err(() => {
+                                                        if (isObject(all_layouts_ordered)) {
+                                                            all_layouts_ordered.forEach(
+                                                                (
+                                                                    layout_name: string,
+                                                                    i: number,
+                                                                ): void =>
+                                                                    err(() => {
+                                                                        language_audio_inputs.push(
+                                                                            generate_audio_input({
+                                                                                i,
+                                                                                object_name,
+                                                                                key_name:
+                                                                                    layout_name,
+                                                                                input_label: `${object_name}_${layout_name}`,
+                                                                                placeholder: `DVORAK_${object_name}.mp3`,
+                                                                            }),
+                                                                        );
+                                                                    }, 'cnt_9388'),
+                                                            );
+                                                        }
+                                                    }, 'cnt_4363'),
+                                            ),
+                                        'cnt_4245',
+                                    );
+
+                                const feature_state_inputs: JSX.Element[] =
+                                    genearate_feature_state_inputs();
+                                const language_audio_inputs: JSX.Element[] = [];
+
+                                generate_language_inputs();
+
+                                if (n(generated_sections)) {
+                                    generated_sections = [
+                                        ...generated_sections,
+                                        ...feature_state_inputs,
+                                        ...language_audio_inputs,
+                                    ];
+                                }
+                            }
                         }
                     }
                 }, 'cnt_4363'),
