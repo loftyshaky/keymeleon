@@ -5,6 +5,7 @@ import isObject from 'lodash/isObject';
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import { d_offers } from '@loftyshaky/shared-app/shared';
 import { i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
@@ -13,6 +14,8 @@ export const Section: React.FunctionComponent = observer(() => {
     const generate_sections = () =>
         err(() => {
             let generated_sections: JSX.Element[] | undefined;
+            const found_offers_for_current_locale =
+                d_offers.Offers.found_offers_for_current_locale();
 
             Object.keys(s_sections.Template.sections).forEach((section_name: string): void =>
                 err(() => {
@@ -416,24 +419,32 @@ export const Section: React.FunctionComponent = observer(() => {
                                 data.settings.prefs.current_section,
                             )
                         ) {
-                            generated_sections = s_sections.Template.sections[section_name].map(
+                            generated_sections = s_sections.Template.sections[section_name].flatMap(
                                 (
                                     section_item: i_sections.SectionTemplateItem,
                                     i: number,
-                                ): JSX.Element =>
+                                ): JSX.Element[] =>
                                     err(() => {
-                                        const input = d_sections.Sections.generate_input({
-                                            section_item,
-                                            val_accessor: `settings.${section_name}.${section_item.name}`,
-                                        });
+                                        if (
+                                            (section_item.name === 'offers_are_visible' &&
+                                                found_offers_for_current_locale) ||
+                                            section_item.name !== 'offers_are_visible'
+                                        ) {
+                                            const input = d_sections.Sections.generate_input({
+                                                section_item,
+                                                val_accessor: `settings.${section_name}.${section_item.name}`,
+                                            });
 
-                                        return (
-                                            <c_sections.Input
-                                                key={i}
-                                                section_item={section_item}
-                                                input={input}
-                                            />
-                                        );
+                                            return [
+                                                <c_sections.Input
+                                                    key={i}
+                                                    section_item={section_item}
+                                                    input={input}
+                                                />,
+                                            ];
+                                        }
+
+                                        return [];
                                     }, 'cnt_4363'),
                             );
 
