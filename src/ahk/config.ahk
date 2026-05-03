@@ -14,6 +14,10 @@ load_config_json(config_path) {
 config_get(keys, accessed := "") {
     global config
 
+    if (!IsSet(config)) {
+        return ""
+    }
+
     if (accessed = "") {
         if (config = "") {
             return ""
@@ -52,6 +56,10 @@ config_write(config) {
 }
 
 get_exe_obj() {
+    if (!IsSet(config)) {
+        return ""
+    }
+
     return config_get(["hotkeys", "context_remap", "exe"])
 }
 

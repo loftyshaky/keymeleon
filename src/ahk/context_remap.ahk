@@ -5,6 +5,10 @@ bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allo
 }
 
 bind_unbind_context_hotkeys(current_layout := 'none') {
+    if (!IsSet(config)) {
+        return ""
+    }
+
     if (current_layout == 'none') {
         current_layout := get_current_layout()
     }

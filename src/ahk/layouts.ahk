@@ -338,6 +338,10 @@ switch_layout_on_exe_change(recursive := false) {
     global taskbar_was_clicked
     global switch_layout_on_exe_change_run_times
 
+    if (!IsSet(config)) {
+        return ""
+    }
+
     if (!recursive) {
         switch_layout_on_exe_change_run_times := 0
     }
@@ -352,6 +356,7 @@ switch_layout_on_exe_change(recursive := false) {
         }
 
         new_exe_name := StrReplace(new_exe, ".exe", "")
+        exe_obj := get_exe_obj()
         new_exe_is_present_in_conditional_exe_list := n(config_get([new_exe_name], get_exe_obj()))
         switched_from_any_app_to_file_explorer := (new_exe == "explorer.exe" && new_exe == last_exe && window_class ==
             "CabinetWClass") ; CabinetWClass = File explorer.
