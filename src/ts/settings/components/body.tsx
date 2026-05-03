@@ -22,7 +22,9 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
         <div className='main'>
             <div className={x.cls(['main_2', 'settings'])}>
                 <div className='section_btns'>
-                    {Object.keys(s_sections.Template.sections).map(
+                    {Object.keys(
+                        n(s_sections.Template.sections) ? s_sections.Template.sections : {},
+                    ).map(
                         (section_name: string, i: number): JSX.Element => (
                             <c_sections.SectionBtn
                                 key={i}

@@ -40,6 +40,10 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
                 );
             }
 
+            if (section_item.type === 'link') {
+                return <c_inputs.Link link={input as o_inputs.Link} />;
+            }
+
             return <c_inputs.Text input={input as o_inputs.Text} include_label calculate_width />;
         }, [section_item.type, input]);
     },

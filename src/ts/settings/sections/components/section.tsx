@@ -17,7 +17,9 @@ export const Section: React.FunctionComponent = observer(() => {
             const found_offers_for_current_locale =
                 d_offers.Offers.found_offers_for_current_locale();
 
-            Object.keys(s_sections.Template.sections).forEach((section_name: string): void =>
+            Object.keys(
+                n(s_sections.Template.sections) ? s_sections.Template.sections : {},
+            ).forEach((section_name: string): void =>
                 err(() => {
                     if (section_name === data.settings.prefs.current_section) {
                         const generate_exe_group_level_2_inner = ({
@@ -26,7 +28,7 @@ export const Section: React.FunctionComponent = observer(() => {
                         }: {
                             exe_name: string;
                             section_item: i_sections.SectionTemplateItem;
-                        }): i_inputs.Input[] =>
+                        }): i_inputs.InputAndLink[] =>
                             err(() => {
                                 const key_bindings_path = `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings`;
                                 const key_bindings_is_visible_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.is_visible`;
@@ -87,7 +89,7 @@ export const Section: React.FunctionComponent = observer(() => {
                         }: {
                             exe_name: string;
                             input_name: string;
-                        }): i_inputs.Input =>
+                        }): i_inputs.InputAndLink =>
                             err(() => {
                                 const input_path: string = `settings.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}`;
                                 const is_visible_input_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.key_bindings.${input_name}.is_visible`;
@@ -140,7 +142,7 @@ export const Section: React.FunctionComponent = observer(() => {
                             key_binding_name: string;
                             section_item: i_sections.SectionTemplateItem;
                             key_bindings_item_type: i_sections.KeyBindingsItemType;
-                        }): i_inputs.Input =>
+                        }): i_inputs.InputAndLink =>
                             err(() => {
                                 const is_val_type_input: boolean = section_item.name === 'val_type';
                                 const val_accessor: string = `${is_val_type_input ? 'ui' : 'settings'}.hotkeys.context_remap.exe.${exe_name}.key_bindings.${key_binding_name}${(section_item.name === 'key' && key_bindings_item_type === 'object_key') || (section_item.name === 'macro' && key_bindings_item_type === 'object_macro') || !['key', 'macro'].includes(section_item.name) ? `.${section_item.name}` : ''}`;
@@ -186,24 +188,27 @@ export const Section: React.FunctionComponent = observer(() => {
                             exe_name,
                         }: {
                             exe_name: string;
-                        }): i_inputs.Inputs =>
+                        }): i_inputs.InputsAndLinks =>
                             err(() => {
-                                const inputs: i_inputs.Inputs =
-                                    s_sections.Template.sections.exe.flatMap(
-                                        (
-                                            section_item: i_sections.SectionTemplateItem,
-                                        ): i_inputs.Input[] =>
-                                            err(
-                                                () =>
-                                                    generate_exe_group_level_2_inner({
-                                                        exe_name,
-                                                        section_item,
-                                                    }),
-                                                'cnt_4363',
-                                            ),
-                                    );
+                                const inputs: i_inputs.InputsAndLinks = n(
+                                    s_sections.Template.sections,
+                                )
+                                    ? s_sections.Template.sections.exe.flatMap(
+                                          (
+                                              section_item: i_sections.SectionTemplateItem,
+                                          ): i_inputs.InputAndLink[] =>
+                                              err(
+                                                  () =>
+                                                      generate_exe_group_level_2_inner({
+                                                          exe_name,
+                                                          section_item,
+                                                      }),
+                                                  'cnt_4363',
+                                              ),
+                                      )
+                                    : [];
                                 const key_bindings_input_is_present: boolean = inputs.some(
-                                    (input: i_inputs.Input): boolean =>
+                                    (input: i_inputs.InputAndLink): boolean =>
                                         err(
                                             () => input.name === 'key_bindings_exe_group_level_2',
                                             'cnt_5437',
@@ -225,16 +230,16 @@ export const Section: React.FunctionComponent = observer(() => {
                             exe_name,
                         }: {
                             exe_name: string;
-                        }): i_inputs.Inputs =>
+                        }): i_inputs.InputsAndLinks =>
                             err(() => {
-                                const inputs: i_inputs.Inputs = n(
+                                const inputs: i_inputs.InputsAndLinks = n(
                                     get(data, `settings.hotkeys.context_remap.exe.${exe_name}`),
                                 )
                                     ? Object.keys(
                                           data.settings.hotkeys.context_remap.exe[exe_name]
                                               .key_bindings,
                                       ).map(
-                                          (input_name: string): i_inputs.Input =>
+                                          (input_name: string): i_inputs.InputAndLink =>
                                               err(
                                                   () =>
                                                       generate_exe_group_level_3_inner({
@@ -264,13 +269,13 @@ export const Section: React.FunctionComponent = observer(() => {
                             exe_name: string;
                             key_binding_name: string;
                             key_bindings_item_type: i_sections.KeyBindingsItemType;
-                        }): i_inputs.Inputs =>
+                        }): i_inputs.InputsAndLinks =>
                             err(() => {
                                 const generate_input = ({
                                     section_item,
                                 }: {
                                     section_item: i_sections.SectionTemplateItem;
-                                }): i_inputs.Input =>
+                                }): i_inputs.InputAndLink =>
                                     err(
                                         () =>
                                             generate_exe_group_level_3_inputs_inner({
@@ -287,7 +292,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                 ].map(
                                     (
                                         section_item: i_sections.SectionTemplateItem,
-                                    ): i_inputs.Input =>
+                                    ): i_inputs.InputAndLink =>
                                         err(() => generate_input({ section_item }), 'cnt_8195'),
                                 );
                             }, 'cnt_8195');
@@ -419,34 +424,36 @@ export const Section: React.FunctionComponent = observer(() => {
                                 data.settings.prefs.current_section,
                             )
                         ) {
-                            generated_sections = s_sections.Template.sections[section_name].flatMap(
-                                (
-                                    section_item: i_sections.SectionTemplateItem,
-                                    i: number,
-                                ): JSX.Element[] =>
-                                    err(() => {
-                                        if (
-                                            (section_item.name === 'offers_are_visible' &&
-                                                found_offers_for_current_locale) ||
-                                            section_item.name !== 'offers_are_visible'
-                                        ) {
-                                            const input = d_sections.Sections.generate_input({
-                                                section_item,
-                                                val_accessor: `settings.${section_name}.${section_item.name}`,
-                                            });
+                            generated_sections = n(s_sections.Template.sections)
+                                ? s_sections.Template.sections[section_name].flatMap(
+                                      (
+                                          section_item: i_sections.SectionTemplateItem,
+                                          i: number,
+                                      ): JSX.Element[] =>
+                                          err(() => {
+                                              if (
+                                                  (section_item.name === 'offers_are_visible' &&
+                                                      found_offers_for_current_locale) ||
+                                                  section_item.name !== 'offers_are_visible'
+                                              ) {
+                                                  const input = d_sections.Sections.generate_input({
+                                                      section_item,
+                                                      val_accessor: `settings.${section_name}.${section_item.name}`,
+                                                  });
 
-                                            return [
-                                                <c_sections.Input
-                                                    key={i}
-                                                    section_item={section_item}
-                                                    input={input}
-                                                />,
-                                            ];
-                                        }
+                                                  return [
+                                                      <c_sections.Input
+                                                          key={i}
+                                                          section_item={section_item}
+                                                          input={input}
+                                                      />,
+                                                  ];
+                                              }
 
-                                        return [];
-                                    }, 'cnt_4363'),
-                            );
+                                              return [];
+                                          }, 'cnt_4363'),
+                                  )
+                                : [];
 
                             if (data.settings.prefs.current_section === 'audio') {
                                 const all_layouts_ordered: string[] = get(

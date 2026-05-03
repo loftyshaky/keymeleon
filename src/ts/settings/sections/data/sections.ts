@@ -33,8 +33,8 @@ class Class {
         svg_2?: string;
         content_is_visible_val_accessor?: string;
         content_is_visible_default?: boolean;
-        inputs?: i_inputs.Inputs;
-    }): i_inputs.Input =>
+        inputs?: i_inputs.InputsAndLinks;
+    }): i_inputs.InputAndLink =>
         err(() => {
             d_settings.Settings.set_transformed({
                 val_type: section_item.val_type,
@@ -51,7 +51,7 @@ class Class {
                     content_is_visible_val_accessor,
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: () => {},
-                    inputs,
+                    inputs: inputs as i_inputs.Inputs,
                     ...(n(side_btns) && { side_btns }),
                 });
             }
@@ -113,6 +113,13 @@ class Class {
                     Svg: svg_2,
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: d_sections.Val.add_new_item,
+                });
+            }
+
+            if (section_item.type === 'link') {
+                return new o_inputs.Link({
+                    name: section_item.name,
+                    href: section_item.href,
                 });
             }
 
@@ -203,7 +210,7 @@ class Class {
     }: {
         name_prefix: string;
         val_accessor: string;
-    }): i_inputs.Input =>
+    }): i_inputs.InputAndLink =>
         // Changed return type to JSX.Element
         err(() => {
             const add_new_setting_section_item: i_sections.SectionTemplateItem =

@@ -1,3 +1,6 @@
-.section_btn.prefs {
-    order: 1;
+.section_btn {
+    &.prefs,
+    &.links {
+        order: 1;
+    }
 }

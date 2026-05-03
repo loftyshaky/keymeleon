@@ -46,5 +46,44 @@
     },
     "macro_btn_text": {
         "message": "Macro"
+    },
+    "github_link_text": {
+        "message": "😼 Keymeleon on Github"
+    },
+    "clear_new_tab_chrome_link_text": {
+        "message": "⚗️ Clear New Tab for Chrome"
+    },
+    "clear_new_tab_edge_link_text": {
+        "message": "⚗️ Clear New Tab for Edge"
+    },
+    "empty_new_tab_page_chrome_link_text": {
+        "message": "⚗️ Empty New Tab Page for Chrome"
+    },
+    "empty_new_tab_page_edge_link_text": {
+        "message": "⚗️ Empty New Tab Page for Edge"
+    },
+    "close_other_tabs_chrome_link_text": {
+        "message": "⚗️ Close Other Tabs+ for Chrome"
+    },
+    "close_other_tabs_edge_link_text": {
+        "message": "⚗️ Close Other Tabs+ for Edge"
+    },
+    "search_enhancer_for_google_chrome_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ for Chrome"
+    },
+    "search_enhancer_for_google_edge_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ for Edge"
+    },
+    "advanced_extension_reloader_chrome_link_text": {
+        "message": "⚗️ Advanced Extension Reloader for Chrome"
+    },
+    "advanced_extension_reloader_edge_link_text": {
+        "message": "⚗️ Advanced Extension Reloader for Edge"
+    },
+    "scroll_to_top_chrome_link_text": {
+        "message": "⚗️ Scroll to Top for Chrome"
+    },
+    "scroll_to_top_edge_link_text": {
+        "message": "⚗️ Scroll to Top for Edge"
     }
 }

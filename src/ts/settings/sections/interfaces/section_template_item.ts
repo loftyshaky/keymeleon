@@ -2,9 +2,10 @@ import { i_settings } from 'shared/internal';
 
 export interface SectionTemplateItem {
     name: string;
-    type?: 'checkbox' | 'text' | 'textarea' | 'number' | 'select' | 'icon_btn' | 'group';
+    type?: 'checkbox' | 'text' | 'textarea' | 'number' | 'select' | 'icon_btn' | 'group' | 'link';
     default_val?: boolean | string;
     val_type?: i_settings.ValType;
     placeholder?: string;
     developer_mode_setting?: boolean;
+    href?: string;
 }
