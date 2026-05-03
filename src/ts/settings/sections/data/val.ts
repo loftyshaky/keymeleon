@@ -5,6 +5,7 @@ import { makeObservable, observable, action } from 'mobx';
 
 import { t, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import { s_css_vars } from 'shared_clean/internal';
 import { d_settings } from 'shared/internal';
 import { d_sections, i_sections } from 'settings/internal';
 
@@ -97,6 +98,8 @@ class Class {
 
                     this.val_type_reaction_id = x.unique_id();
                 }
+
+                s_css_vars.CssVars.set();
 
                 d_settings.Settings.write_change_val({
                     val_setter: input.val_accessor,

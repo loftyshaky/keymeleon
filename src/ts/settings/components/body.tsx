@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react';
-
+import { c_offers, d_offers } from '@loftyshaky/shared-app/shared';
 import { c_sections, o_sections, d_sections, s_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
@@ -32,6 +32,12 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
                     )}
                 </div>
                 <div className='sections_and_offers'>
+                    {d_offers.Offers.found_offers_for_current_locale() ? (
+                        <c_offers.Body
+                            is_visible={data.settings.prefs.offers_are_visible}
+                            offer_banner_type='horizontal'
+                        />
+                    ) : undefined}
                     <div className='sections' ref={sections_ref}>
                         <c_sections.Section />
                     </div>

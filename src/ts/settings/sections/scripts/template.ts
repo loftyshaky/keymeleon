@@ -18,6 +18,7 @@ class Class {
         'hotkeys',
         'audio',
         'process_control',
+        'prefs',
     ];
 
     public sections: i_sections.Sections = {
@@ -241,6 +242,37 @@ class Class {
                 name: 'pre_suspend_screenshot',
                 type: 'checkbox',
                 default_val: false,
+            },
+        ],
+        prefs: [
+            {
+                name: 'options_page_theme',
+                type: 'select',
+                val_type: 'string',
+                default_val: 'lavender',
+            },
+            {
+                name: 'transition_duration',
+                type: 'number',
+                val_type: 'number',
+                placeholder: '200',
+            },
+            {
+                name: 'enable_cut_features',
+                type: 'checkbox',
+                default_val: false,
+            },
+            {
+                name: 'offers_are_visible',
+                type: 'checkbox',
+                default_val: true,
+                developer_mode_setting: true,
+            },
+            {
+                name: 'developer_mode',
+                type: 'checkbox',
+                default_val: false,
+                developer_mode_setting: true,
             },
         ],
         input_bindings: [],

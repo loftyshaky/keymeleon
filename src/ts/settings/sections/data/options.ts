@@ -30,6 +30,15 @@ class Class {
                     new o_inputs.Option({ name: 'send_play', val: 'SendPlay' }),
                     new o_inputs.Option({ name: 'send_event', val: 'SendEvent' }),
                 ],
+                options_page_theme: [
+                    new o_inputs.Option({ name: 'light' }),
+                    new o_inputs.Option({ name: 'dark' }),
+                    new o_inputs.Option({ name: 'very_dark' }),
+                    new o_inputs.Option({ name: 'clover' }),
+                    new o_inputs.Option({ name: 'aqua' }),
+                    new o_inputs.Option({ name: 'lavender' }),
+                    new o_inputs.Option({ name: 'ruby' }),
+                ],
             };
         }, 'seg_1127');
 }

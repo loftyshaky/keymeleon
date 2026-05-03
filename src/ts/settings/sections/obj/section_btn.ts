@@ -1,5 +1,6 @@
 import { computedFn } from 'mobx-utils';
 
+import { d_developer_mode } from '@loftyshaky/shared-app/settings';
 import { d_settings } from 'shared/internal';
 
 export class SectionBtn {
@@ -27,5 +28,16 @@ export class SectionBtn {
                 val_setter: 'settings.prefs.current_section',
                 val: this.section_name,
             });
+
+            if (this.section_name === 'prefs') {
+                d_developer_mode.DeveloperMode.enable({
+                    save_callback: async () =>
+                        d_settings.Settings.write_change_val({
+                            val_setter: 'settings.prefs.developer_mode',
+                            val: 1,
+                            val_type: 'number',
+                        }),
+                });
+            }
         }, 'cnt_1129');
 }

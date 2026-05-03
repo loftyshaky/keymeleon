@@ -49,6 +49,7 @@ class Class {
                     content_is_visible_default,
                     val_accessor,
                     content_is_visible_val_accessor,
+                    developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: () => {},
                     inputs,
                     ...(n(side_btns) && { side_btns }),
@@ -60,6 +61,7 @@ class Class {
                     name: section_item.name,
                     default_val: section_item.default_val,
                     val_accessor,
+                    developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
                             input,
@@ -76,6 +78,7 @@ class Class {
                     val_accessor,
                     label_is_visible,
                     options: d_sections.Options.options,
+                    developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
                             input,
@@ -91,6 +94,7 @@ class Class {
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
+                    developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
                             input,
@@ -107,6 +111,7 @@ class Class {
                     val_accessor,
                     label_is_visible,
                     Svg: svg_2,
+                    developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: d_sections.Val.add_new_item,
                 });
             }

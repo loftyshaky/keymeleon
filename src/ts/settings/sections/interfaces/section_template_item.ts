@@ -6,4 +6,5 @@ export interface SectionTemplateItem {
     default_val?: boolean | string;
     val_type?: i_settings.ValType;
     placeholder?: string;
+    developer_mode_setting?: boolean;
 }
