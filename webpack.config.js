@@ -56,7 +56,7 @@ module.exports = (env, argv) => {
         callback_done: () => {
             const env_2 = 'app';
 
-            env_instance.generate({ browser: env.browser, mode: argv.mode, env: env_2 });
+            env_instance.generate({ browser: 'chrome', mode: argv.mode, env: env_2 });
             locales.merge({ env: env_2 });
             dependencies_shared.add_missing_dependesies({
                 extension_specific_missing_dependencies: dependencies.missing_dependencies,
