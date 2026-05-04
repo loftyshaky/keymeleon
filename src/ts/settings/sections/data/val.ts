@@ -29,6 +29,8 @@ class Class {
     public edit_group_label_reaction_id: string = x.unique_id();
     public collapse_group_reaction_id: string = x.unique_id();
     public add_new_setting: string = x.unique_id();
+    private previous_editing_label_input: i_inputs.Input | undefined;
+    private previous_editing_label_input_label_val: string | undefined;
 
     public change = action(
         ({
@@ -292,12 +294,29 @@ class Class {
     public toggle_edit_label_state = ({ input }: { input: i_inputs.Input }): void =>
         err(() => {
             if (n(d_inputs.LabelInInputItem.toggle_edit_label_state)) {
+                if (
+                    n(this.previous_editing_label_input) &&
+                    input !== this.previous_editing_label_input &&
+                    (this.previous_editing_label_input as o_inputs.Group).editing_label
+                ) {
+                    this.previous_editing_label_input.label_val =
+                        this.previous_editing_label_input_label_val;
+
+                    d_inputs.LabelInInputItem.toggle_edit_label_state({
+                        input: this.previous_editing_label_input,
+                        callback: () => {},
+                    });
+                }
+
                 d_inputs.LabelInInputItem.toggle_edit_label_state({
                     input,
                     callback: this.toggle_edit_label_state_callback,
                 });
 
                 this.edit_group_label_reaction_id = x.unique_id();
+
+                this.previous_editing_label_input = input;
+                this.previous_editing_label_input_label_val = input.label_val;
             }
         }, 'cnt_5168');
 
