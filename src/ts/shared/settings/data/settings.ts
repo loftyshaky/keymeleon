@@ -162,7 +162,7 @@ class Class {
                     sort,
                 });
             }
-            this.write({ config: this.data_raw });
+            this.write({ config: this.data_raw.settings });
         }, 'shr_1129');
 
     private deep_obj_sort_by_key = <T>({ obj }: { obj: T }): T =>
