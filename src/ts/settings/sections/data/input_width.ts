@@ -1,3 +1,5 @@
+import { runInAction } from 'mobx';
+
 import get from 'lodash/get';
 import { d_settings } from 'shared/internal';
 import { d_inputs } from '@loftyshaky/shared-app/inputs';
@@ -18,7 +20,11 @@ class Class {
             const current_section: string = get(data, 'settings.prefs.current_section');
 
             if (n(input_width)) {
-                d_inputs.InputWidth.width = input_width;
+                runInAction(() =>
+                    err(() => {
+                        d_inputs.InputWidth.width = input_width;
+                    }, 'cnt_1244'),
+                );
             } else {
                 await d_inputs.InputWidth.calculate();
 
