@@ -6,7 +6,7 @@ import { makeObservable, observable, action } from 'mobx';
 import { t, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { s_css_vars } from 'shared_clean/internal';
-import { d_settings } from 'shared/internal';
+import { d_settings, i_settings } from 'shared/internal';
 import { d_sections, i_sections } from 'settings/internal';
 
 class Class {
@@ -188,11 +188,34 @@ class Class {
             });
         }, 'cnt_1290');
 
-    public remove_property = ({ input }: { input: i_inputs.Input }): void =>
+    public remove_property = ({
+        input,
+        val_type,
+    }: {
+        input: i_inputs.Input;
+        val_type: i_settings.ValType | undefined;
+    }): void =>
         err(() => {
-            d_settings.Settings.write_unset({ val_setter: input.val_accessor });
+            if (n(input.side_btns)) {
+                const side_btn_2: i_inputs.SideBtn | undefined = input.side_btns.find(
+                    (side_btn: i_inputs.SideBtn): boolean =>
+                        err(() => side_btn.name === 'remove_property', 'cnt_4637'),
+                );
 
-            this.remove_property_reaction_id = x.unique_id();
+                if (n(side_btn_2)) {
+                    if (side_btn_2.is_enabled_cond!({ input })) {
+                        d_settings.Settings.write_unset({ val_setter: input.val_accessor });
+                    } else {
+                        d_settings.Settings.write_change_val({
+                            val_setter: input.val_accessor,
+                            val: input.default_val,
+                            val_type,
+                        });
+                    }
+
+                    this.remove_property_reaction_id = x.unique_id();
+                }
+            }
         }, 'cnt_1291');
 
     public remove_property_side_btn_is_enabled_cond = ({

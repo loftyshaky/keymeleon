@@ -1,6 +1,6 @@
 import { o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_sections, i_sections } from 'settings/internal';
-import { svg, d_settings } from 'shared/internal';
+import { svg, d_settings, i_settings } from 'shared/internal';
 
 class Class {
     private static instance: Class;
@@ -44,6 +44,7 @@ class Class {
             if (section_item.type === 'group') {
                 return new o_inputs.Group({
                     name: section_item.name,
+                    default_val: section_item.default_val,
                     alt_msg,
                     is_column_layout: true,
                     content_is_visible_default,
@@ -108,6 +109,7 @@ class Class {
             if (section_item.type === 'icon_btn' && n(svg_2)) {
                 return new o_inputs.IconBtn({
                     name: section_item.name,
+                    default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
                     Svg: svg_2,
@@ -148,8 +150,10 @@ class Class {
 
     public generate_side_btns = ({
         side_btns_to_generate,
+        val_type,
     }: {
         side_btns_to_generate: string[];
+        val_type: i_settings.ValType | undefined;
     }): i_inputs.SideBtn[] =>
         err(
             () =>
@@ -162,7 +166,9 @@ class Class {
                                     Svg: svg.Delete,
                                     is_enabled_cond:
                                         d_sections.Val.remove_property_side_btn_is_enabled_cond,
-                                    event_callback: d_sections.Val.remove_property,
+                                    event_callback: ({ input }: { input: i_inputs.Input }) => {
+                                        d_sections.Val.remove_property({ input, val_type });
+                                    },
                                 };
                             }
 

@@ -43,6 +43,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                 'remove_property',
                                                 'collapse_group',
                                             ],
+                                            val_type: section_item.val_type,
                                         });
                                     const section_item_2: i_sections.SectionTemplateItem = {
                                         name: `${section_item.name}_exe_group_level_2`,
@@ -69,6 +70,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                     const side_btns: i_inputs.SideBtn[] =
                                         d_sections.Sections.generate_side_btns({
                                             side_btns_to_generate: ['remove_property'],
+                                            val_type: section_item.val_type,
                                         });
 
                                     const input = d_sections.Sections.generate_input({
@@ -102,6 +104,11 @@ export const Section: React.FunctionComponent = observer(() => {
                                     d_sections.Val.compute_val_type_initial_val({
                                         key_bindings_item,
                                     });
+
+                                const section_item: i_sections.SectionTemplateItem = {
+                                    name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_3`,
+                                    type: 'group',
+                                };
                                 const side_btns: i_inputs.SideBtn[] =
                                     d_sections.Sections.generate_side_btns({
                                         side_btns_to_generate: [
@@ -109,11 +116,8 @@ export const Section: React.FunctionComponent = observer(() => {
                                             'edit_group_label',
                                             'collapse_group',
                                         ],
+                                        val_type: section_item.val_type,
                                     });
-                                const section_item: i_sections.SectionTemplateItem = {
-                                    name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_3`,
-                                    type: 'group',
-                                };
                                 const input = d_sections.Sections.generate_input({
                                     section_item,
                                     alt_msg: input_name,
@@ -173,6 +177,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                             is_val_type_input || !generate_remove_property_side_btn
                                                 ? []
                                                 : ['remove_property'],
+                                        val_type: section_item.val_type,
                                     });
 
                                 const input = d_sections.Sections.generate_input({
@@ -303,19 +308,20 @@ export const Section: React.FunctionComponent = observer(() => {
                             ).map(
                                 (input_name: string, i: number): JSX.Element =>
                                     err(() => {
-                                        const group_side_btns: i_inputs.SideBtn[] =
-                                            d_sections.Sections.generate_side_btns({
-                                                side_btns_to_generate: [
-                                                    'remove_property',
-                                                    'edit_group_label',
-                                                ],
-                                            });
                                         const section_item: i_sections.SectionTemplateItem = {
                                             name: `${input_name}`,
                                             type: 'text',
                                             val_type: 'string',
                                             placeholder: '^+F2',
                                         };
+                                        const group_side_btns: i_inputs.SideBtn[] =
+                                            d_sections.Sections.generate_side_btns({
+                                                side_btns_to_generate: [
+                                                    'remove_property',
+                                                    'edit_group_label',
+                                                ],
+                                                val_type: section_item.val_type,
+                                            });
                                         const group_section_item: i_sections.SectionTemplateItem = {
                                             name: input_name,
                                             type: 'group',
@@ -365,6 +371,10 @@ export const Section: React.FunctionComponent = observer(() => {
                                     err(() => {
                                         const exe_path: string = `settings.hotkeys.context_remap.exe.${exe_name}`;
                                         const exe_is_visible_path: string = `settings.ui.window.section_visibility_state.hotkeys.context_remap.exe.${exe_name}.is_visible`;
+                                        const section_item: i_sections.SectionTemplateItem = {
+                                            name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_1`,
+                                            type: 'group',
+                                        };
                                         const side_btns: i_inputs.SideBtn[] =
                                             d_sections.Sections.generate_side_btns({
                                                 side_btns_to_generate: [
@@ -372,12 +382,8 @@ export const Section: React.FunctionComponent = observer(() => {
                                                     'edit_group_label',
                                                     'collapse_group',
                                                 ],
+                                                val_type: section_item.val_type,
                                             });
-                                        const section_item: i_sections.SectionTemplateItem = {
-                                            name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_1`,
-                                            type: 'group',
-                                        };
-
                                         const input = d_sections.Sections.generate_input({
                                             section_item,
                                             alt_msg: exe_name,
