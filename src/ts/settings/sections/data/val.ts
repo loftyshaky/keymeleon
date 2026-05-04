@@ -40,8 +40,9 @@ class Class {
         }): void =>
             err(() => {
                 const val: i_data.Val = d_inputs.Val.access({ input });
-                const val_final =
+                const val_final: i_data.Val =
                     n(val) &&
+                    typeof val === 'string' &&
                     ['enable_typing_audio', 'enable_layout_switching_audio'].includes(input.name) &&
                     ['0', '1'].includes(val)
                         ? +val
