@@ -78,13 +78,13 @@ class Class {
                         name: 'all_layouts_ordered',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: 'en-DVORAK,en-US',
+                        placeholder: 'en-DVORAK, en-US',
                     },
                     {
                         name: 'layout_ids',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: '-268303351,67699721',
+                        placeholder: '-268303351, 67699721',
                     },
                     {
                         name: 'primary_layout',
@@ -96,13 +96,13 @@ class Class {
                         name: 'secondary_layouts',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: 'en-US,es-ES',
+                        placeholder: 'en-US, es-ES',
                     },
                     {
                         name: 'fallback_layout_switching_exes',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: 'x360ce,RazerAppEngine',
+                        placeholder: 'x360ce, RazerAppEngine',
                     },
                     {
                         name: 'layout_switching_delay',
@@ -134,7 +134,7 @@ class Class {
                         name: 'dedicated_layout_hotkeys',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: '^+F8,^+F9',
+                        placeholder: '^+F8, ^+F9',
                     },
                     {
                         name: 'toggle_sequential_layout_switching',
@@ -221,7 +221,7 @@ class Class {
                         name: 'target_processes',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: 'Fallout4,KingdomCome',
+                        placeholder: 'Fallout4, KingdomCome',
                     },
                     {
                         name: 'suspend_post_minimize_delay',
@@ -383,7 +383,7 @@ class Class {
                         name: 'binding_disabled_layouts',
                         type: 'text',
                         val_type: 'array',
-                        placeholder: 'en-DVORAK,es-ES',
+                        placeholder: 'en-DVORAK, es-ES',
                     },
                     {
                         name: 'enable_layout_switching_audio',
@@ -538,7 +538,7 @@ class Class {
                     name: 'modifiers',
                     type: 'text',
                     val_type: 'array',
-                    placeholder: 'Ctrl,Shift',
+                    placeholder: 'Ctrl, Shift',
                 },
                 ...this.allow_native_function_and_ignore_extra_modifiers,
                 {
