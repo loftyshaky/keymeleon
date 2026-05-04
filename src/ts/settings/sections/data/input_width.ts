@@ -22,7 +22,7 @@ class Class {
             } else {
                 await d_inputs.InputWidth.calculate();
 
-                if (current_section === 'exe') {
+                if (current_section === 'exe' && s('.layout')) {
                     d_settings.Settings.write_change_val({
                         val_setter: val_accessor,
                         val: d_inputs.InputWidth.width,
