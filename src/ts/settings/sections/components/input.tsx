@@ -9,7 +9,7 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
 
         return useMemo(() => {
             if (section_item.type === 'group') {
-                return <c_inputs.Group input={input as o_inputs.Group} />;
+                return <c_inputs.Group input={input as o_inputs.Group} calculate_width={false} />;
             }
 
             if (section_item.type === 'checkbox') {

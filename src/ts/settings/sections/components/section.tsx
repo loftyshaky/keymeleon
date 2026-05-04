@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { d_offers } from '@loftyshaky/shared-app/shared';
@@ -11,6 +11,12 @@ import { d_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
 
 export const Section: React.FunctionComponent = observer(() => {
+    useEffect(() => {
+        (async () => {
+            await d_sections.InputWidth.calculate();
+        })();
+    });
+
     const generate_sections = () =>
         err(() => {
             let generated_sections: JSX.Element[] | undefined;

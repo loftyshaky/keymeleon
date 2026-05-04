@@ -9,6 +9,7 @@ import {
     s_tab_index,
     s_theme as s_theme_shared,
 } from '@loftyshaky/shared-app/shared';
+import { d_inputs } from '@loftyshaky/shared-app/inputs';
 import { s_css_vars, s_suffix, s_theme } from 'shared_clean/internal';
 
 class Class {

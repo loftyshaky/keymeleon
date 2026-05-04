@@ -44,6 +44,7 @@ class Class {
             if (section_item.type === 'group') {
                 return new o_inputs.Group({
                     name: section_item.name,
+                    section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     alt_msg,
                     is_column_layout: true,
@@ -60,6 +61,7 @@ class Class {
             if (section_item.type === 'checkbox') {
                 return new o_inputs.Checkbox({
                     name: section_item.name,
+                    section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     val_accessor,
                     developer_mode_setting: section_item.developer_mode_setting,
@@ -75,6 +77,7 @@ class Class {
             if (section_item.type === 'select') {
                 return new o_inputs.Select({
                     name: section_item.name,
+                    section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
@@ -92,6 +95,7 @@ class Class {
             if (section_item.type === 'textarea') {
                 return new o_inputs.Textarea({
                     name: section_item.name,
+                    section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
@@ -109,6 +113,7 @@ class Class {
             if (section_item.type === 'icon_btn' && n(svg_2)) {
                 return new o_inputs.IconBtn({
                     name: section_item.name,
+                    section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
@@ -127,6 +132,7 @@ class Class {
 
             return new o_inputs.Text({
                 name: section_item.name,
+                section: data.settings.prefs.current_section,
                 text_type: section_item.type as 'text' | 'number',
                 default_val: section_item.default_val,
                 val_accessor,

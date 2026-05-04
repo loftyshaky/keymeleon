@@ -43,9 +43,6 @@ class Class {
             s_msgs.Msgs.send({ msg: 'get_config' });
         }, 'shr_1125');
 
-    public get_val = ({ val_accessor }: { val_accessor: string }): any =>
-        err(() => get(data.settings, val_accessor), 'shr_1126');
-
     private set_val = ({
         val_setter,
         val,
