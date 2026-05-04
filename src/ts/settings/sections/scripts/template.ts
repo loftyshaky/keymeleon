@@ -418,16 +418,18 @@ class Class {
                     },
                     {
                         name: 'enable_layout_switching_audio',
-                        type: 'checkbox',
-                        default_val: true,
-                    },
-                    {
-                        name: 'enable_layout_switching_audio_for_automatic_layout_change',
-                        type: 'checkbox',
-                        default_val: true,
+                        type: 'select',
+                        val_type: 'string',
+                        default_val: 'default',
                     },
                     {
                         name: 'enable_typing_audio',
+                        type: 'select',
+                        val_type: 'string',
+                        default_val: 'default',
+                    },
+                    {
+                        name: 'enable_layout_switching_audio_for_automatic_layout_change',
                         type: 'checkbox',
                         default_val: true,
                     },

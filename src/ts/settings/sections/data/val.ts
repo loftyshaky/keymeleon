@@ -40,6 +40,12 @@ class Class {
         }): void =>
             err(() => {
                 const val: i_data.Val = d_inputs.Val.access({ input });
+                const val_final =
+                    n(val) &&
+                    ['enable_typing_audio', 'enable_layout_switching_audio'].includes(input.name) &&
+                    ['0', '1'].includes(val)
+                        ? +val
+                        : val;
 
                 if (input.name === 'val_type' && input.val_accessor) {
                     const val_accessor_split: string[] = input.val_accessor.split('.');
@@ -103,7 +109,7 @@ class Class {
 
                 d_settings.Settings.write_change_val({
                     val_setter: input.val_accessor,
-                    val,
+                    val: val_final,
                     val_type: section_item.val_type,
                 });
             }, 'cnt_1288'),

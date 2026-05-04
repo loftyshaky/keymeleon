@@ -23,6 +23,16 @@ class Class {
                     new o_inputs.Option({ name: 'array_macro' }),
                     new o_inputs.Option({ name: 'object_macro' }),
                 ],
+                enable_layout_switching_audio: [
+                    new o_inputs.Option({ name: 'Default', val: 'default' }),
+                    new o_inputs.Option({ name: '0' }),
+                    new o_inputs.Option({ name: '1' }),
+                ],
+                enable_typing_audio: [
+                    new o_inputs.Option({ name: 'Default', val: 'default' }),
+                    new o_inputs.Option({ name: '0' }),
+                    new o_inputs.Option({ name: '1' }),
+                ],
                 send_mode: [
                     new o_inputs.Option({ name: 'send', val: 'Send' }),
                     new o_inputs.Option({ name: 'send_input', val: 'SendInput' }),
