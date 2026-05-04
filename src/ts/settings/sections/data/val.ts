@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { makeObservable, observable, action } from 'mobx';
 
-import { t, i_data } from '@loftyshaky/shared-app/shared';
+import { t, s_theme, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { s_css_vars } from 'shared_clean/internal';
 import { d_settings, i_settings } from 'shared/internal';
@@ -109,6 +109,12 @@ class Class {
                 }
 
                 s_css_vars.CssVars.set();
+
+                if (input.name === 'options_page_theme') {
+                    s_theme.Theme.set({
+                        name: data.settings.prefs.options_page_theme,
+                    });
+                }
 
                 d_settings.Settings.write_change_val({
                     val_setter: input.val_accessor,

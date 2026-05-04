@@ -61,10 +61,6 @@ class Class {
             data.settings = (
                 sort ? this.deep_obj_sort_by_key<any>({ obj: updated_data }) : updated_data
             ).settings;
-
-            s_theme.Theme.set({
-                name: data.settings.prefs.options_page_theme,
-            });
         }, 'shr_1127');
 
     private unset_val = ({ val_setter }: { val_setter: string }): void =>
@@ -75,10 +71,6 @@ class Class {
             unset(updated_data, val_setter);
 
             data.settings = updated_data.settings;
-
-            s_theme.Theme.set({
-                name: data.settings.prefs.options_page_theme,
-            });
         }, 'shr_1107');
 
     public set_key = ({
