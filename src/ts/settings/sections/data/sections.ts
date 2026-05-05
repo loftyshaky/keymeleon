@@ -100,12 +100,13 @@ class Class {
                     val_accessor,
                     label_is_visible,
                     developer_mode_setting: section_item.developer_mode_setting,
+                    input_errors: section_item.input_errors,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
                             input,
                             section_item,
                         }),
-                    warn_state_checker: () => false,
+                    warn_state_checker: d_sections.Validation.validate_input,
                     ...(n(side_btns) && { side_btns }),
                 });
             }
@@ -139,6 +140,7 @@ class Class {
                 label_is_visible,
                 allow_removing_val: true,
                 placeholder: section_item.placeholder,
+                input_errors: section_item.input_errors,
                 event_callback: ({ input }: { input: i_inputs.Input }) =>
                     d_sections.Val.change({
                         input,
@@ -149,7 +151,7 @@ class Class {
                         input,
                         section_item,
                     }),
-                warn_state_checker: () => false,
+                warn_state_checker: d_sections.Validation.validate_input,
                 ...(n(side_btns) && { side_btns }),
             });
         }, 'cnt_2212');

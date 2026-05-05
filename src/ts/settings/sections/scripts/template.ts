@@ -80,6 +80,7 @@ class Class {
                         val_type: 'array',
                         placeholder: 'en-DVORAK, en-US',
                         default_val: '',
+                        input_errors: ['invalid_layouts'],
                     },
                     {
                         name: 'layout_ids',
@@ -87,6 +88,7 @@ class Class {
                         val_type: 'array',
                         placeholder: '-268303351, 67699721',
                         default_val: '',
+                        input_errors: ['invalid_layout_ids'],
                     },
                     {
                         name: 'primary_layout',
@@ -94,6 +96,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'en-DVORAK',
                         default_val: '',
+                        input_errors: ['invalid_layout'],
                     },
                     {
                         name: 'secondary_layouts',
@@ -101,6 +104,7 @@ class Class {
                         val_type: 'array',
                         placeholder: 'en-US, es-ES',
                         default_val: '',
+                        input_errors: ['invalid_layouts'],
                     },
                     {
                         name: 'fallback_layout_switching_exes',
@@ -108,6 +112,7 @@ class Class {
                         val_type: 'array',
                         placeholder: 'x360ce, RazerAppEngine',
                         default_val: '',
+                        input_errors: ['invalid_exe_names'],
                     },
                     {
                         name: 'layout_switching_delay',
@@ -115,6 +120,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '30',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                 ],
                 hotkeys: [
@@ -124,6 +130,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+sc017',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'set_primary_layout',
@@ -131,6 +138,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'ScrollLock',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'set_secondary_layout',
@@ -138,6 +146,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'Pause',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'dedicated_layout_hotkeys',
@@ -145,6 +154,7 @@ class Class {
                         val_type: 'array',
                         placeholder: '^+F8, ^+F9',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkeys'],
                     },
                     {
                         name: 'toggle_sequential_layout_switching',
@@ -152,12 +162,15 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC01B',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_dedicated_layout_switching',
                         type: 'text',
+                        val_type: 'string',
                         placeholder: '^!+SC01A',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_all_bindings',
@@ -165,6 +178,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC035',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_windows_api_layout_switching',
@@ -172,6 +186,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC019',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_layout_switching_audio',
@@ -179,6 +194,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC034',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_typing_audio',
@@ -186,6 +202,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC033',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_feature_state_audio',
@@ -193,6 +210,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '^!+SC032',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_current_process_minimized_state',
@@ -200,6 +218,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+1',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_current_process_suspend_state',
@@ -207,6 +226,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+2',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_current_process_minimize_and_suspend_state',
@@ -214,6 +234,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+3',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'resume_current_process_suspended',
@@ -221,6 +242,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+4',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'resume_all_suspended_processes',
@@ -228,6 +250,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+5',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                 ],
                 audio: [
@@ -237,6 +260,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'mp3',
                         default_val: '',
+                        input_errors: ['invalid_file_extension'],
                     },
                 ],
                 process_control: [
@@ -246,6 +270,7 @@ class Class {
                         val_type: 'array',
                         placeholder: 'Fallout4, KingdomCome',
                         default_val: '',
+                        input_errors: ['invalid_exe_names'],
                     },
                     {
                         name: 'suspend_post_minimize_delay',
@@ -253,6 +278,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '100',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'resume_pre_unminimize_delay',
@@ -260,6 +286,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '100',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'pre_screenshot_delay',
@@ -267,6 +294,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '100',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'post_screenshot_delay',
@@ -274,6 +302,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '100',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'pre_minimize_screenshot',
@@ -299,6 +328,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '200',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'enable_cut_features',
@@ -408,6 +438,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'en-US',
                         default_val: '',
+                        input_errors: ['invalid_layout'],
                     },
                     {
                         name: 'binding_disabled_layouts',
@@ -415,6 +446,7 @@ class Class {
                         val_type: 'array',
                         placeholder: 'en-DVORAK, es-ES',
                         default_val: '',
+                        input_errors: ['invalid_layouts'],
                     },
                     {
                         name: 'enable_layout_switching_audio',
@@ -439,6 +471,7 @@ class Class {
                         val_type: 'number',
                         placeholder: '1000',
                         default_val: '0',
+                        input_errors: ['invalid_integer'],
                     },
                     {
                         name: 'borderless_window',
@@ -462,6 +495,7 @@ class Class {
                         val_type: 'string',
                         placeholder: 'Fallout4',
                         default_val: '',
+                        input_errors: ['invalid_exe_name'],
                     },
                     {
                         name: 'toggle_current_process_minimized_state',
@@ -469,6 +503,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+1',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_current_process_suspend_state',
@@ -476,6 +511,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+2',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'toggle_current_process_minimize_and_suspend_state',
@@ -483,6 +519,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+3',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'resume_current_process_suspended',
@@ -490,6 +527,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+4',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'resume_all_suspended_processes',
@@ -497,6 +535,7 @@ class Class {
                         val_type: 'string',
                         placeholder: '!+5',
                         default_val: '',
+                        input_errors: ['invalid_ahk_hotkey'],
                     },
                     {
                         name: 'key_bindings',
@@ -535,6 +574,7 @@ class Class {
                     val_type: 'string',
                     placeholder: 'a',
                     default_val: '',
+                    input_errors: ['invalid_any_character_no_space'],
                 },
             ];
 
@@ -546,6 +586,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '30',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
                 {
                     name: 'delay_between',
@@ -553,6 +594,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '30',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
                 {
                     name: 'pre_key_delay',
@@ -560,6 +602,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '30',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
                 {
                     name: 'post_key_delay',
@@ -567,6 +610,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '30',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
                 {
                     name: 'wait',
@@ -579,6 +623,7 @@ class Class {
                     val_type: 'string',
                     placeholder: 'f3',
                     default_val: '',
+                    input_errors: ['invalid_any_character_no_space'],
                 },
                 {
                     name: 'modifiers',
@@ -586,6 +631,7 @@ class Class {
                     val_type: 'array',
                     placeholder: 'Ctrl, Shift',
                     default_val: '',
+                    input_errors: ['invalid_modifiers'],
                 },
                 ...this.allow_native_function_and_ignore_extra_modifiers,
                 {
@@ -605,6 +651,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '300',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
             ];
 
@@ -615,17 +662,12 @@ class Class {
                     type: 'textarea',
                     val_type: 'macro',
                     default_val: '',
+                    input_errors: ['invalid_json'],
                 },
             ];
 
             this.custom_binding_name_object_macro = [
-                ...this.val_type,
-                {
-                    name: 'macro',
-                    type: 'textarea',
-                    val_type: 'macro',
-                    default_val: '',
-                },
+                ...this.custom_binding_name_array_macro,
                 ...this.allow_native_function_and_ignore_extra_modifiers,
                 {
                     name: 'repeat_count',
@@ -633,6 +675,7 @@ class Class {
                     val_type: 'number',
                     placeholder: '3',
                     default_val: '0',
+                    input_errors: ['invalid_integer'],
                 },
             ];
 

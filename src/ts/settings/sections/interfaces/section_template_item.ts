@@ -8,4 +8,5 @@ export interface SectionTemplateItem {
     placeholder?: string;
     developer_mode_setting?: boolean;
     href?: string;
+    input_errors?: string[];
 }

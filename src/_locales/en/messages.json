@@ -47,6 +47,45 @@
     "macro_btn_text": {
         "message": "Macro"
     },
+    "invalid_layouts_input_error_text": {
+        "message": "Separate each layout with a comma. Layout names can contain any character except commas and spaces."
+    },
+    "invalid_layout_ids_input_error_text": {
+        "message": "Separate each layout ID with a comma. Layout IDs must be integers (positive or negative) without spaces."
+    },
+    "invalid_layout_input_error_text": {
+        "message": "Layout name can contain any character except commas and spaces."
+    },
+    "invalid_exe_names_input_error_text": {
+        "message": "Separate each EXE name with a comma. Do not include \".exe\"."
+    },
+    "invalid_exe_name_input_error_text": {
+        "message": "Enter a valid EXE name without \".exe\"."
+    },
+    "invalid_integer_input_error_text": {
+        "message": "Value must be a positive integer."
+    },
+    "invalid_ahk_hotkey_input_error_text": {
+        "message": "Enter a valid AutoHotkey hotkey."
+    },
+    "invalid_ahk_hotkeys_input_error_text": {
+        "message": "Enter valid AutoHotkey hotkeys. Separate each AutoHotkey hotkey with a comma."
+    },
+    "invalid_file_extension_input_error_text": {
+        "message": "Enter a valid file extension without a dot."
+    },
+    "invalid_filename_input_error_text": {
+        "message": "Enter a valid filename with extension."
+    },
+    "invalid_modifiers_input_error_text": {
+        "message": "Separate each modifier with a comma. Allowed values: LWin, RWin, Control, Ctrl, Alt, Shift, LControl, LCtrl, RControl, RCtrl, LShift, RShift, LAlt, RAlt."
+    },
+    "invalid_json_input_error_text": {
+        "message": "Invalid JSON. Please enter valid JSON."
+    },
+    "invalid_any_character_no_space_input_error_text": {
+        "message": "Key name can contain any character except spaces."
+    },
     "github_link_text": {
         "message": "😼 Keymeleon on Github"
     },

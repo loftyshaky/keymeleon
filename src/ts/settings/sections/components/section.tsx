@@ -319,6 +319,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                             type: 'text',
                                             val_type: 'string',
                                             placeholder: '^+F2',
+                                            input_errors: ['invalid_ahk_hotkey'],
                                         };
                                         const group_side_btns: i_inputs.SideBtn[] =
                                             d_sections.Sections.generate_side_btns({
@@ -492,6 +493,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                             type: 'text',
                                             val_type: 'string',
                                             placeholder,
+                                            input_errors: ['invalid_filename'],
                                         };
 
                                         const input = d_sections.Sections.generate_input({

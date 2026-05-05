@@ -115,12 +115,13 @@ class Class {
                         name: data.settings.prefs.options_page_theme,
                     });
                 }
-
-                d_settings.Settings.write_change_val({
-                    val_setter: input.val_accessor,
-                    val: val_final,
-                    val_type: section_item.val_type,
-                });
+                if (!d_sections.Validation.validate_input({ input })) {
+                    d_settings.Settings.write_change_val({
+                        val_setter: input.val_accessor,
+                        val: val_final,
+                        val_type: section_item.val_type,
+                    });
+                }
             }, 'cnt_1288'),
     );
 
