@@ -661,7 +661,11 @@ class Class {
                     name: 'macro',
                     type: 'textarea',
                     val_type: 'macro',
-                    default_val: '',
+                    default_val: `[
+    {
+        "key": ""
+    }
+]`,
                     input_errors: ['invalid_json'],
                 },
             ];
