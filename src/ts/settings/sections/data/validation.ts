@@ -63,6 +63,10 @@ class Class {
                 }
             }
 
+            if (input.type && ['checkbox', 'select'].includes(input.type)) {
+                return false;
+            }
+
             if (is_invalid_json_input) {
                 try {
                     JSON.parse(raw_val as string);
