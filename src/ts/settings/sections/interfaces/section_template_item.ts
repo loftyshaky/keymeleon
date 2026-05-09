@@ -6,6 +6,7 @@ export interface SectionTemplateItem {
     default_val?: boolean | string;
     val_type?: i_settings.ValType;
     placeholder?: string;
+    include_help?: boolean;
     developer_mode_setting?: boolean;
     href?: string;
     input_errors?: string[];

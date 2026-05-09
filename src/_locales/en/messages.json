@@ -47,6 +47,129 @@
     "macro_btn_text": {
         "message": "Macro"
     },
+    "features_help_text": {
+        "message": "@docs_features@\n@docs_features_object@"
+    },
+    "layouts_help_text": {
+        "message": "@docs_layout_switching_methods@\n@docs_layout_switching_techniques@\n@docs_layouts_object@"
+    },
+    "hotkeys_help_text": {
+        "message": "@docs_hotkeys_object@"
+    },
+    "audio_help_text": {
+        "message": "@docs_audio_feedback@\n@docs_audio_object@"
+    },
+    "process_control_help_text": {
+        "message": "@docs_process_minimize_and_suspend@\n@docs_process_control_object@"
+    },
+    "input_bindings_help_text": {
+        "message": "@docs_context_key_remapping@\n@docs_macros@\n@docs_mouse_button_support@\n@docs_remapping_keyboard_keys_and_hotkeys@"
+    },
+    "exe_help_text": {
+        "message": "@docs_context_key_remapping@\n@docs_macros@\n@docs_mouse_button_support@\n@docs_remapping_keyboard_keys_and_hotkeys@\n@docs_app_exe_name_within_exe_object@\n@docs_custom_binding_name_object_within_key_bindings@\n@docs_macro_item@"
+    },
+    "docs_features_help_link_text": {
+        "message": "Features"
+    },
+    "docs_features_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#features-1"
+    },
+    "docs_features_object_help_link_text": {
+        "message": "Features: Reference"
+    },
+    "docs_features_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#features-object"
+    },
+    "docs_layout_switching_methods_help_link_text": {
+        "message": "Layout switching methods"
+    },
+    "docs_layout_switching_methods_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#layout-switching-methods"
+    },
+    "docs_layout_switching_techniques_help_link_text": {
+        "message": "Layout switching techniques"
+    },
+    "docs_layout_switching_techniques_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#layout-switching-techniques"
+    },
+    "docs_layouts_object_help_link_text": {
+        "message": "Layouts: Reference"
+    },
+    "docs_layouts_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#layouts-object"
+    },
+    "docs_hotkeys_object_help_link_text": {
+        "message": "Hotkeys: Reference"
+    },
+    "docs_hotkeys_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#hotkeys-object"
+    },
+    "docs_audio_feedback_help_link_text": {
+        "message": "Audio feedback"
+    },
+    "docs_audio_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#audio-object"
+    },
+    "docs_audio_object_help_link_text": {
+        "message": "Audio: Reference"
+    },
+    "docs_audio_feedback_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#audio-feedback"
+    },
+    "docs_process_minimize_and_suspend_help_link_text": {
+        "message": "Process minimize and suspend"
+    },
+    "docs_process_minimize_and_suspend_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#process-minimize-and-suspend"
+    },
+    "docs_process_control_object_help_link_text": {
+        "message": "Process control: Reference"
+    },
+    "docs_process_control_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#process_control-object"
+    },
+    "docs_context_key_remapping_help_link_text": {
+        "message": "Context key remapping"
+    },
+    "docs_context_key_remapping_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#context-key-remapping"
+    },
+    "docs_macros_help_link_text": {
+        "message": "Macros"
+    },
+    "docs_macros_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#macros"
+    },
+    "docs_mouse_button_support_help_link_text": {
+        "message": "Mouse button support"
+    },
+    "docs_mouse_button_support_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#mouse-button-support"
+    },
+    "docs_remapping_keyboard_keys_and_hotkeys_help_link_text": {
+        "message": "Remapping keyboard keys and hotkeys"
+    },
+    "docs_remapping_keyboard_keys_and_hotkeys_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#remapping-keyboard-keys-and-hotkeys"
+    },
+    "docs_app_exe_name_within_exe_object_help_link_text": {
+        "message": "Exe: Reference"
+    },
+    "docs_app_exe_name_within_exe_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#app-exe-name-within-exe-object"
+    },
+    "docs_custom_binding_name_object_within_key_bindings_help_link_text": {
+        "message": "Key bindings: Reference"
+    },
+    "docs_custom_binding_name_object_within_key_bindings_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#custom-binding-name-object-within-key_bindings"
+    },
+    "docs_macro_item_help_link_text": {
+        "message": "Macro item: Reference"
+    },
+    "docs_macro_item_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#macro-item"
+    },
     "invalid_layouts_input_error_text": {
         "message": "Separate each layout with a comma. Layout names can contain any character except commas and spaces."
     },

@@ -64,6 +64,7 @@ class Class {
                     section: data.settings.prefs.current_section,
                     default_val: section_item.default_val,
                     val_accessor,
+                    include_help: section_item.include_help,
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
                         d_sections.Val.change({
@@ -81,6 +82,7 @@ class Class {
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
+                    include_help: section_item.include_help,
                     options: d_sections.Options.options,
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
@@ -99,6 +101,7 @@ class Class {
                     default_val: section_item.default_val,
                     val_accessor,
                     label_is_visible,
+                    include_help: section_item.include_help,
                     developer_mode_setting: section_item.developer_mode_setting,
                     input_errors: section_item.input_errors,
                     event_callback: ({ input }: { input: i_inputs.Input }) =>
@@ -138,6 +141,7 @@ class Class {
                 default_val: section_item.default_val,
                 val_accessor,
                 label_is_visible,
+                include_help: section_item.include_help,
                 allow_removing_val: true,
                 placeholder: section_item.placeholder,
                 input_errors: section_item.input_errors,
