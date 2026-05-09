@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { d_offers } from '@loftyshaky/shared-app/shared';
-import { i_inputs } from '@loftyshaky/shared-app/inputs';
+import { c_inputs, o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
 
@@ -615,8 +615,27 @@ export const Section: React.FunctionComponent = observer(() => {
 
     const sections: JSX.Element[] | undefined = generate_sections();
 
+    const section = new o_inputs.Section({
+        name:
+            data.settings.prefs.current_section === 'prefs'
+                ? 'admin'
+                : data.settings.prefs.current_section,
+        include_help: true,
+        inputs: [],
+    });
+
     return (
         <div className={x.cls(['section', data.settings.prefs.current_section])}>
+            {['docs', 'links'].includes(data.settings.prefs.current_section) ? undefined : (
+                <div className='section_help'>
+                    {section.include_help ? (
+                        <c_inputs.HelpBtn section_or_input={section} />
+                    ) : undefined}
+                    {section.include_help ? (
+                        <c_inputs.Help section_or_input={section} />
+                    ) : undefined}
+                </div>
+            )}
             <div className='inputs'>{sections}</div>
         </div>
     );
