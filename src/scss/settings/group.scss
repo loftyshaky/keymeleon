@@ -6,16 +6,34 @@
     }
 }
 
-[class*='_exe_group_level_1'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
-    font-size: 29px;
+:is(.key_bindings_add_new_setting .label_in_input_item),
+:is(
+    [class*='_exe_group_level_3']
+        > .input_item_inner
+        > .label_in_input_item_w
+        > .label_in_input_item
+) {
+    font-size: 21px;
 }
 
-[class*='_exe_group_level_2'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
+:is(.specific_exe_add_new_setting .label_in_input_item),
+:is(
+    [class*='_exe_group_level_2']
+        > .input_item_inner
+        > .label_in_input_item_w
+        > .label_in_input_item
+) {
     font-size: 25px;
 }
 
-[class*='_exe_group_level_3'] > .input_item_inner > .label_in_input_item_w > .label_in_input_item {
-    font-size: 21px;
+:is(.exe_add_new_setting .label_in_input_item),
+:is(
+    [class*='_exe_group_level_1']
+        > .input_item_inner
+        > .label_in_input_item_w
+        > .label_in_input_item
+) {
+    font-size: 29px;
 }
 
 .section.input_bindings .input_item.group {
