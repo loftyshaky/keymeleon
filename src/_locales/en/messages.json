@@ -14,6 +14,15 @@
     "val_type_label_text": {
         "message": "Value type"
     },
+    "exe_add_new_setting_label_text": {
+        "message": "Create new exe"
+    },
+    "specific_exe_add_new_setting_label_text": {
+        "message": "Add key bindings"
+    },
+    "key_bindings_add_new_setting_label_text": {
+        "message": "Add hotkey action"
+    },
     "send_option_text": {
         "message": "Send"
     },

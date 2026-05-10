@@ -238,6 +238,7 @@ class Class {
                 section_item: add_new_setting_section_item,
                 svg_2: svg.Add,
                 val_accessor,
+                label_is_visible: true,
             });
         }, 'cnt_5464');
 

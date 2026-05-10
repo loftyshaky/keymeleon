@@ -27,7 +27,12 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
             }
 
             if (section_item.type === 'icon_btn') {
-                return <c_inputs.IconBtn input={input as o_inputs.IconBtn} />;
+                return (
+                    <c_inputs.IconBtn
+                        input={input as o_inputs.IconBtn}
+                        include_label={(input as o_inputs.IconBtn).label_is_visible}
+                    />
+                );
             }
 
             if (section_item.type === 'textarea') {
