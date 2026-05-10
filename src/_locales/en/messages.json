@@ -44,6 +44,9 @@
     "object_macro_option_text": {
         "message": "Macro with properties"
     },
+    "reload_config_btn_text": {
+        "message": "Reload config"
+    },
     "macro_btn_text": {
         "message": "Macro"
     },
@@ -253,5 +256,14 @@
     },
     "scroll_to_top_edge_link_text": {
         "message": "⚗️ Scroll to Top for Edge"
+    },
+    "remove_exe_confirm": {
+        "message": "Remove exe?"
+    },
+    "remove_key_bindings_confirm": {
+        "message": "Remove key bindings?"
+    },
+    "remove_macro_confirm": {
+        "message": "Remove macro?"
     }
 }

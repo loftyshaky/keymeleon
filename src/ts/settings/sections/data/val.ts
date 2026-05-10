@@ -213,23 +213,45 @@ class Class {
     }): void =>
         err(() => {
             if (n(input.side_btns)) {
-                const side_btn_2: i_inputs.SideBtn | undefined = input.side_btns.find(
-                    (side_btn: i_inputs.SideBtn): boolean =>
-                        err(() => side_btn.name === 'remove_property', 'cnt_4637'),
+                const confirm_input_names: string[] = [
+                    'macro',
+                    'key_bindings_exe_group_level_2',
+                    '_exe_group_level_1',
+                ];
+                const confirm_confirm_message_suffix: string[] = ['macro', 'key_bindings', 'exe'];
+                const confirm_input_i: number = confirm_input_names.findIndex(
+                    (confirm_input_name): boolean =>
+                        err(() => input.name.includes(confirm_input_name), 'cnt_5364'),
                 );
 
-                if (n(side_btn_2)) {
-                    if (side_btn_2.is_enabled_cond!({ input })) {
-                        d_settings.Settings.write_unset({ val_setter: input.val_accessor });
-                    } else {
-                        d_settings.Settings.write_change_val({
-                            val_setter: input.val_accessor,
-                            val: input.default_val,
-                            val_type,
-                        });
-                    }
+                const confirmed: boolean =
+                    confirm_input_i === -1
+                        ? true
+                        : globalThis.confirm(
+                              app.msg(
+                                  `remove_${confirm_confirm_message_suffix[confirm_input_i]}_confirm`,
+                              ),
+                          );
 
-                    this.remove_property_reaction_id = x.unique_id();
+                if (confirmed) {
+                    const side_btn_2: i_inputs.SideBtn | undefined = input.side_btns.find(
+                        (side_btn: i_inputs.SideBtn): boolean =>
+                            err(() => side_btn.name === 'remove_property', 'cnt_4637'),
+                    );
+
+                    if (n(side_btn_2)) {
+                        if (side_btn_2.is_enabled_cond!({ input })) {
+                            d_settings.Settings.write_unset({ val_setter: input.val_accessor });
+                        } else {
+                            d_settings.Settings.write_change_val({
+                                val_setter: input.val_accessor,
+                                val: input.default_val,
+                                val_type,
+                            });
+                        }
+
+                        this.remove_property_reaction_id = x.unique_id();
+                    }
                 }
             }
         }, 'cnt_1291');
