@@ -45,10 +45,12 @@ config_get(keys, accessed := "") {
     return current
 }
 
-config_write(config) {
+config_write(new_config) {
+    global config
     global config_path
 
-    config_json := jxon_dump(config, indent := 4)
+    config_json := jxon_dump(new_config, indent := 4)
+    config := new_config
 
     file := FileOpen(config_path, "w")
     file.write(config_json)
