@@ -129,7 +129,7 @@ class Class {
         err(() => {
             if (input.name === 'input_bindings_add_new_setting') {
                 d_settings.Settings.write_change_val({
-                    val_setter: `${input.val_accessor}.New_input_bindings_item_${x.id()}`,
+                    val_setter: `${input.val_accessor}.New_input_binding_${x.id()}`,
                     val: '',
                     val_type: 'string',
                 });
@@ -151,7 +151,7 @@ class Class {
                 });
             } else if (input.name === 'key_bindings_add_new_setting') {
                 d_settings.Settings.write_change_val({
-                    val_setter: `${input.val_accessor}.New_input_hotkey_action_item_${x.id()}`,
+                    val_setter: `${input.val_accessor}.New_input_hotkey_action_${x.id()}`,
                     val: '',
                     val_type: 'string',
                 });

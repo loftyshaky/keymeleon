@@ -29,6 +29,9 @@
     "val_type_label_text": {
         "message": "Value type"
     },
+    "input_bindings_add_new_setting_label_text": {
+        "message": "Create new input binding"
+    },
     "exe_add_new_setting_label_text": {
         "message": "Create new exe"
     },
