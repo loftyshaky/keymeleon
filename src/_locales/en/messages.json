@@ -71,6 +71,9 @@
     "docs_features_help_link_text": {
         "message": "Features"
     },
+    "docs_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md"
+    },
     "docs_features_help_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#features-1"
     },
@@ -208,6 +211,9 @@
     },
     "invalid_any_character_no_space_input_error_text": {
         "message": "Key name can contain any character except spaces."
+    },
+    "docs_link_text": {
+        "message": "📄 Documentation"
     },
     "github_link_text": {
         "message": "😼 Keymeleon on Github"

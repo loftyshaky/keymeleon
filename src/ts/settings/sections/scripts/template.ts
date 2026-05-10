@@ -13,6 +13,7 @@ class Class {
     [key: string]: any;
 
     public static_sections: string[] = [
+        'docs',
         'features',
         'layouts',
         'hotkeys',
@@ -36,6 +37,12 @@ class Class {
     public set_templates = (): void =>
         err(() => {
             this.sections = {
+                docs: [
+                    {
+                        name: 'docs',
+                        type: 'link',
+                    },
+                ],
                 features: [
                     {
                         name: 'enable_all_bindings',
