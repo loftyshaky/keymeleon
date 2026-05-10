@@ -3,9 +3,9 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { makeObservable, observable, action } from 'mobx';
 
-import { t, s_theme, i_data } from '@loftyshaky/shared-app/shared';
+import { t, s_theme as s_theme_shared, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
-import { s_css_vars } from 'shared_clean/internal';
+import { s_css_vars, s_theme } from 'shared_clean/internal';
 import { d_settings, i_settings } from 'shared/internal';
 import { d_sections, i_sections } from 'settings/internal';
 
@@ -111,8 +111,9 @@ class Class {
                 s_css_vars.CssVars.set();
 
                 if (input.name === 'options_page_theme') {
-                    s_theme.Theme.set({
+                    s_theme_shared.Theme.set({
                         name: data.settings.prefs.options_page_theme,
+                        additional_theme_callback: s_theme.Theme.set,
                     });
                 }
                 if (!d_sections.Validation.validate_input({ input })) {
