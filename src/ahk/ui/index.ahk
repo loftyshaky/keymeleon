@@ -1,5 +1,4 @@
-#Include %A_ScriptDir%\config.ahk
-#Include %A_ScriptDir%\log.ahk
+#Include %A_ScriptDir%\keymeleon.ahk
 #Include %A_ScriptDir%\ui\win.ahk
 #Include %A_ScriptDir%\ui\msgs.ahk
 #Include %A_ScriptDir%\ui\tray.ahk

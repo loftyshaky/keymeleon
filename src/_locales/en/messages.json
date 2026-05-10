@@ -2,6 +2,12 @@
     "name": {
         "message": "Keymeleon"
     },
+    "copy_current_layout_id_to_clipboard_notification": {
+        "message": "Copied current layout ID to clipboard."
+    },
+    "copy_current_layout_id_to_clipboard_error": {
+        "message": "Failed to copy current layout ID to clipboard."
+    },
     "key_bindings_label_text": {
         "message": "Key bindings"
     },

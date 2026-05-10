@@ -34,6 +34,7 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
                     )}
                 </div>
                 <div className='sections_and_offers'>
+                    <c_sections.BtnBar />
                     {d_offers.Offers.found_offers_for_current_locale() ? (
                         <c_offers.Body
                             is_visible={data.settings.prefs.offers_are_visible}

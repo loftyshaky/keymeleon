@@ -1,0 +1,20 @@
+.main:not(.loading_screen) .btn_bar_w {
+    width: 100%;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+    .btn_bar {
+        display: flex;
+        margin-left: $main_margin;
+        margin-right: $main_margin;
+
+        .icon_btn {
+            border: 0;
+            margin-top: 0;
+
+            .btn {
+                background-color: transparent;
+            }
+        }
+    }
+}

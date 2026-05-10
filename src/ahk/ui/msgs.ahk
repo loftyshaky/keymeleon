@@ -18,6 +18,13 @@ on_message(sender, args) {
             send_response(jxon_dump(response))
         } else if (msg_str = "write_config") {
             config_write(msg_obj["config"])
+        } else if (msg_str = "reload_config") {
+            Reload()
+        } else if (msg_str = "get_current_layout_id") {
+            response["msg"] := "get_current_layout_id_response"
+            response["current_layout_id"] := get_current_layout_id()
+
+            send_response(jxon_dump(response))
         }
 
     } catch as e {

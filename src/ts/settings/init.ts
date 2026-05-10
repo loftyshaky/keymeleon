@@ -5,6 +5,7 @@ export const init = (): Promise<void> =>
     err_async(async () => {
         s_sections.Template.set_templates();
         d_sections.Options.init();
+        d_sections.BtnBar.init();
         await InitAll.init();
 
         InitAll.render_settings();
