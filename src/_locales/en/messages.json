@@ -269,6 +269,9 @@
     "remove_key_bindings_confirm": {
         "message": "Remove key bindings?"
     },
+    "remove_hotkey_action_confirm": {
+        "message": "Remove hotkey action?"
+    },
     "remove_macro_confirm": {
         "message": "Remove macro?"
     }

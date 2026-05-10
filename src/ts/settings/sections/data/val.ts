@@ -215,10 +215,16 @@ class Class {
             if (n(input.side_btns)) {
                 const confirm_input_names: string[] = [
                     'macro',
+                    '_exe_group_level_3',
                     'key_bindings_exe_group_level_2',
                     '_exe_group_level_1',
                 ];
-                const confirm_confirm_message_suffix: string[] = ['macro', 'key_bindings', 'exe'];
+                const confirm_confirm_message_suffix: string[] = [
+                    'macro',
+                    'hotkey_action',
+                    'key_bindings',
+                    'exe',
+                ];
                 const confirm_input_i: number = confirm_input_names.findIndex(
                     (confirm_input_name): boolean =>
                         err(() => input.name.includes(confirm_input_name), 'cnt_5364'),
