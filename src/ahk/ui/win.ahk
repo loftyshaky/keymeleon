@@ -3,6 +3,14 @@ navigate_page(page_name) {
     wv.Navigate("http://app.localhost/" page_name ".html")
 }
 
+on_new_window(wv, args) { ; Opens links in default browser.
+    url := args.Uri
+
+    Run(url)
+
+    args.Handled := true
+}
+
 win_display_initial(dimensions_obj) {
     global wvc
     global wv
@@ -23,6 +31,7 @@ win_display_initial(dimensions_obj) {
     wvc := WebView2.create(win.Hwnd)
     wv := wvc.CoreWebView2
     wv.add_WebMessageReceived(on_message)
+    wv.add_NewWindowRequested(on_new_window)
 
     navigate_page("settings")
 }
