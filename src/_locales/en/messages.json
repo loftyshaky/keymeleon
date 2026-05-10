@@ -11,6 +11,21 @@
     "key_bindings_label_text": {
         "message": "Key bindings"
     },
+    "enable_windows_api_layout_switching_label_text": {
+        "message": "Enable windows API layout switching"
+    },
+    "layout_ids_label_text": {
+        "message": "Layout IDs"
+    },
+    "display_current_layout_id_label_text": {
+        "message": "Display current layout ID"
+    },
+    "toggle_windows_api_layout_switching_label_text": {
+        "message": "Toggle windows API layout switching"
+    },
+    "automatic_exe_windows_api_layout_switching_delay_label_text": {
+        "message": "Automatic exe windows API layout switching delay"
+    },
     "val_type_label_text": {
         "message": "Value type"
     },
