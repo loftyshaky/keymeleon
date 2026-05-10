@@ -18,10 +18,10 @@
         "message": "Create new exe"
     },
     "specific_exe_add_new_setting_label_text": {
-        "message": "Add key bindings"
+        "message": "Create key bindings"
     },
     "key_bindings_add_new_setting_label_text": {
-        "message": "Add hotkey action"
+        "message": "Create hotkey action"
     },
     "send_option_text": {
         "message": "Send"
