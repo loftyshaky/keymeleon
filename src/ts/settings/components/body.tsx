@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { c_offers, d_offers } from '@loftyshaky/shared-app/shared';
+import { c_app_version, c_offers, d_offers } from '@loftyshaky/shared-app/shared';
 import { c_sections, o_sections, d_sections, s_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
@@ -46,6 +46,7 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
                     </div>
                 </div>
             </div>
+            <c_app_version.Body />
         </div>
     );
 });
