@@ -172,9 +172,14 @@ class Class {
                 side_btns_to_generate.map(
                     (side_btn_name: string): i_inputs.SideBtn =>
                         err(() => {
+                            const side_button_alt_title: string = app.msg(
+                                `${side_btn_name}_side_btn_title`,
+                            );
+                            l(side_button_alt_title);
                             if (side_btn_name === 'remove_property') {
                                 return {
                                     name: side_btn_name,
+                                    alt_title: side_button_alt_title,
                                     Svg: svg.Delete,
                                     is_enabled_cond:
                                         d_sections.Val.remove_property_side_btn_is_enabled_cond,
@@ -187,6 +192,7 @@ class Class {
                             if (side_btn_name === 'edit_group_label') {
                                 return {
                                     name: 'edit_group_label',
+                                    alt_title: side_button_alt_title,
                                     Svg: svg.Edit,
                                     event_callback: d_sections.Val.toggle_edit_label_state,
                                     is_enabled_cond:
@@ -197,6 +203,7 @@ class Class {
                             // if (side_btn_name === 'collapse_group') {
                             return {
                                 name: 'collapse_group',
+                                alt_title: side_button_alt_title,
                                 Svg: svg.KeyboardArrowDown,
                                 is_enabled_cond:
                                     d_sections.Val.collapse_group_side_btn_is_enabled_cond, // eslint-disable-line max-len

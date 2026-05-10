@@ -89,6 +89,21 @@
     "docs_features_help_link_text": {
         "message": "Features"
     },
+    "reload_config_btn_title": {
+        "message": "Reload config"
+    },
+    "copy_current_layout_id_to_clipboard_btn_title": {
+        "message": "Copy current layout id to clipboard"
+    },
+    "remove_property_side_btn_title": {
+        "message": "Remove"
+    },
+    "edit_group_label_side_btn_title": {
+        "message": "Change name"
+    },
+    "collapse_group_side_btn_title": {
+        "message": "Collapse"
+    },
     "docs_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md"
     },
