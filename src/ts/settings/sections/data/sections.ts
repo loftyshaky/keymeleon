@@ -53,6 +53,7 @@ class Class {
                     content_is_visible_val_accessor,
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: () => {},
+                    keydown_callback: d_sections.Val.handle_keyboard_on_edit_label,
                     inputs: inputs as i_inputs.Inputs,
                     ...(n(side_btns) && { side_btns }),
                 });
@@ -175,7 +176,7 @@ class Class {
                             const side_button_alt_title: string = app.msg(
                                 `${side_btn_name}_side_btn_title`,
                             );
-                            l(side_button_alt_title);
+
                             if (side_btn_name === 'remove_property') {
                                 return {
                                     name: side_btn_name,

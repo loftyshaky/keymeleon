@@ -42,6 +42,7 @@ class Class {
         }): void =>
             err(() => {
                 const val: i_data.Val = d_inputs.Val.access({ input });
+
                 const val_final: i_data.Val =
                     n(val) &&
                     typeof val === 'string' &&
@@ -327,13 +328,20 @@ class Class {
             }
         }, 'cnt_7844');
 
-    public toggle_edit_label_state = ({ input }: { input: i_inputs.Input }): void =>
+    public toggle_edit_label_state = ({
+        input,
+        update_val = true,
+    }: {
+        input: i_inputs.Input;
+        update_val?: boolean;
+    }): void =>
         err(() => {
             if (n(d_inputs.LabelInInputItem.toggle_edit_label_state)) {
                 if (
                     n(this.previous_editing_label_input) &&
-                    input !== this.previous_editing_label_input &&
-                    (this.previous_editing_label_input as o_inputs.Group).editing_label
+                    ((input !== this.previous_editing_label_input &&
+                        (this.previous_editing_label_input as o_inputs.Group).editing_label) ||
+                        !update_val)
                 ) {
                     this.previous_editing_label_input.label_val =
                         this.previous_editing_label_input_label_val;
@@ -344,10 +352,12 @@ class Class {
                     });
                 }
 
-                d_inputs.LabelInInputItem.toggle_edit_label_state({
-                    input,
-                    callback: this.toggle_edit_label_state_callback,
-                });
+                if (update_val) {
+                    d_inputs.LabelInInputItem.toggle_edit_label_state({
+                        input,
+                        callback: this.toggle_edit_label_state_callback,
+                    });
+                }
 
                 this.edit_group_label_reaction_id = x.unique_id();
 
@@ -369,6 +379,7 @@ class Class {
                     0,
                     -1,
                 );
+
                 const val_unsetter_ui: string | undefined = val_accessor_arr_ui.join('.');
                 const val_ui: string = get(data, val_unsetter_ui);
 
@@ -408,6 +419,18 @@ class Class {
 
             return n(editing_label) && !editing_label;
         }, 'cnt_7844');
+
+    public handle_keyboard_on_edit_label = (
+        { parent_input }: { parent_input: i_inputs.Input },
+        e: KeyboardEvent,
+    ): void =>
+        err(() => {
+            if (e.code === 'Enter') {
+                this.toggle_edit_label_state({ input: parent_input });
+            } else if (e.code === 'Escape') {
+                this.toggle_edit_label_state({ input: parent_input, update_val: false });
+            }
+        }, 'cnt_1315');
 }
 
 export const Val = Class.get_instance();
