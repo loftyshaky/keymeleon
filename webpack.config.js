@@ -21,7 +21,7 @@ const task_scheduler = new TaskScheduler();
 const dependencies_shared = new DependenciesShared({ app_root });
 
 const env_instance = new Env({ app_root });
-const locales = new Locales({ app_root, exclude_shared_locales: ['de', 'ru'] });
+const locales = new Locales({ app_root, exclude_shared_locales: ['de'] });
 const dependencies = new Dependencies();
 
 module.exports = (env, argv) => {
