@@ -40,6 +40,7 @@ class Class {
                     new o_inputs.Option({ name: 'send_play', val: 'SendPlay' }),
                     new o_inputs.Option({ name: 'send_event', val: 'SendEvent' }),
                 ],
+                locale: [new o_inputs.Option({ name: 'en' }), new o_inputs.Option({ name: 'ru' })],
                 options_page_theme: [
                     new o_inputs.Option({ name: 'light' }),
                     new o_inputs.Option({ name: 'dark' }),

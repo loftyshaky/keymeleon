@@ -525,7 +525,9 @@ export const Section: React.FunctionComponent = observer(() => {
                                                             i,
                                                             object_name,
                                                             key_name: section_item.name,
-                                                            input_label: `${object_name}_${section_item.name === '0' ? 'off' : 'on'}`,
+                                                            input_label: app.msg(
+                                                                `${object_name}_${section_item.name === '0' ? 'off' : 'on'}_label_text`,
+                                                            ),
                                                             placeholder: section_item.placeholder
                                                                 ? `${section_item.placeholder}.mp3`
                                                                 : '',
@@ -554,7 +556,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                                                 object_name,
                                                                                 key_name:
                                                                                     layout_name,
-                                                                                input_label: `${object_name}_${layout_name}`,
+                                                                                input_label: `${app.msg(`${object_name}_label_text`)}_${layout_name}`,
                                                                                 placeholder: `DVORAK_${object_name}.mp3`,
                                                                             }),
                                                                         );

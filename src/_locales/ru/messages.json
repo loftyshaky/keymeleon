@@ -1,1 +1,497 @@
-{}
+{
+    "copy_current_layout_id_to_clipboard_notification": {
+        "message": "ID текущей раскладки скопирован в буфер обмена."
+    },
+    "copy_current_layout_id_to_clipboard_error": {
+        "message": "Не удалось скопировать ID текущей раскладки в буфер обмена."
+    },
+    "remove_exe_confirm": {
+        "message": "Удалить EXE?"
+    },
+    "remove_key_bindings_confirm": {
+        "message": "Удалить привязки клавиш?"
+    },
+    "remove_hotkey_action_confirm": {
+        "message": "Удалить действие горячей клавиши?"
+    },
+    "remove_macro_confirm": {
+        "message": "Удалить макрос?"
+    },
+    "features_section_text": {
+        "message": "Функции"
+    },
+    "layouts_section_text": {
+        "message": "Раскладки"
+    },
+    "hotkeys_section_text": {
+        "message": "Горячие клавиши"
+    },
+    "audio_section_text": {
+        "message": "Звук"
+    },
+    "process_control_section_text": {
+        "message": "Управление процессами"
+    },
+    "input_bindings_section_text": {
+        "message": "Назначаемые клавиши"
+    },
+    "prefs_section_text": {
+        "message": "Параметры"
+    },
+    "key_bindings_label_text": {
+        "message": "Привязки клавиш"
+    },
+    "enable_all_bindings_label_text": {
+        "message": "Включить все привязки"
+    },
+    "enable_dedicated_layout_switching_label_text": {
+        "message": "Включить выделенное переключение раскладок"
+    },
+    "enable_sequential_layout_switching_label_text": {
+        "message": "Включить последовательное переключение раскладок"
+    },
+    "enable_layout_switching_audio_label_text": {
+        "message": "Включить звук переключения раскладок"
+    },
+    "enable_typing_audio_label_text": {
+        "message": "Включить звук печати"
+    },
+    "enable_feature_state_audio_label_text": {
+        "message": "Включить звук изменения настроек"
+    },
+    "enable_windows_api_layout_switching_label_text": {
+        "message": "Включить переключение раскладок через Windows API"
+    },
+    "all_layouts_ordered_label_text": {
+        "message": "Все раскладки по порядку"
+    },
+    "layout_ids_label_text": {
+        "message": "ID раскладок"
+    },
+    "primary_layout_label_text": {
+        "message": "Основная раскладка"
+    },
+    "secondary_layouts_label_text": {
+        "message": "Дополнительные раскладки"
+    },
+    "fallback_layout_switching_exes_label_text": {
+        "message": "EXE для аварийного переключения раскладок"
+    },
+    "layout_switching_delay_label_text": {
+        "message": "Задержка переключения раскладок"
+    },
+    "display_current_layout_id_label_text": {
+        "message": "Показать ID текущей раскладки"
+    },
+    "set_primary_layout_label_text": {
+        "message": "Переключиться на основную раскладку"
+    },
+    "set_secondary_layout_label_text": {
+        "message": "Переключиться на дополнительную раскладку"
+    },
+    "dedicated_layout_hotkeys_label_text": {
+        "message": "Выделенные горячие клавиши для раскладок"
+    },
+    "toggle_sequential_layout_switching_label_text": {
+        "message": "Переключить последовательное переключение раскладок"
+    },
+    "toggle_dedicated_layout_switching_label_text": {
+        "message": "Переключить выделенное переключение раскладок"
+    },
+    "toggle_all_bindings_label_text": {
+        "message": "Переключить все привязки"
+    },
+    "toggle_windows_api_layout_switching_label_text": {
+        "message": "Переключить переключение раскладок через Windows API"
+    },
+    "toggle_layout_switching_audio_label_text": {
+        "message": "Переключить звук переключения раскладок"
+    },
+    "toggle_typing_audio_label_text": {
+        "message": "Переключить звук печати"
+    },
+    "toggle_feature_state_audio_label_text": {
+        "message": "Переключить звук изменения настроек"
+    },
+    "toggle_current_process_minimized_state_label_text": {
+        "message": "Переключить состояние свёрнутости текущего процесса"
+    },
+    "toggle_current_process_suspend_state_label_text": {
+        "message": "Переключить состояние приостановки текущего процесса"
+    },
+    "toggle_current_process_minimize_and_suspend_state_label_text": {
+        "message": "Переключить состояние свёртывания и приостановки текущего процесса"
+    },
+    "resume_current_process_suspended_label_text": {
+        "message": "Возобновить текущий процесс в приостановленное состояние"
+    },
+    "resume_all_suspended_processes_label_text": {
+        "message": "Возобновить все приостановленные процессы"
+    },
+    "default_file_extension_label_text": {
+        "message": "Расширение файла по умолчанию"
+    },
+    "feature_state_off_label_text": {
+        "message": "Выключение изменения настроек"
+    },
+    "feature_state_on_label_text": {
+        "message": "Включение изменения настроек"
+    },
+    "layout_switching_label_text": {
+        "message": "Переключение раскладки"
+    },
+    "typing_label_text": {
+        "message": "Печать"
+    },
+    "target_processes_label_text": {
+        "message": "Целевые процессы"
+    },
+    "suspend_post_minimize_delay_label_text": {
+        "message": "Задержка перед приостановкой после сворачивания"
+    },
+    "resume_pre_unminimize_delay_label_text": {
+        "message": "Задержка перед разворачиванием после возобновления"
+    },
+    "pre_screenshot_delay_label_text": {
+        "message": "Задержка перед скриншотом"
+    },
+    "post_screenshot_delay_label_text": {
+        "message": " Задержка после скриншота"
+    },
+    "pre_minimize_screenshot_label_text": {
+        "message": "Скриншот перед сворачиванием"
+    },
+    "pre_suspend_screenshot_label_text": {
+        "message": "Скриншот перед приостановкой"
+    },
+    "layout_label_text": {
+        "message": "Раскладка"
+    },
+    "binding_disabled_layouts_label_text": {
+        "message": "Отключённые раскладки для привязок"
+    },
+    "enable_layout_switching_audio_for_automatic_layout_change_label_text": {
+        "message": "Включить звук переключения раскладок при автоматической смене"
+    },
+    "borderless_window_label_text": {
+        "message": "Безрамочное окно"
+    },
+    "enable_process_suspend_hotkeys_label_text": {
+        "message": "Включить горячие клавиши приостановки процесса"
+    },
+    "process_minimize_method_label_text": {
+        "message": "Метод сворачивания процесса"
+    },
+    "window_title_label_text": {
+        "message": "Заголовок окна"
+    },
+    "value_type_label_text": {
+        "message": "Тип значения"
+    },
+    "key_label_text": {
+        "message": "Клавиша"
+    },
+    "delay_before_label_text": {
+        "message": "Задержка перед"
+    },
+    "delay_between_label_text": {
+        "message": "Задержка между"
+    },
+    "pre_key_delay_label_text": {
+        "message": "Задержка перед клавишей"
+    },
+    "post_key_delay_label_text": {
+        "message": "Задержка после клавиши"
+    },
+    "wait_label_text": {
+        "message": "Ожидание"
+    },
+    "key_wait_label_text": {
+        "message": "Ожидание клавиши"
+    },
+    "modifiers_label_text": {
+        "message": "Модификаторы"
+    },
+    "allow_native_function_label_text": {
+        "message": "Разрешить нативное поведение"
+    },
+    "ignore_extra_modifiers_label_text": {
+        "message": "Игнорировать дополнительные модификаторы"
+    },
+    "blind_label_text": {
+        "message": "Слепой режим"
+    },
+    "send_mode_label_text": {
+        "message": "Режим отправки"
+    },
+    "modifiers_release_timeout_label_text": {
+        "message": "Таймаут отпускания модификаторов"
+    },
+    "macro_label_text": {
+        "message": "Макрос"
+    },
+    "repeat_count_label_text": {
+        "message": "Количество повторений"
+    },
+    "automatic_exe_windows_api_layout_switching_delay_label_text": {
+        "message": "Задержка автоматического переключения раскладок через Windows API"
+    },
+    "val_type_label_text": {
+        "message": "Тип значения"
+    },
+    "input_bindings_add_new_setting_label_text": {
+        "message": "Создать новую назначаемую клавишу"
+    },
+    "exe_add_new_setting_label_text": {
+        "message": "Создать новый EXE"
+    },
+    "specific_exe_add_new_setting_label_text": {
+        "message": "Создать привязки клавиш"
+    },
+    "key_bindings_add_new_setting_label_text": {
+        "message": "Создать действие горячей клавиши"
+    },
+    "minimize_option_text": {
+        "message": "Свернуть"
+    },
+    "hide_option_text": {
+        "message": "Скрыть"
+    },
+    "reposition_option_text": {
+        "message": "Переместить"
+    },
+    "string_key_option_text": {
+        "message": "Клавиша"
+    },
+    "object_key_option_text": {
+        "message": "Клавиша со свойствами"
+    },
+    "array_macro_option_text": {
+        "message": "Макрос"
+    },
+    "object_macro_option_text": {
+        "message": "Макрос со свойствами"
+    },
+    "reload_config_btn_title": {
+        "message": "Перезагрузить конфиг"
+    },
+    "copy_current_layout_id_to_clipboard_btn_title": {
+        "message": "Скопировать ID текущей раскладки в буфер обмена"
+    },
+    "remove_property_side_btn_title": {
+        "message": "Удалить"
+    },
+    "edit_group_label_side_btn_title": {
+        "message": "Изменить название"
+    },
+    "collapse_group_side_btn_title": {
+        "message": "Свернуть"
+    },
+    "invalid_layouts_input_error_text": {
+        "message": "Разделите раскладки запятыми. Названия раскладок могут содержать любые символы, кроме запятых и пробелов."
+    },
+    "invalid_layout_ids_input_error_text": {
+        "message": "Разделите ID раскладок запятыми. ID раскладок должны быть целыми числами (положительными или отрицательными) без пробелов."
+    },
+    "invalid_layout_input_error_text": {
+        "message": "Название раскладки может содержать любые символы, кроме запятых и пробелов."
+    },
+    "invalid_exe_names_input_error_text": {
+        "message": "Разделите имена EXE запятыми. Не указывайте расширение \".exe\"."
+    },
+    "invalid_exe_name_input_error_text": {
+        "message": "Введите корректное имя EXE без \".exe\"."
+    },
+    "invalid_integer_input_error_text": {
+        "message": "Значение должно быть положительным целым числом."
+    },
+    "invalid_ahk_hotkey_input_error_text": {
+        "message": "Введите корректную горячую клавишу AutoHotkey."
+    },
+    "invalid_ahk_hotkeys_input_error_text": {
+        "message": "Введите корректные горячие клавиши AutoHotkey. Разделите каждую горячую клавишу AutoHotkey запятой."
+    },
+    "invalid_file_extension_input_error_text": {
+        "message": "Введите корректное расширение файла без точки."
+    },
+    "invalid_filename_input_error_text": {
+        "message": "Введите корректное имя файла с расширением."
+    },
+    "invalid_modifiers_input_error_text": {
+        "message": "Разделите модификаторы запятыми. Допустимые значения: LWin, RWin, Control, Ctrl, Alt, Shift, LControl, LCtrl, RControl, RCtrl, LShift, RShift, LAlt, RAlt."
+    },
+    "invalid_json_input_error_text": {
+        "message": "Некорректный JSON. Пожалуйста, введите корректный JSON."
+    },
+    "invalid_any_character_no_space_input_error_text": {
+        "message": "Название клавиши может содержать любые символы, кроме пробелов."
+    },
+    "docs_link_text": {
+        "message": "📄 Документация"
+    },
+    "github_link_text": {
+        "message": "😼 Keymeleon на Github"
+    },
+    "clear_new_tab_chrome_link_text": {
+        "message": "⚗️ Clear New Tab для Chrome"
+    },
+    "clear_new_tab_edge_link_text": {
+        "message": "⚗️ Clear New Tab для Edge"
+    },
+    "empty_new_tab_page_chrome_link_text": {
+        "message": "⚗️ Empty New Tab Page для Chrome"
+    },
+    "empty_new_tab_page_edge_link_text": {
+        "message": "⚗️ Empty New Tab Page для Edge"
+    },
+    "close_other_tabs_chrome_link_text": {
+        "message": "⚗️ Close Other Tabs+ для Chrome"
+    },
+    "close_other_tabs_edge_link_text": {
+        "message": "⚗️ Close Other Tabs+ для Edge"
+    },
+    "search_enhancer_for_google_chrome_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ для Chrome"
+    },
+    "search_enhancer_for_google_edge_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ для Edge"
+    },
+    "advanced_extension_reloader_chrome_link_text": {
+        "message": "⚗️ Advanced Extension Reloader для Chrome"
+    },
+    "advanced_extension_reloader_edge_link_text": {
+        "message": "⚗️ Advanced Extension Reloader для Edge"
+    },
+    "scroll_to_top_chrome_link_text": {
+        "message": "⚗️ Scroll to Top для Chrome"
+    },
+    "scroll_to_top_edge_link_text": {
+        "message": "⚗️ Scroll to Top для Edge"
+    },
+    "features_help_text": {
+        "message": "@docs_features@\n@docs_features_object@"
+    },
+    "layouts_help_text": {
+        "message": "@docs_layout_switching_methods@\n@docs_layout_switching_techniques@\n@docs_layouts_object@"
+    },
+    "hotkeys_help_text": {
+        "message": "@docs_hotkeys_object@"
+    },
+    "audio_help_text": {
+        "message": "@docs_audio_feedback@\n@docs_audio_object@"
+    },
+    "process_control_help_text": {
+        "message": "@docs_process_minimize_and_suspend@\n@docs_process_control_object@"
+    },
+    "input_bindings_help_text": {
+        "message": "@docs_context_key_remapping@\n@docs_macros@\n@docs_mouse_button_support@\n@docs_remapping_keyboard_keys_and_hotkeys@"
+    },
+    "exe_help_text": {
+        "message": "@docs_context_key_remapping@\n@docs_macros@\n@docs_mouse_button_support@\n@docs_remapping_keyboard_keys_and_hotkeys@\n@docs_app_exe_name_within_exe_object@\n@docs_custom_binding_name_object_within_key_bindings@\n@docs_macro_item@"
+    },
+    "docs_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md"
+    },
+    "docs_features_help_link_text": {
+        "message": "Функции"
+    },
+    "docs_features_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#функции"
+    },
+    "docs_features_object_help_link_text": {
+        "message": "Функции: Справочник"
+    },
+    "docs_features_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-features"
+    },
+    "docs_layout_switching_methods_help_link_text": {
+        "message": "Методы переключения раскладок"
+    },
+    "docs_layout_switching_methods_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#методы-переключения-раскладок"
+    },
+    "docs_layout_switching_techniques_help_link_text": {
+        "message": "Техники переключения раскладок"
+    },
+    "docs_layout_switching_techniques_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#техники-переключения-раскладок"
+    },
+    "docs_layouts_object_help_link_text": {
+        "message": "Раскладки: Справочник"
+    },
+    "docs_layouts_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-layouts"
+    },
+    "docs_hotkeys_object_help_link_text": {
+        "message": "Горячие клавиши: Справочник"
+    },
+    "docs_hotkeys_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-hotkeys"
+    },
+    "docs_audio_feedback_help_link_text": {
+        "message": "Звуковая обратная связь"
+    },
+    "docs_audio_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-audio"
+    },
+    "docs_audio_object_help_link_text": {
+        "message": "Звук: Справочник"
+    },
+    "docs_audio_feedback_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#звуковая-обратная-связь"
+    },
+    "docs_process_minimize_and_suspend_help_link_text": {
+        "message": "Сворачивание и приостановка процессов"
+    },
+    "docs_process_minimize_and_suspend_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#сворачивание-и-приостановка-процессов"
+    },
+    "docs_process_control_object_help_link_text": {
+        "message": "Управление процессами: Справочник"
+    },
+    "docs_process_control_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-process_control"
+    },
+    "docs_context_key_remapping_help_link_text": {
+        "message": "Контекстное переназначение клавиш"
+    },
+    "docs_context_key_remapping_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#контекстное-переназначение-клавиш"
+    },
+    "docs_macros_help_link_text": {
+        "message": "Макросы"
+    },
+    "docs_macros_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#макросы"
+    },
+    "docs_mouse_button_support_help_link_text": {
+        "message": "Поддержка кнопок мыши"
+    },
+    "docs_mouse_button_support_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#поддержка-кнопок-мыши"
+    },
+    "docs_remapping_keyboard_keys_and_hotkeys_help_link_text": {
+        "message": "Переназначение клавиш и горячих клавиш"
+    },
+    "docs_remapping_keyboard_keys_and_hotkeys_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#переназначение-клавиш-и-горячих-клавиш"
+    },
+    "docs_app_exe_name_within_exe_object_help_link_text": {
+        "message": "EXE: Справочник"
+    },
+    "docs_app_exe_name_within_exe_object_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-имя-exe-приложения-внутри-объекта-exe"
+    },
+    "docs_custom_binding_name_object_within_key_bindings_help_link_text": {
+        "message": "Привязки клавиш: Справочник"
+    },
+    "docs_custom_binding_name_object_within_key_bindings_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#объект-пользовательское-имя-привязки-внутри-key_bindings"
+    },
+    "docs_macro_item_help_link_text": {
+        "message": "Макрос: Справочник"
+    },
+    "docs_macro_item_help_link_href": {
+        "message": "https://github.com/loftyshaky/keymeleon/blob/main/README-RU.md#макрос"
+    }
+}

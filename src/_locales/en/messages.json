@@ -8,6 +8,21 @@
     "copy_current_layout_id_to_clipboard_error": {
         "message": "Failed to copy current layout ID to clipboard."
     },
+    "remove_exe_confirm": {
+        "message": "Remove EXE?"
+    },
+    "remove_key_bindings_confirm": {
+        "message": "Remove key bindings?"
+    },
+    "remove_hotkey_action_confirm": {
+        "message": "Remove hotkey action?"
+    },
+    "remove_macro_confirm": {
+        "message": "Remove macro?"
+    },
+    "exe_section_text": {
+        "message": "EXE"
+    },
     "key_bindings_label_text": {
         "message": "Key bindings"
     },
@@ -23,8 +38,20 @@
     "toggle_windows_api_layout_switching_label_text": {
         "message": "Toggle windows API layout switching"
     },
+    "feature_state_off_label_text": {
+        "message": "Feature state off"
+    },
+    "feature_state_on_label_text": {
+        "message": "Feature state on"
+    },
+    "layout_switching_label_text": {
+        "message": "Layout switching"
+    },
+    "typing_label_text": {
+        "message": "Typing"
+    },
     "automatic_exe_windows_api_layout_switching_delay_label_text": {
-        "message": "Automatic exe windows API layout switching delay"
+        "message": "Automatic EXE windows API layout switching delay"
     },
     "val_type_label_text": {
         "message": "Value type"
@@ -33,16 +60,13 @@
         "message": "Create new input binding"
     },
     "exe_add_new_setting_label_text": {
-        "message": "Create new exe"
+        "message": "Create new EXE"
     },
     "specific_exe_add_new_setting_label_text": {
         "message": "Create key bindings"
     },
     "key_bindings_add_new_setting_label_text": {
         "message": "Create hotkey action"
-    },
-    "send_option_text": {
-        "message": "Send"
     },
     "minimize_option_text": {
         "message": "Minimize"
@@ -52,18 +76,6 @@
     },
     "reposition_option_text": {
         "message": "Reposition"
-    },
-    "send_input_option_text": {
-        "message": "SendInput"
-    },
-    "send_text_option_text": {
-        "message": "SendText"
-    },
-    "send_play_option_text": {
-        "message": "SendPlay"
-    },
-    "send_event_option_text": {
-        "message": "SendEvent"
     },
     "string_key_option_text": {
         "message": "Key"
@@ -77,11 +89,116 @@
     "object_macro_option_text": {
         "message": "Macro with properties"
     },
-    "reload_config_btn_text": {
+    "send_option_text": {
+        "message": "Send"
+    },
+    "send_input_option_text": {
+        "message": "SendInput"
+    },
+    "send_text_option_text": {
+        "message": "SendText"
+    },
+    "send_play_option_text": {
+        "message": "SendPlay"
+    },
+    "send_event_option_text": {
+        "message": "SendEvent"
+    },
+    "reload_config_btn_title": {
         "message": "Reload config"
     },
-    "macro_btn_text": {
-        "message": "Macro"
+    "copy_current_layout_id_to_clipboard_btn_title": {
+        "message": "Copy current layout id to clipboard"
+    },
+    "remove_property_side_btn_title": {
+        "message": "Remove"
+    },
+    "edit_group_label_side_btn_title": {
+        "message": "Change name"
+    },
+    "collapse_group_side_btn_title": {
+        "message": "Collapse"
+    },
+    "invalid_layouts_input_error_text": {
+        "message": "Separate each layout with a comma. Layout names can contain any character except commas and spaces."
+    },
+    "invalid_layout_ids_input_error_text": {
+        "message": "Separate each layout ID with a comma. Layout IDs must be integers (positive or negative) without spaces."
+    },
+    "invalid_layout_input_error_text": {
+        "message": "Layout name can contain any character except commas and spaces."
+    },
+    "invalid_exe_names_input_error_text": {
+        "message": "Separate each EXE name with a comma. Do not include \".exe\"."
+    },
+    "invalid_exe_name_input_error_text": {
+        "message": "Enter a valid EXE name without \".exe\"."
+    },
+    "invalid_integer_input_error_text": {
+        "message": "Value must be a positive integer."
+    },
+    "invalid_ahk_hotkey_input_error_text": {
+        "message": "Enter a valid AutoHotkey hotkey."
+    },
+    "invalid_ahk_hotkeys_input_error_text": {
+        "message": "Enter valid AutoHotkey hotkeys. Separate each AutoHotkey hotkey with a comma."
+    },
+    "invalid_file_extension_input_error_text": {
+        "message": "Enter a valid file extension without a dot."
+    },
+    "invalid_filename_input_error_text": {
+        "message": "Enter a valid filename with extension."
+    },
+    "invalid_modifiers_input_error_text": {
+        "message": "Separate each modifier with a comma. Allowed values: LWin, RWin, Control, Ctrl, Alt, Shift, LControl, LCtrl, RControl, RCtrl, LShift, RShift, LAlt, RAlt."
+    },
+    "invalid_json_input_error_text": {
+        "message": "Invalid JSON. Please enter valid JSON."
+    },
+    "invalid_any_character_no_space_input_error_text": {
+        "message": "Key name can contain any character except spaces."
+    },
+    "docs_link_text": {
+        "message": "📄 Documentation"
+    },
+    "github_link_text": {
+        "message": "😼 Keymeleon on Github"
+    },
+    "clear_new_tab_chrome_link_text": {
+        "message": "⚗️ Clear New Tab for Chrome"
+    },
+    "clear_new_tab_edge_link_text": {
+        "message": "⚗️ Clear New Tab for Edge"
+    },
+    "empty_new_tab_page_chrome_link_text": {
+        "message": "⚗️ Empty New Tab Page for Chrome"
+    },
+    "empty_new_tab_page_edge_link_text": {
+        "message": "⚗️ Empty New Tab Page for Edge"
+    },
+    "close_other_tabs_chrome_link_text": {
+        "message": "⚗️ Close Other Tabs+ for Chrome"
+    },
+    "close_other_tabs_edge_link_text": {
+        "message": "⚗️ Close Other Tabs+ for Edge"
+    },
+    "search_enhancer_for_google_chrome_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ for Chrome"
+    },
+    "search_enhancer_for_google_edge_link_text": {
+        "message": "⚗️ Search Enhancer for Google™ for Edge"
+    },
+    "advanced_extension_reloader_chrome_link_text": {
+        "message": "⚗️ Advanced Extension Reloader for Chrome"
+    },
+    "advanced_extension_reloader_edge_link_text": {
+        "message": "⚗️ Advanced Extension Reloader for Edge"
+    },
+    "scroll_to_top_chrome_link_text": {
+        "message": "⚗️ Scroll to Top for Chrome"
+    },
+    "scroll_to_top_edge_link_text": {
+        "message": "⚗️ Scroll to Top for Edge"
     },
     "features_help_text": {
         "message": "@docs_features@\n@docs_features_object@"
@@ -104,26 +221,11 @@
     "exe_help_text": {
         "message": "@docs_context_key_remapping@\n@docs_macros@\n@docs_mouse_button_support@\n@docs_remapping_keyboard_keys_and_hotkeys@\n@docs_app_exe_name_within_exe_object@\n@docs_custom_binding_name_object_within_key_bindings@\n@docs_macro_item@"
     },
-    "docs_features_help_link_text": {
-        "message": "Features"
-    },
-    "reload_config_btn_title": {
-        "message": "Reload config"
-    },
-    "copy_current_layout_id_to_clipboard_btn_title": {
-        "message": "Copy current layout id to clipboard"
-    },
-    "remove_property_side_btn_title": {
-        "message": "Remove"
-    },
-    "edit_group_label_side_btn_title": {
-        "message": "Change name"
-    },
-    "collapse_group_side_btn_title": {
-        "message": "Collapse"
-    },
     "docs_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md"
+    },
+    "docs_features_help_link_text": {
+        "message": "Features"
     },
     "docs_features_help_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#features-1"
@@ -207,7 +309,7 @@
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#remapping-keyboard-keys-and-hotkeys"
     },
     "docs_app_exe_name_within_exe_object_help_link_text": {
-        "message": "Exe: Reference"
+        "message": "EXE: Reference"
     },
     "docs_app_exe_name_within_exe_object_help_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#app-exe-name-within-exe-object"
@@ -223,98 +325,5 @@
     },
     "docs_macro_item_help_link_href": {
         "message": "https://github.com/loftyshaky/keymeleon/blob/main/README.md#macro-item"
-    },
-    "invalid_layouts_input_error_text": {
-        "message": "Separate each layout with a comma. Layout names can contain any character except commas and spaces."
-    },
-    "invalid_layout_ids_input_error_text": {
-        "message": "Separate each layout ID with a comma. Layout IDs must be integers (positive or negative) without spaces."
-    },
-    "invalid_layout_input_error_text": {
-        "message": "Layout name can contain any character except commas and spaces."
-    },
-    "invalid_exe_names_input_error_text": {
-        "message": "Separate each EXE name with a comma. Do not include \".exe\"."
-    },
-    "invalid_exe_name_input_error_text": {
-        "message": "Enter a valid EXE name without \".exe\"."
-    },
-    "invalid_integer_input_error_text": {
-        "message": "Value must be a positive integer."
-    },
-    "invalid_ahk_hotkey_input_error_text": {
-        "message": "Enter a valid AutoHotkey hotkey."
-    },
-    "invalid_ahk_hotkeys_input_error_text": {
-        "message": "Enter valid AutoHotkey hotkeys. Separate each AutoHotkey hotkey with a comma."
-    },
-    "invalid_file_extension_input_error_text": {
-        "message": "Enter a valid file extension without a dot."
-    },
-    "invalid_filename_input_error_text": {
-        "message": "Enter a valid filename with extension."
-    },
-    "invalid_modifiers_input_error_text": {
-        "message": "Separate each modifier with a comma. Allowed values: LWin, RWin, Control, Ctrl, Alt, Shift, LControl, LCtrl, RControl, RCtrl, LShift, RShift, LAlt, RAlt."
-    },
-    "invalid_json_input_error_text": {
-        "message": "Invalid JSON. Please enter valid JSON."
-    },
-    "invalid_any_character_no_space_input_error_text": {
-        "message": "Key name can contain any character except spaces."
-    },
-    "docs_link_text": {
-        "message": "📄 Documentation"
-    },
-    "github_link_text": {
-        "message": "😼 Keymeleon on Github"
-    },
-    "clear_new_tab_chrome_link_text": {
-        "message": "⚗️ Clear New Tab for Chrome"
-    },
-    "clear_new_tab_edge_link_text": {
-        "message": "⚗️ Clear New Tab for Edge"
-    },
-    "empty_new_tab_page_chrome_link_text": {
-        "message": "⚗️ Empty New Tab Page for Chrome"
-    },
-    "empty_new_tab_page_edge_link_text": {
-        "message": "⚗️ Empty New Tab Page for Edge"
-    },
-    "close_other_tabs_chrome_link_text": {
-        "message": "⚗️ Close Other Tabs+ for Chrome"
-    },
-    "close_other_tabs_edge_link_text": {
-        "message": "⚗️ Close Other Tabs+ for Edge"
-    },
-    "search_enhancer_for_google_chrome_link_text": {
-        "message": "⚗️ Search Enhancer for Google™ for Chrome"
-    },
-    "search_enhancer_for_google_edge_link_text": {
-        "message": "⚗️ Search Enhancer for Google™ for Edge"
-    },
-    "advanced_extension_reloader_chrome_link_text": {
-        "message": "⚗️ Advanced Extension Reloader for Chrome"
-    },
-    "advanced_extension_reloader_edge_link_text": {
-        "message": "⚗️ Advanced Extension Reloader for Edge"
-    },
-    "scroll_to_top_chrome_link_text": {
-        "message": "⚗️ Scroll to Top for Chrome"
-    },
-    "scroll_to_top_edge_link_text": {
-        "message": "⚗️ Scroll to Top for Edge"
-    },
-    "remove_exe_confirm": {
-        "message": "Remove exe?"
-    },
-    "remove_key_bindings_confirm": {
-        "message": "Remove key bindings?"
-    },
-    "remove_hotkey_action_confirm": {
-        "message": "Remove hotkey action?"
-    },
-    "remove_macro_confirm": {
-        "message": "Remove macro?"
     }
 }

@@ -324,6 +324,12 @@ class Class {
                 ],
                 prefs: [
                     {
+                        name: 'locale',
+                        type: 'select',
+                        val_type: 'string',
+                        default_val: 'en',
+                    },
+                    {
                         name: 'options_page_theme',
                         type: 'select',
                         val_type: 'string',
