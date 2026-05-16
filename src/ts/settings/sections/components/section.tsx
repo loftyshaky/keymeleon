@@ -6,16 +6,19 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { d_offers } from '@loftyshaky/shared-app/shared';
-import { c_inputs, o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import { c_inputs, d_inputs, o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
 import { c_sections, d_sections, s_sections, i_sections } from 'settings/internal';
 
 export const Section: React.FunctionComponent = observer(() => {
+    const { locale } = data.settings.prefs;
     useEffect(() => {
         (async () => {
-            await d_sections.InputWidth.calculate();
+            await d_inputs.InputWidth.calculate({
+                set_all_inputs_to_msg_input_min_width_css: true,
+            });
         })();
-    });
+    }, [locale]);
 
     const generate_sections = () =>
         err(() => {

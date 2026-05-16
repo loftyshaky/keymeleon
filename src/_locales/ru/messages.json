@@ -1,4 +1,7 @@
 {
+    "input_min_width_css": {
+        "message": "612"
+    },
     "copy_current_layout_id_to_clipboard_notification": {
         "message": "ID текущей раскладки скопирован в буфер обмена."
     },

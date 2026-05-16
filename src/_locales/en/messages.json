@@ -1,4 +1,7 @@
 {
+    "input_min_width_css": {
+        "message": "411"
+    },
     "name": {
         "message": "Keymeleon"
     },
