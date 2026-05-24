@@ -14,6 +14,10 @@ export class SectionBtn {
         return data.settings.prefs.current_section === this.section_name ? 'selected' : '';
     });
 
+    public tab_index? = computedFn(function (this: SectionBtn): number {
+        return data.settings.prefs.current_section === this.section_name ? -1 : 0;
+    });
+
     public section_name_text? = (): string =>
         err(
             () =>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import { d_sections } from '@loftyshaky/shared-app/settings';
 import { p_sections } from 'settings/internal';
 
 export const SectionBtn: React.FunctionComponent<p_sections.SectionBtn> = observer((props) => {
@@ -14,6 +15,7 @@ export const SectionBtn: React.FunctionComponent<p_sections.SectionBtn> = observ
                 section_btn.selected_cls!(),
             ])}
             type='button'
+            tabIndex={section_btn.tab_index!()}
             onClick={section_btn.change_current_section_val}
         >
             {section_btn.section_name_text!()}
