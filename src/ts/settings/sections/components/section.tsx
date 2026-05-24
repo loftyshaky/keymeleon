@@ -342,6 +342,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                             content_is_visible_default: true,
                                             val_accessor: `settings.hotkeys.context_remap.input_bindings.${input_name}`,
                                             side_btns: group_side_btns,
+                                            use_group_id_on_child_inputs: true,
                                             inputs: [
                                                 d_sections.Sections.generate_input({
                                                     section_item,

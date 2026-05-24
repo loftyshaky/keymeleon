@@ -23,6 +23,7 @@ class Class {
         svg_2,
         content_is_visible_val_accessor,
         content_is_visible_default = false,
+        use_group_id_on_child_inputs = false,
         inputs,
     }: {
         section_item: i_sections.SectionTemplateItem;
@@ -33,6 +34,7 @@ class Class {
         svg_2?: string;
         content_is_visible_val_accessor?: string;
         content_is_visible_default?: boolean;
+        use_group_id_on_child_inputs?: boolean;
         inputs?: i_inputs.InputsAndLinks;
     }): i_inputs.InputAndLink =>
         err(() => {
@@ -54,6 +56,7 @@ class Class {
                     developer_mode_setting: section_item.developer_mode_setting,
                     event_callback: () => {},
                     keydown_callback: d_sections.Val.handle_keyboard_on_edit_label,
+                    use_group_id_on_child_inputs,
                     inputs: inputs as i_inputs.Inputs,
                     ...(n(side_btns) && { side_btns }),
                 });
