@@ -13,7 +13,18 @@
     },
     "hotkeys": {
         "context_remap": {
-            "exe": {},
+            "exe": {
+                "Fallout4": {
+                    "enable_process_suspend_hotkeys": 1,
+                    "process_minimize_method": "minimize",
+                    "window_title": "Fallout4"
+                },
+                "KingdomCome": {
+                    "enable_process_suspend_hotkeys": 1,
+                    "process_minimize_method": "reposition",
+                    "window_title": "Kingdom Come: Deliverance II"
+                }
+            },
             "input_bindings": {}
         },
         "dedicated_layout_hotkeys": [],
