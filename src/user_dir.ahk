@@ -21,7 +21,9 @@ set_up_user_dir() {
     }
 
     if (!FileExist(config_path)) {
-        FileAppend("{}", config_path)
+        default_config := FileRead(A_ScriptDir "\json\default_config.json")
+
+        FileAppend(default_config, config_path)
     }
 
     config := load_config_json(config_path)

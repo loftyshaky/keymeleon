@@ -1,0 +1,72 @@
+{
+    "audio": {
+        "default_file_extension": "wav"
+    },
+    "features": {
+        "enable_all_bindings": 1,
+        "enable_dedicated_layout_switching": 1,
+        "enable_feature_state_audio": 1,
+        "enable_layout_switching_audio": 1,
+        "enable_sequential_layout_switching": 1,
+        "enable_typing_audio": 1,
+        "enable_windows_api_layout_switching": 1
+    },
+    "hotkeys": {
+        "context_remap": {
+            "exe": {},
+            "input_bindings": {}
+        },
+        "dedicated_layout_hotkeys": [],
+        "display_current_layout_id": "^!+sc017",
+        "resume_all_suspended_processes": "!+5",
+        "resume_current_process_suspended": "!+4",
+        "set_primary_layout": "ScrollLock",
+        "set_secondary_layout": "Pause",
+        "toggle_all_bindings": "^!+sc035",
+        "toggle_current_process_minimize_and_suspend_state": "!+3",
+        "toggle_current_process_minimized_state": "!+1",
+        "toggle_current_process_suspend_state": "!+2",
+        "toggle_dedicated_layout_switching": "^!+sc01A",
+        "toggle_feature_state_audio": "^!+sc032",
+        "toggle_layout_switching_audio": "^!+sc034",
+        "toggle_sequential_layout_switching": "^!+sc01B",
+        "toggle_typing_audio": "^!+sc033",
+        "toggle_windows_api_layout_switching": "^!+sc019"
+    },
+    "layouts": {
+        "all_layouts_ordered": [],
+        "fallback_layout_switching_exes": ["x360ce", "RazerAppEngine"],
+        "layout_ids": [],
+        "layout_switching_delay": 30,
+        "primary_layout": "",
+        "secondary_layouts": []
+    },
+    "prefs": {
+        "current_section": "features",
+        "developer_mode": 0,
+        "enable_cut_features": 0,
+        "locale": "en",
+        "offers_are_visible": 1,
+        "options_page_theme": "blaze",
+        "transition_duration": 200,
+        "version": "0.0.1",
+        "window": {
+            "dimensions": {
+                "height": 800,
+                "is_maximized": 1,
+                "width": 1150,
+                "x": 50,
+                "y": 50
+            }
+        }
+    },
+    "process_control": {
+        "post_screenshot_delay": 100,
+        "pre_minimize_screenshot": 0,
+        "pre_screenshot_delay": 100,
+        "pre_suspend_screenshot": 0,
+        "resume_pre_unminimize_delay": 100,
+        "suspend_post_minimize_delay": 100,
+        "target_processes": ["Fallout4", "KingdomCome"]
+    }
+}

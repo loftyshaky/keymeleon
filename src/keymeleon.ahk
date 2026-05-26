@@ -12,8 +12,6 @@ DetectHiddenWindows(true)
 #Include %A_ScriptDir%\config.ahk
 #Include %A_ScriptDir%\user_dir.ahk
 
-config := load_config_json("config.json")
-
 set_up_user_dir()
 
 #Include %A_ScriptDir%\utils.ahk
