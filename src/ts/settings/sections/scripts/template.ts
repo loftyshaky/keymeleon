@@ -1,3 +1,4 @@
+import { t } from '@loftyshaky/shared-app/shared_clean';
 import { i_sections } from 'settings/internal';
 
 class Class {
@@ -11,6 +12,9 @@ class Class {
     private constructor() {}
 
     [key: string]: any;
+
+    public ensure_sections = (): i_sections.Sections | t.AnyRecord =>
+        err(() => (n(this.sections) ? this.sections : {}), 'cnt_5346');
 
     public static_sections: string[] = [
         'docs',
@@ -704,6 +708,79 @@ class Class {
 
     public sanitize_text_for_class = ({ text }: { text: string }): string =>
         err(() => text.replace(/[^A-Za-z0-9]+/g, '_').replace(/^-|-$/g, ''), 'cnt_3478');
+
+    public generate_add_new_setting_input_section_item = ({
+        name_prefix,
+    }: {
+        name_prefix: string;
+    }): i_sections.SectionTemplateItem =>
+        err(
+            () => ({
+                name: `${name_prefix}_add_new_setting`,
+                type: 'icon_btn',
+            }),
+            'cnt_5464',
+        );
+
+    public generate_input_bindings_section_item = ({
+        input_name,
+    }: {
+        input_name: string;
+    }): i_sections.SectionTemplateItem =>
+        err(
+            () => ({
+                name: `${input_name}`,
+                type: 'text',
+                val_type: 'string',
+                placeholder: '^+F2',
+                input_errors: ['invalid_ahk_hotkey'],
+            }),
+            'cnt_6367',
+        );
+
+    public generate_input_bindings_group_section_item = ({
+        input_name,
+    }: {
+        input_name: string;
+    }): i_sections.SectionTemplateItem =>
+        err(
+            () => ({
+                name: input_name,
+                type: 'group',
+            }),
+            'cnt_6367',
+        );
+
+    public generate_exe_group_section_item = ({
+        exe_name,
+    }: {
+        exe_name: string;
+    }): i_sections.SectionTemplateItem =>
+        err(
+            () => ({
+                name: `${this.sanitize_text_for_class({ text: exe_name })}_exe_group_level_1`,
+                type: 'group',
+            }),
+            'cnt_6367',
+        );
+
+    public generate_audio_section_item = ({
+        input_label,
+        placeholder,
+    }: {
+        input_label: string;
+        placeholder: string;
+    }): i_sections.SectionTemplateItem =>
+        err(
+            () => ({
+                name: input_label,
+                type: 'text',
+                val_type: 'string',
+                placeholder,
+                input_errors: ['invalid_filename'],
+            }),
+            'cnt_7423',
+        );
 }
 
 export const Template = Class.get_instance();

@@ -1,4 +1,4 @@
-import { t } from '@loftyshaky/shared-app/shared';
+import { t } from '@loftyshaky/shared-app/shared_clean';
 
 class Class {
     private static instance: Class;

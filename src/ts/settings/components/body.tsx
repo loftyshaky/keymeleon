@@ -11,20 +11,14 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
     useEffect(() => {
         on_render();
 
-        if (d_sections.Sections.scroll_sections_to_bottom && n(sections_ref.current)) {
-            sections_ref.current.scrollTop = sections_ref.current.scrollHeight;
-        }
-
-        d_sections.Sections.scroll_sections_to_bottom = false;
+        s_sections.Sections.set_scroll_height({ sections_el: sections_ref.current });
     }, [on_render, add_new_setting]);
 
     return (
         <div className='main'>
             <div className={x.cls(['main_2', 'settings'])}>
                 <div className='section_btns'>
-                    {Object.keys(
-                        n(s_sections.Template.sections) ? s_sections.Template.sections : {},
-                    ).map(
+                    {Object.keys(s_sections.Template.ensure_sections()).map(
                         (section_name: string, i: number): JSX.Element => (
                             <c_sections.SectionBtn
                                 key={i}

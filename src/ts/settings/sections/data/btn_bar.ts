@@ -1,6 +1,6 @@
-import { s_msgs } from 'shared_clean/internal';
-import { svg } from 'shared/internal';
 import { o_inputs } from '@loftyshaky/shared-app/inputs';
+import { svg } from 'shared/internal';
+import { s_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -17,48 +17,15 @@ class Class {
                 new o_inputs.IconBtn({
                     name: 'reload_config',
                     Svg: svg.Refresh,
-                    event_callback: this.reload_config,
+                    event_callback: s_sections.BtnBar.reload_config,
                 }),
                 new o_inputs.IconBtn({
                     name: 'copy_current_layout_id_to_clipboard',
                     Svg: svg.Translate,
-                    event_callback: this.copy_current_layout_id_to_clipboard,
+                    event_callback: s_sections.BtnBar.copy_current_layout_id_to_clipboard,
                 }),
             ];
         }, 'seg_1127');
-
-    private reload_config = (): void =>
-        err(() => {
-            s_msgs.Msgs.send({ msg: 'reload_config' });
-        }, 'seg_1727');
-
-    private copy_current_layout_id_to_clipboard = (): void =>
-        err(() => {
-            s_msgs.Msgs.send({ msg: 'get_current_layout_id' });
-        }, 'seg_1727');
-
-    public copy_current_layout_id_to_clipboard_responder = ({
-        current_layout_id,
-    }: {
-        current_layout_id: string;
-    }): Promise<void> =>
-        err_async(async () => {
-            await navigator.clipboard.writeText(current_layout_id);
-
-            if (current_layout_id === '') {
-                show_notification({
-                    error_msg_key: 'copy_current_layout_id_to_clipboard_error',
-                    notification_type: 'error',
-                    hide_delay: 2000,
-                });
-            } else {
-                show_notification({
-                    error_msg_key: 'copy_current_layout_id_to_clipboard_notification',
-                    notification_type: 'positive',
-                    hide_delay: 2000,
-                });
-            }
-        }, 'seg_1727');
 }
 
 export const BtnBar = Class.get_instance();

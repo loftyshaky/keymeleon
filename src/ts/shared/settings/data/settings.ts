@@ -10,7 +10,7 @@ import map from 'lodash/map';
 import trim from 'lodash/trim';
 import { makeObservable, action, toJS } from 'mobx';
 
-import { t, s_theme, i_data } from '@loftyshaky/shared-app/shared';
+import { t, i_data } from '@loftyshaky/shared-app/shared';
 import { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 

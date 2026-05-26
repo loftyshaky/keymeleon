@@ -1,6 +1,6 @@
 import { init_shared } from '@loftyshaky/shared-app/shared';
 import { d_settings } from 'shared/internal';
-import { init, d_sections } from 'settings/internal';
+import { init, s_sections } from 'settings/internal';
 
 window.chrome.webview.addEventListener('message', (e: any) =>
     err_async(async () => {
@@ -16,7 +16,7 @@ window.chrome.webview.addEventListener('message', (e: any) =>
             init_shared();
             await init();
         } else if (msg_str === 'get_current_layout_id_response') {
-            d_sections.BtnBar.copy_current_layout_id_to_clipboard_responder({
+            s_sections.BtnBar.copy_current_layout_id_to_clipboard_responder({
                 current_layout_id: msg_obj.current_layout_id,
             });
         }

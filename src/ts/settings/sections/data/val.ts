@@ -7,7 +7,7 @@ import { t, s_theme as s_theme_shared, i_data } from '@loftyshaky/shared-app/sha
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { s_css_vars, s_theme } from 'shared_clean/internal';
 import { d_settings, i_settings } from 'shared/internal';
-import { d_sections, i_sections } from 'settings/internal';
+import { d_sections, s_sections, i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -136,7 +136,7 @@ class Class {
                     val_type: 'string',
                 });
 
-                d_sections.Sections.scroll_sections_to_bottom = true;
+                s_sections.Sections.scroll_sections_to_bottom = true;
             } else if (input.name === 'exe_add_new_setting') {
                 d_settings.Settings.write_change_val({
                     val_setter: `${input.val_accessor}.New_exe_${x.id()}`,
@@ -144,7 +144,7 @@ class Class {
                     val_type: 'object',
                 });
 
-                d_sections.Sections.scroll_sections_to_bottom = true;
+                s_sections.Sections.scroll_sections_to_bottom = true;
             } else if (input.name === 'specific_exe_add_new_setting') {
                 d_settings.Settings.write_change_val({
                     val_setter: `${input.val_accessor}.key_bindings`,
