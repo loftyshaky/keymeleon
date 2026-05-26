@@ -5,7 +5,7 @@ create_context_menu_items() {
 
 tray_click_action(*) {
     global win_is_open
-    global dimensions_obj
+    global dimensions_obj_global
 
     if (win_is_open) {
         win_is_open := 0
@@ -14,6 +14,6 @@ tray_click_action(*) {
     } else {
         win_is_open := 1
 
-        win_display_initial(dimensions_obj)
+        win_display_initial(dimensions_obj_global)
     }
 }

@@ -9,6 +9,7 @@ on_new_window(wv, args) { ; Opens links in default browser.
     Run(url)
 
     args.Handled := true
+
 }
 
 win_display_initial(dimensions_obj) {
@@ -22,6 +23,7 @@ win_display_initial(dimensions_obj) {
     } else {
         win.Show("W" dimensions_obj["width"] " H" dimensions_obj["height"] " X" dimensions_obj[
             "x"] " Y" dimensions_obj["y"])
+
     }
 
     set_win_icon_w()
@@ -40,6 +42,7 @@ win_size(gui_obj, min_max, client_width, client_height) {
     global config
     global is_maximized
     global previous_is_maximized
+    global restored_down_once
     global windows_obj_exists
 
     if (min_max = -1) {
@@ -48,19 +51,24 @@ win_size(gui_obj, min_max, client_width, client_height) {
         previous_is_maximized := ""
     }
 
-    dimensions := get_dimensions_from_config()
+    dimensions_obj := get_dimensions_from_config()
     is_minimized := false
+    restored_down := min_max = 0 && is_maximized
 
-    if (min_max = 0 && is_maximized) { ; Restored down
+    if (restored_down) { ; Restored down - when restoring down from maximized
         is_maximized := false
 
-        win_move(dimensions)
+        if (!restored_down_once) {
+            win_move(dimensions_obj)
+        }
 
     } else if (min_max = 1) { ; Maximized
         is_maximized := true
     } else if (min_max = -1) { ; Minimized
         is_maximized := false
         is_minimized := true
+    } else { ; Restored down - when opening settings page in restored down state
+        win_move(dimensions_obj)
     }
 
     if (windows_obj_exists) {
@@ -72,9 +80,10 @@ win_size(gui_obj, min_max, client_width, client_height) {
 
             } else {
                 WinGetPos(, , &win_width, &win_height, "ahk_id " gui_obj.hwnd)
+                WinGetClientPos(, , &new_client_width, &new_client_height, "ahk_id " gui_obj.hwnd)
 
-                set_dimension_to_config("width", is_minimized ? win_width : client_width)
-                set_dimension_to_config("height", is_minimized ? win_height : client_height)
+                set_dimension_to_config("width", win_width)
+                set_dimension_to_config("height", win_height)
 
                 config_write(config)
             }
@@ -83,6 +92,10 @@ win_size(gui_obj, min_max, client_width, client_height) {
 
     if (min_max != -1) {
         try wvc.Fill()
+    }
+
+    if (restored_down) {
+        restored_down_once := true
     }
 }
 
@@ -121,6 +134,8 @@ win_hide() {
     global is_maximized
     global previous_is_maximized
 
+    restored_down_once := false
+
     min_max := WinGetMinMax(win)
 
     if (n(previous_is_maximized)) {
@@ -128,6 +143,7 @@ win_hide() {
     }
 
     win.Hide()
+
 }
 
 set_dimension_to_config(key, dimension) {
@@ -144,10 +160,10 @@ get_dimensions_from_config() {
 
     default_dimensions_obj := Map()
     default_dimensions_obj["is_maximized"] := 1
-    default_dimensions_obj["x"] := 0
-    default_dimensions_obj["y"] := 0
-    default_dimensions_obj["width"] := 1000
-    default_dimensions_obj["height"] := 700
+    default_dimensions_obj["x"] := 50
+    default_dimensions_obj["y"] := 50
+    default_dimensions_obj["width"] := 1150
+    default_dimensions_obj["height"] := 800
 
     dimensions_obj := config_get(["dimensions"], window_obj)
     dimensions_obj_final := n(dimensions_obj) ? dimensions_obj : default_dimensions_obj
