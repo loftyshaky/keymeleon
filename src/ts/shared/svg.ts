@@ -7,6 +7,7 @@ import Edit from '../../svg/edit.svg';
 import KeyboardArrowDown from '../../svg/keyboard_arrow_down.svg';
 import Refresh from '../../svg/refresh.svg';
 import Translate from '../../svg/translate.svg';
+import Dehaze from '../../svg/dehaze.svg';
 
 export type SvgType = {
     Add: string;
@@ -16,6 +17,7 @@ export type SvgType = {
     KeyboardArrowDown: string;
     Refresh: string;
     Translate: string;
+    Dehaze: string;
 };
 
 export const svg: SvgType = {
@@ -26,4 +28,5 @@ export const svg: SvgType = {
     KeyboardArrowDown,
     Refresh,
     Translate,
+    Dehaze,
 };

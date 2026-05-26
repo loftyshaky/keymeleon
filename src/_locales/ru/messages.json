@@ -281,6 +281,9 @@
     "copy_current_layout_id_to_clipboard_btn_title": {
         "message": "Скопировать ID текущей раскладки в буфер обмена"
     },
+    "collapse_all_btn_title": {
+        "message": "Свернуть всё (EXE)"
+    },
     "remove_property_side_btn_title": {
         "message": "Удалить"
     },

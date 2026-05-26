@@ -24,6 +24,11 @@ class Class {
                     Svg: svg.Translate,
                     event_callback: s_sections.BtnBar.copy_current_layout_id_to_clipboard,
                 }),
+                new o_inputs.IconBtn({
+                    name: 'collapse_all',
+                    Svg: svg.Dehaze,
+                    event_callback: s_sections.BtnBar.collapse_all,
+                }),
             ];
         }, 'seg_1127');
 }

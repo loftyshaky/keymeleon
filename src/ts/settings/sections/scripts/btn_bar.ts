@@ -1,4 +1,5 @@
 import { s_msgs } from 'shared_clean/internal';
+import { d_settings } from 'shared/internal';
 import { o_inputs } from '@loftyshaky/shared-app/inputs';
 
 class Class {
@@ -18,6 +19,14 @@ class Class {
     public copy_current_layout_id_to_clipboard = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'get_current_layout_id' });
+        }, 'seg_1727');
+
+    public collapse_all = (): void =>
+        err(() => {
+            d_settings.Settings.write_change_val({
+                val_setter: 'settings.ui.window.section_visibility_state',
+                val: {},
+            });
         }, 'seg_1727');
 
     public copy_current_layout_id_to_clipboard_responder = ({
