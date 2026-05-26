@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { makeObservable, observable, action } from 'mobx';
 
-import { t, s_theme as s_theme_shared, i_data } from '@loftyshaky/shared-app/shared';
+import { t, d_offers, s_theme as s_theme_shared, i_data } from '@loftyshaky/shared-app/shared';
 import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
 import { s_css_vars, s_theme } from 'shared_clean/internal';
 import { d_settings, i_settings } from 'shared/internal';
@@ -110,6 +110,10 @@ class Class {
                 }
 
                 s_css_vars.CssVars.set();
+
+                if (input.name === 'locale') {
+                    d_offers.Offers.set_offers();
+                }
 
                 if (input.name === 'options_page_theme') {
                     s_theme_shared.Theme.set({
