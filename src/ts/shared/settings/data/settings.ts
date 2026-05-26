@@ -31,11 +31,14 @@ class Class {
     }
 
     public data_raw: t.AnyRecord = {};
+    public set_once: boolean = false;
 
     public set = ({ settings }: { settings: any }): void =>
         err(() => {
-            this.data_raw.settings = settings;
-            data.settings = settings;
+            const settings_final = this.set_once ? settings : this.transform({ settings });
+
+            this.data_raw.settings = settings_final;
+            data.settings = settings_final;
         }, 'shr_1124');
 
     public get = (): void =>
@@ -221,6 +224,22 @@ class Class {
                 }
             }
         }, 'aer_1082');
+
+    private transform = ({ settings }: { settings: any }): any =>
+        err(() => {
+            settings.prefs.version = app.get_app_version();
+
+            return settings;
+        }, 'aer_1085');
+
+    public transform_on_render = (): void =>
+        err(() => {
+            if (!this.set_once) {
+                this.write({ config: this.data_raw.settings });
+            }
+
+            this.set_once = true;
+        }, 'shr_1728');
 }
 
 export const Settings = Class.get_instance();

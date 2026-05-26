@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { c_app_version, c_offers, d_offers } from '@loftyshaky/shared-app/shared';
+import { d_settings } from 'shared/internal';
 import { c_sections, o_sections, d_sections, s_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
@@ -11,6 +12,7 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
     useEffect(() => {
         on_render();
 
+        d_settings.Settings.transform_on_render();
         s_sections.Sections.set_scroll_height({ sections_el: sections_ref.current });
     }, [on_render, add_new_setting]);
 
