@@ -1,4 +1,4 @@
-class Dependencies {
+export class Dependencies {
     missing_dependencies = [
         {
             name: 'Material Icons - Image Icon',
@@ -11,5 +11,3 @@ class Dependencies {
         },
     ];
 }
-
-module.exports = { Dependencies };

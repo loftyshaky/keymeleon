@@ -1,4 +1,6 @@
-import { d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_inputs } from '@loftyshaky/shared-app/inputs';
+import { d_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_error } from '@loftyshaky/shared-app/shared_clean';
 
 class Class {
     private static instance: Class;
@@ -7,7 +9,6 @@ class Class {
         return this.instance || (this.instance = new this());
     }
 
-    // eslint-disable-next-line no-useless-constructor, no-empty-function
     private constructor() {}
 
     private comma_separated_list_any: RegExp = /^[^,\s]+(?:\s*,\s*[^,\s]+)*\s*$/;
@@ -72,8 +73,8 @@ class Class {
                     JSON.parse(raw_val as string);
 
                     return false;
-                } catch (error_obj: any) {
-                    show_err_ribbon(error_obj, 'aer_1060', { silent: true });
+                } catch (error_obj: unknown) {
+                    show_err_ribbon(error_obj as i_error.ErrorObj, 'aer_1060', { silent: true });
                 }
             } else if (n(regex)) {
                 return (

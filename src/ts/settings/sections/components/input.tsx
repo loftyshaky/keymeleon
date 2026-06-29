@@ -1,7 +1,9 @@
 import React, { memo, useMemo } from 'react';
 
-import { c_inputs, o_inputs } from '@loftyshaky/shared-app/inputs';
-import { s_sections, p_sections } from 'settings/internal';
+import type { o_inputs } from '@loftyshaky/shared-app/inputs';
+import { c_inputs } from '@loftyshaky/shared-app/inputs';
+import type { p_sections } from 'settings/internal';
+import { s_sections } from 'settings/internal';
 
 export const Input: React.FunctionComponent<p_sections.Input> = memo(
     (props) => {

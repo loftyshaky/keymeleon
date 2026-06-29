@@ -1,6 +1,6 @@
-import { s_msgs } from 'shared_clean/internal';
+import type { o_inputs } from '@loftyshaky/shared-app/inputs';
 import { d_settings } from 'shared/internal';
-import { o_inputs } from '@loftyshaky/shared-app/inputs';
+import { s_msgs } from 'shared_clean/internal';
 
 class Class {
     private static instance: Class;

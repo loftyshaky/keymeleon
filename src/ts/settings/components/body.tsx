@@ -1,8 +1,10 @@
-import React, { useRef, useEffect } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
+import React, { type JSX, useEffect, useRef } from 'react';
+
 import { c_app_version, c_offers, d_offers } from '@loftyshaky/shared-app/shared';
+import type { p_settings } from 'settings/internal';
+import { c_sections, d_sections, o_sections, s_sections } from 'settings/internal';
 import { d_settings } from 'shared/internal';
-import { c_sections, o_sections, d_sections, s_sections, p_settings } from 'settings/internal';
 
 export const Body: React.FunctionComponent<p_settings.Body> = observer((props) => {
     const { on_render } = props;
@@ -21,9 +23,9 @@ export const Body: React.FunctionComponent<p_settings.Body> = observer((props) =
             <div className={x.cls(['main_2', 'settings'])}>
                 <div className='section_btns'>
                     {Object.keys(s_sections.Template.ensure_sections()).map(
-                        (section_name: string, i: number): JSX.Element => (
+                        (section_name: string): JSX.Element => (
                             <c_sections.SectionBtn
-                                key={i}
+                                key={section_name}
                                 section_btn={new o_sections.SectionBtn({ section_name })}
                             />
                         ),

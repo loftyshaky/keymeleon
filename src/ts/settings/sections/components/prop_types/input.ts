@@ -1,5 +1,5 @@
-import { i_inputs } from '@loftyshaky/shared-app/inputs';
-import { i_sections } from 'settings/internal';
+import type { i_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_sections } from 'settings/internal';
 
 export interface Input {
     section_item: i_sections.SectionTemplateItem;

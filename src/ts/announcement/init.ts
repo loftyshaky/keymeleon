@@ -4,5 +4,5 @@ export const init = (): Promise<void> =>
     err_async(async () => {
         await InitAll.init();
 
-        void InitAll.render_dependencies();
-    }, 'cnt_1229');
+        await InitAll.render_announcement();
+    }, 'seg_1000');

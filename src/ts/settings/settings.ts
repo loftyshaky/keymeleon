@@ -2,6 +2,6 @@ import '@loftyshaky/shared-app/app';
 import { d_settings } from 'shared/internal';
 import 'settings/internal';
 
-(async () => {
+void (async () => {
     d_settings.Settings.get();
 })();

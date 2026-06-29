@@ -5,10 +5,12 @@ The Microsoft Edge WebView2 control enables you to host web content in your appl
 The WebView2 Runtime is built into Win10(latest version) and Win11 and can be easily used in AHK.
 
 ## api conversion
+
 - The Asynchronous method will have the `Async` suffix, such as `ExecuteScriptAsync`, and return the [Promise](https://github.com/thqby/ahk2_lib/blob/master/Promise.ahk) after the call.
 - The `add_event` method accepts an ahk callable object with two minimum parameters, and it has a method named `event`, which returns the object and cancels the registration event after the object is destructed.
 
 ## Example1: AddHostObjectToEdge, Open with multiple windows
+
 ```autohotkey
 #Include <WebView2\WebView2>
 
@@ -24,6 +26,7 @@ wv.OpenDevToolsWindow()
 ```
 
 Run code in Edge DevTools
+
 ```javascript
 obj = await window.chrome.webview.hostObjects.ahk;
 obj.func('call from edge\n' + (await obj.str));
@@ -32,6 +35,7 @@ obj.func('call from edge\n' + obj.str);
 ```
 
 ## Example2: Open with only one Tab
+
 ```autohotkey
 #Include <WebView2\WebView2>
 
@@ -52,6 +56,7 @@ NewWindowRequestedHandler(wv2, arg) {
 ```
 
 ## Example3: Open with multiple Tabs in a window
+
 ```autohotkey
 #Include <WebView2\WebView2>
 
@@ -102,6 +107,7 @@ _exit_(*) {
 ```
 
 ## Example4: PrintToPDF
+
 ```
 #Include <WebView2\WebView2>
 

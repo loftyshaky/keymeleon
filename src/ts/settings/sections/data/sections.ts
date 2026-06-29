@@ -1,11 +1,15 @@
 import get from 'lodash/get';
-import set from 'lodash/set';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
-import { makeObservable, computed } from 'mobx';
-import { o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
-import { d_sections, s_sections, i_sections } from 'settings/internal';
-import { svg, d_settings, i_settings } from 'shared/internal';
+import set from 'lodash/set';
+import { computed, makeObservable } from 'mobx';
+
+import type { i_inputs } from '@loftyshaky/shared-app/inputs';
+import { o_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_sections } from 'settings/internal';
+import { d_sections, s_sections } from 'settings/internal';
+import type { i_settings } from 'shared/internal';
+import { d_settings, svg } from 'shared/internal';
 
 class Class {
     private static instance: Class;
@@ -592,7 +596,7 @@ class Class {
                                     Svg: svg.Edit,
                                     event_callback: d_sections.Val.toggle_edit_label_state,
                                     is_enabled_cond:
-                                        d_sections.Val.editing_group_label_side_btn_is_enabled_cond, // eslint-disable-line max-len
+                                        d_sections.Val.editing_group_label_side_btn_is_enabled_cond,
                                 };
                             }
 
@@ -602,7 +606,7 @@ class Class {
                                 alt_title: side_button_alt_title,
                                 Svg: svg.KeyboardArrowDown,
                                 is_enabled_cond:
-                                    d_sections.Val.collapse_group_side_btn_is_enabled_cond, // eslint-disable-line max-len
+                                    d_sections.Val.collapse_group_side_btn_is_enabled_cond,
                                 event_callback: d_sections.Val.collapse_group,
                             };
                             // }

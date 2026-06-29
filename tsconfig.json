@@ -1,24 +1,24 @@
 {
     "compilerOptions": {
+        "rootDir": ".",
         "outDir": "dist",
-        "baseUrl": "src",
-        "target": "es6",
+        "target": "esnext",
         "module": "esnext",
-        "moduleResolution": "node",
-        "jsx": "react",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
         "strict": true,
         "esModuleInterop": true,
         "sourceMap": true,
-        "typeRoots": ["node_modules/@types"],
         "skipLibCheck": true,
+        "typeRoots": ["node_modules/@types"],
         "paths": {
-            "shared_clean/*": ["./ts/shared_clean/*"],
-            "shared/*": ["./ts/shared/*"],
-            "dependencies/*": ["./ts/dependencies/*"],
-            "settings/*": ["./ts/settings/*"]
-        },
-        "plugins": [{ "transform": "typescript-transform-paths", "afterDeclarations": true }]
+            "shared_clean/*": ["./src/ts/shared_clean/*"],
+            "shared/*": ["./src/ts/shared/*"],
+            "announcement/*": ["./src/ts/announcement/*"],
+            "settings/*": ["./src/ts/settings/*"],
+            "dependencies/*": ["./src/ts/dependencies/*"]
+        }
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"]
+    "files": ["node_modules/@loftyshaky/shared-app/src/ts/custom.d.ts"],
+    "include": ["src/ts/**/*", "build/**/*"]
 }

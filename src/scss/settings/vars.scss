@@ -1,1 +1,3 @@
-$exe_group_offset: $gap * 3;
+@use '../../../node_modules/@loftyshaky/shared-app/scss/shared/vars';
+
+$exe_group_offset: vars.$gap * 3;

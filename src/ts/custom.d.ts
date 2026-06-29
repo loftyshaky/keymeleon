@@ -1,8 +1,3 @@
-declare module '*.svg' {
-    const content: string;
-    export default content;
-}
-
 interface Window {
     // Chrome WebView properties
     chrome: {
@@ -12,6 +7,7 @@ interface Window {
             addEventListener: (type: string, listener: (event: MessageEvent) => void) => void;
             removeEventListener: (type: string, listener: (event: MessageEvent) => void) => void;
         };
+        // oxlint-disable-next-line typescript/no-explicit-any
         runtime: any; // Chrome extension runtime
     };
 }

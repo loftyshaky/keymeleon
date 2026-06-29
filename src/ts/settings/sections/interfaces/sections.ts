@@ -1,7 +1,8 @@
-import { i_sections } from 'settings/internal';
+import type { t } from '@loftyshaky/shared-app/shared_clean';
+import type { i_sections } from 'settings/internal';
 
 export interface Sections {
-    [key: string]: any;
+    [key: string]: t.Any;
 
     features: i_sections.SectionTemplateItem[];
     layouts: i_sections.SectionTemplateItem[];

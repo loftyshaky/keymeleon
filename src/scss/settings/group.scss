@@ -1,8 +1,10 @@
+@use 'vars';
+
 [class*='_exe_group_level_1'],
 [class*='_exe_group_level_2'],
 [class*='_exe_group_level_3'] {
     &.input_item.group > .input_item_inner > .input_w_and_help_btn > .input_w {
-        margin-left: $exe_group_offset;
+        margin-left: vars.$exe_group_offset;
     }
 }
 

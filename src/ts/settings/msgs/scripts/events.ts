@@ -1,8 +1,9 @@
 import { init_shared } from '@loftyshaky/shared-app/shared';
-import { d_settings } from 'shared/internal';
+import type { t } from '@loftyshaky/shared-app/shared_clean';
 import { init, s_sections } from 'settings/internal';
+import { d_settings } from 'shared/internal';
 
-window.chrome.webview.addEventListener('message', (e: any) =>
+window.chrome.webview.addEventListener('message', (e: t.Any) =>
     err_async(async () => {
         const msg_obj = JSON.parse(JSON.parse(e.data));
         const msg_str: string = msg_obj.msg;
@@ -11,12 +12,12 @@ window.chrome.webview.addEventListener('message', (e: any) =>
             d_settings.Settings.set({ settings: msg_obj.config });
 
             await app.read_data_into_vars();
-            await show_unable_to_access_settings_error();
+            show_unable_to_access_settings_error();
 
             init_shared();
             await init();
         } else if (msg_str === 'get_current_layout_id_response') {
-            s_sections.BtnBar.copy_current_layout_id_to_clipboard_responder({
+            void s_sections.BtnBar.copy_current_layout_id_to_clipboard_responder({
                 current_layout_id: msg_obj.current_layout_id,
             });
         }

@@ -1,4 +1,5 @@
-import { o_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_inputs } from '@loftyshaky/shared-app/inputs';
+import { o_inputs } from '@loftyshaky/shared-app/inputs';
 
 class Class {
     private static instance: Class;

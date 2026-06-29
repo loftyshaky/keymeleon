@@ -1,13 +1,17 @@
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
-import { makeObservable, observable, action } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
-import { t, d_offers, s_theme as s_theme_shared, i_data } from '@loftyshaky/shared-app/shared';
-import { o_inputs, d_inputs, i_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_inputs, o_inputs } from '@loftyshaky/shared-app/inputs';
+import { d_inputs } from '@loftyshaky/shared-app/inputs';
+import type { i_data, t } from '@loftyshaky/shared-app/shared';
+import { d_offers, s_theme as s_theme_shared } from '@loftyshaky/shared-app/shared';
+import type { i_sections } from 'settings/internal';
+import { d_sections, s_sections } from 'settings/internal';
+import type { i_settings } from 'shared/internal';
+import { d_settings } from 'shared/internal';
 import { s_css_vars, s_theme } from 'shared_clean/internal';
-import { d_settings, i_settings } from 'shared/internal';
-import { d_sections, s_sections, i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -116,7 +120,7 @@ class Class {
                 }
 
                 if (input.name === 'options_page_theme') {
-                    s_theme_shared.Theme.set({
+                    void s_theme_shared.Theme.set({
                         name: data.settings.prefs.options_page_theme,
                         additional_theme_callback: s_theme.Theme.set,
                     });
@@ -185,7 +189,7 @@ class Class {
             }
 
             if (isObject(val)) {
-                if (n((val as any).macro) || n((val as any).repeat_count)) {
+                if (n((val as t.AnyRecord).macro) || n((val as t.AnyRecord).repeat_count)) {
                     return 'object_macro';
                 }
 
@@ -294,7 +298,7 @@ class Class {
             let side_btn_is_enabled_cond: number = 0;
 
             if (n(val_accessor)) {
-                const content_is_visible: any = get(data, val_accessor);
+                const content_is_visible: boolean | number = get(data, val_accessor);
 
                 if (
                     n(content_is_visible) &&
@@ -313,7 +317,7 @@ class Class {
                 .content_is_visible_val_accessor;
 
             if (n(val_accessor)) {
-                const content_is_visible: any = get(data, val_accessor);
+                const content_is_visible: boolean | number = get(data, val_accessor);
                 let new_content_is_visible_val: number = 1;
 
                 if (
@@ -388,7 +392,7 @@ class Class {
                 const val_ui: string = get(data, val_unsetter_ui);
 
                 const val_config: string = get(data, input.val_accessor);
-                const val_unsetter_config: string | undefined = { ...input }.val_accessor;
+                const val_unsetter_config: string | undefined = input.val_accessor;
                 const val_accessor_arr_config: string[] = input.val_accessor.split('.');
 
                 if (n(input.label_val) && n(val_unsetter_config)) {

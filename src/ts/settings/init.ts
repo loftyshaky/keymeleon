@@ -1,5 +1,5 @@
-import { InitAll } from 'shared/internal';
 import { d_sections, s_sections } from 'settings/internal';
+import { InitAll } from 'shared/internal';
 
 export const init = (): Promise<void> =>
     err_async(async () => {
@@ -8,5 +8,5 @@ export const init = (): Promise<void> =>
         d_sections.BtnBar.init();
         await InitAll.init();
 
-        InitAll.render_settings();
+        void InitAll.render_settings();
     }, 'cnt_1221');

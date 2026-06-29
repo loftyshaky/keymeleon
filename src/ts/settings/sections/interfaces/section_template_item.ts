@@ -1,4 +1,4 @@
-import { i_settings } from 'shared/internal';
+import type { i_settings } from 'shared/internal';
 
 export interface SectionTemplateItem {
     name: string;

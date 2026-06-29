@@ -1,5 +1,5 @@
-import { t } from '@loftyshaky/shared-app/shared_clean';
-import { i_sections } from 'settings/internal';
+import type { t } from '@loftyshaky/shared-app/shared_clean';
+import type { i_sections } from 'settings/internal';
 
 class Class {
     private static instance: Class;
@@ -8,10 +8,9 @@ class Class {
         return this.instance || (this.instance = new this());
     }
 
-    // eslint-disable-next-line no-useless-constructor, no-empty-function
     private constructor() {}
 
-    [key: string]: any;
+    [key: string]: t.Any;
 
     public ensure_sections = (): i_sections.Sections | t.AnyRecord =>
         err(() => (n(this.sections) ? this.sections : {}), 'cnt_5346');

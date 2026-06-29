@@ -1,6 +1,6 @@
 import { o_inputs } from '@loftyshaky/shared-app/inputs';
-import { svg } from 'shared/internal';
 import { s_sections } from 'settings/internal';
+import { svg } from 'shared/internal';
 
 class Class {
     private static instance: Class;

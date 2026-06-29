@@ -1,17 +1,17 @@
-import isObject from 'lodash/isObject';
-import isArray from 'lodash/isArray';
 import fromPairs from 'lodash/fromPairs';
+import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
+import map from 'lodash/map';
+import set from 'lodash/set';
 import sortBy from 'lodash/sortBy';
 import toPairs from 'lodash/toPairs';
-import unset from 'lodash/unset';
-import set from 'lodash/set';
-import get from 'lodash/get';
-import map from 'lodash/map';
 import trim from 'lodash/trim';
-import { makeObservable, action, toJS } from 'mobx';
+import unset from 'lodash/unset';
+import { action, makeObservable, toJS } from 'mobx';
 
-import { t, i_data } from '@loftyshaky/shared-app/shared';
-import { i_settings } from 'shared/internal';
+import type { i_data, t } from '@loftyshaky/shared-app/shared';
+import type { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 
 class Class {
@@ -33,7 +33,7 @@ class Class {
     public data_raw: t.AnyRecord = {};
     public set_once: boolean = false;
 
-    public set = ({ settings }: { settings: any }): void =>
+    public set = ({ settings }: { settings: t.AnyRecord }): void =>
         err(() => {
             const settings_final = this.set_once ? settings : this.transform({ settings });
 
@@ -52,7 +52,7 @@ class Class {
         sort = false,
     }: {
         val_setter: string;
-        val: any;
+        val: t.Any;
         sort?: boolean;
     }): void =>
         err(() => {
@@ -62,7 +62,7 @@ class Class {
             set(updated_data, val_setter, val);
 
             data.settings = (
-                sort ? this.deep_obj_sort_by_key<any>({ obj: updated_data }) : updated_data
+                sort ? this.deep_obj_sort_by_key<t.Any>({ obj: updated_data }) : updated_data
             ).settings;
         }, 'shr_1127');
 
@@ -84,7 +84,7 @@ class Class {
     }: {
         val_unsetter: string;
         val_setter: string;
-        val: any;
+        val: t.Any;
         sort?: boolean;
     }): void =>
         err(() => {
@@ -92,7 +92,7 @@ class Class {
             this.set_val({ val_setter, val, sort });
         }, 'shr_1127');
 
-    private write = ({ config }: { config: any }): void =>
+    private write = ({ config }: { config: t.AnyRecord }): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'write_config', config });
         }, 'shr_1128');
@@ -104,7 +104,7 @@ class Class {
         sort = false,
     }: {
         val_setter: string | undefined;
-        val: any;
+        val: t.Any;
         val_type?: i_settings.ValType;
         sort?: boolean;
     }): void =>
@@ -142,7 +142,7 @@ class Class {
     }: {
         val_unsetter: string | undefined;
         val_setter: string | undefined;
-        val: any;
+        val: t.Any;
         sort?: boolean;
     }): void =>
         err(() => {
@@ -225,7 +225,7 @@ class Class {
             }
         }, 'aer_1082');
 
-    private transform = ({ settings }: { settings: any }): any =>
+    private transform = ({ settings }: { settings: t.AnyRecord }): t.AnyRecord =>
         err(() => {
             settings.prefs.version = app.get_app_version();
 

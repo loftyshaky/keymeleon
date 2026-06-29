@@ -34,7 +34,7 @@ export class SectionBtn {
             });
 
             if (this.section_name === 'prefs') {
-                d_developer_mode.DeveloperMode.enable({
+                void d_developer_mode.DeveloperMode.enable({
                     save_callback: async () =>
                         d_settings.Settings.write_change_val({
                             val_setter: 'settings.prefs.developer_mode',

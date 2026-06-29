@@ -1,7 +1,6 @@
-@import '../../../node_modules/@loftyshaky/shared-app/scss/settings/index';
-@import 'btn';
-@import 'vars';
-@import 'group';
-@import 'inputs';
-@import 'sections';
-@import 'btn_bar';
+@use '../../../node_modules/@loftyshaky/shared-app/scss/settings/index';
+@use 'btn';
+@use 'group';
+@use 'inputs';
+@use 'sections';
+@use 'btn_bar';

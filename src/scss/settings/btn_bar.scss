@@ -1,3 +1,5 @@
+@use '../../../node_modules/@loftyshaky/shared-app/scss/shared/vars';
+
 .main:not(.loading_screen) .btn_bar_w {
     width: 100%;
     border-bottom-width: 1px;
@@ -5,16 +7,16 @@
 
     .btn_bar {
         display: flex;
-        margin: $main_margin / 2;
-        margin-left: $main_margin;
-        margin-right: $main_margin;
+        margin: calc(vars.$main_margin / 2);
+        margin-left: vars.$main_margin;
+        margin-right: vars.$main_margin;
 
         .icon_btn {
             border: 0;
             margin-top: 0;
 
             &:not(:first-child) {
-                margin-left: $main_margin !important;
+                margin-left: vars.$main_margin !important;
             }
 
             .btn {
