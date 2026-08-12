@@ -3,6 +3,7 @@ import type { Target } from 'vite-plugin-static-copy';
 import path from 'node:path';
 
 import appRoot from 'app-root-path';
+import fs from 'fs-extra';
 import {
     type LibraryOptions,
     type PluginOption,
@@ -36,9 +37,42 @@ const config = defineConfig(({ mode }) => {
     const copy_paths: Target[] = [
         {
             src: path.posix.join(app_root, 'src', 'ahk'),
-
             dest: dest_path,
+            transform: (content_: string, filename: string) => {
+                const content = fs.readFileSync(filename);
+
+                if (
+                    filename.includes(`${path.sep}lib`) ||
+                    filename.includes(`${path.sep}ui`) ||
+                    filename.includes(`${path.sep}json`) ||
+                    filename.includes(`${path.sep}icons`)
+                ) {
+                    return null;
+                }
+
+                return content.toString();
+            },
             rename: { stripBase: true },
+        },
+        {
+            src: path.posix.join(app_root, 'src', 'ahk', 'lib'),
+            dest: dest_path,
+            rename: { stripBase: 2 },
+        },
+        {
+            src: path.posix.join(app_root, 'src', 'ahk', 'ui'),
+            dest: dest_path,
+            rename: { stripBase: 2 },
+        },
+        {
+            src: path.posix.join(app_root, 'src', 'ahk', 'json'),
+            dest: dest_path,
+            rename: { stripBase: 2 },
+        },
+        {
+            src: path.posix.join(app_root, 'src', 'ahk', 'icons'),
+            dest: dest_path,
+            rename: { stripBase: 2 },
         },
     ];
     const shared_config = generate_shared_config({
