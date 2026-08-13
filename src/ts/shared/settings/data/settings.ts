@@ -11,6 +11,7 @@ import unset from 'lodash/unset';
 import { action, makeObservable, toJS } from 'mobx';
 
 import type { i_data, t } from '@loftyshaky/shared-app/shared';
+import { d_schema, o_schema } from '@loftyshaky/shared-app/shared_clean';
 import type { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 
@@ -33,9 +34,11 @@ class Class {
     public data_raw: t.AnyRecord = {};
     public set_once: boolean = false;
 
-    public set = ({ settings }: { settings: t.AnyRecord }): void =>
-        err(() => {
-            const settings_final = this.set_once ? settings : this.transform({ settings });
+    public set = ({ settings }: { settings: t.AnyRecord }): Promise<void> =>
+        err_async(async () => {
+            const settings_final = await (this.set_once
+                ? Promise.resolve(settings)
+                : this.transform({ settings }));
 
             this.data_raw.settings = settings_final;
             data.settings = settings_final;
@@ -226,8 +229,26 @@ class Class {
         }, 'aer_1082');
 
     private transform = ({ settings }: { settings: t.AnyRecord }): t.AnyRecord =>
-        err(() => {
-            settings.prefs.version = app.get_app_version();
+        err_async(async () => {
+            const version = d_schema.Schema.get_version_legacy({ settings });
+
+            const transform_items_prefs: o_schema.TransformItem[] = [
+                new o_schema.TransformItem({
+                    new_key: 'detect_infinite_loops',
+                    new_val: false,
+                }),
+            ];
+
+            const updated_prefs = await d_schema.Schema.transform({
+                data_obj: settings.prefs,
+                version,
+                transform_items: transform_items_prefs,
+                force: false,
+            });
+
+            updated_prefs.version = app.get_app_version();
+
+            settings.prefs = updated_prefs;
 
             return settings;
         }, 'aer_1085');

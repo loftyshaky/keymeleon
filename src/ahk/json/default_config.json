@@ -56,6 +56,7 @@
         "current_section": "features",
         "developer_mode": 0,
         "enable_cut_features": 0,
+        "detect_infinite_loops": 0,
         "locale": "en",
         "offers_are_visible": 1,
         "options_page_theme": "blaze",

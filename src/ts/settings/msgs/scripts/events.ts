@@ -9,7 +9,7 @@ window.chrome.webview.addEventListener('message', (e: t.Any) =>
         const msg_str: string = msg_obj.msg;
 
         if (msg_str === 'get_config_response') {
-            d_settings.Settings.set({ settings: msg_obj.config });
+            await d_settings.Settings.set({ settings: msg_obj.config });
 
             await app.read_data_into_vars();
             show_unable_to_access_settings_error();

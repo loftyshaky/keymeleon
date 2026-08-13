@@ -352,6 +352,11 @@ class Class {
                         default_val: false,
                     },
                     {
+                        name: 'detect_infinite_loops',
+                        type: 'checkbox',
+                        default_val: false,
+                    },
+                    {
                         name: 'offers_are_visible',
                         type: 'checkbox',
                         default_val: true,
