@@ -11,7 +11,7 @@ import unset from 'lodash/unset';
 import { action, makeObservable, toJS } from 'mobx';
 
 import type { i_data, t } from '@loftyshaky/shared-app/shared';
-import { d_schema, o_schema } from '@loftyshaky/shared-app/shared_clean';
+import { d_error, d_schema, o_schema } from '@loftyshaky/shared-app/shared_clean';
 import type { i_settings } from 'shared/internal';
 import { s_msgs } from 'shared_clean/internal';
 
@@ -42,6 +42,8 @@ class Class {
 
             this.data_raw.settings = settings_final;
             data.settings = settings_final;
+
+            d_error.Error.set_detect_infinite_loops_val();
         }, 'shr_1124');
 
     public get = (): void =>
