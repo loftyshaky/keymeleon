@@ -179,6 +179,9 @@
     "borderless_window_label_text": {
         "message": "Безрамочное окно"
     },
+    "show_taskbar_label_text": {
+        "message": "Показывать панель задач"
+    },
     "enable_process_suspend_hotkeys_label_text": {
         "message": "Включить горячие клавиши приостановки процесса"
     },

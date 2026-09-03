@@ -415,14 +415,15 @@ on_exe_change() {
     global EVENT_SYSTEM_FOREGROUND
     global taskbar_was_clicked
 
-    exe_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
-        if (check_if_changed_active_window(event)) {
+    exe_change_handler(h_hook := 0, event := 0, hwnd := 0, id_object := 0, id_child := 0, dw_event_thread := 0,
+        dwms_event_time := 0) {
+        if (check_if_changed_active_window(event) || !event) {
             global last_switched_layout
 
             taskbar_was_clicked := false
 
             try {
-                window_class := WinGetClass("ahk_id " hwnd)
+                window_class := hwnd ? WinGetProcessName("ahk_id " hwnd) : WinGetClass("A")
 
                 if (window_class == "Shell_TrayWnd") {
                     taskbar_was_clicked := true
@@ -435,4 +436,5 @@ on_exe_change() {
     }
 
     register_shell_hook(exe_change_handler, EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND)
+    SetTimer(exe_change_handler, exe_change_polling_rate)
 }

@@ -505,6 +505,11 @@ class Class {
                         default_val: false,
                     },
                     {
+                        name: 'show_taskbar',
+                        type: 'checkbox',
+                        default_val: true,
+                    },
+                    {
                         name: 'process_minimize_method',
                         type: 'select',
                         val_type: 'string',

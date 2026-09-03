@@ -1,5 +1,7 @@
 #Requires AutoHotkey v2.0
 
+exe_change_polling_rate := 1000
+
 load_config_json(config_path) {
     config := Map()
 

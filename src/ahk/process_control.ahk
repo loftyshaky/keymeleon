@@ -317,14 +317,17 @@ listen_for_focus_change() {
 
     if (n(target_processes) && is_arr(target_processes)) {
         register_shell_hook(focus_change_handler, EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND)
+        SetTimer(focus_change_handler, exe_change_polling_rate)
 
-        focus_change_handler(h_hook, event, hwnd, id_object, id_child, dw_event_thread, dwms_event_time) {
+        focus_change_handler(h_hook := 0, event := 0, hwnd := 0, id_object := 0, id_child := 0, dw_event_thread := 0,
+            dwms_event_time := 0) {
+
             one_of_the_exe_is_focused := false
             focused_exe_name := ''
 
             try {
-                if (check_if_changed_active_window(event)) {
-                    window_process := WinGetProcessName("ahk_id " hwnd)
+                if (check_if_changed_active_window(event) || !hwnd) {
+                    window_process := hwnd ? WinGetProcessName("ahk_id " hwnd) : WinGetProcessName("A")
                     target_processes := config_get(["process_control", "target_processes"])
 
                     for (i, exe_name in target_processes) {
@@ -371,6 +374,7 @@ listen_for_focus_change() {
             }
 
             make_window_borderless()
+            call_set_taskbar_visibility()
         }
     }
 }
@@ -454,6 +458,62 @@ make_window_borderless() {
 
     target_processes := config_get(["process_control", "target_processes"])
     borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "borderless_window"])
+    window_id := get_window_id(currently_focused_exe)
+
+    if (borderless_window && window_id && (currently_focused_exe) && n(find_i_in_array(currently_focused_exe,
+        target_processes))) {
+        try {
+            style := WinGetStyle(window_id)
+            is_borderless := (style & 0xC00000) == 0
+
+            if (!is_borderless) {
+                ;WinSetAlwaysOnTop(1, window_id)
+                WinMove(0, 0, A_ScreenWidth, A_ScreenHeight, window_id)
+                WinSetStyle("-0xC00000", window_id)
+            }
+        }
+    }
+}
+
+call_set_taskbar_visibility() {
+    global currently_focused_exe
+
+    window_process := ""
+
+    try {
+        window_process := WinGetProcessName("A")
+    }
+
+    target_processes := config_get(["process_control", "target_processes"])
+    show_taskbar := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "show_taskbar"])
+    window_id := get_window_id(currently_focused_exe)
+
+    if (window_id && is_focused[currently_focused_exe] && !is_suspended[
+        currently_focused_exe] && n(find_i_in_array(currently_focused_exe, target_processes)) && currently_focused_exe ==
+        StrReplace(window_process, ".exe", "")) {
+        show_taskbar_final := IsInteger(show_taskbar) ? show_taskbar : true
+
+        if (WinExist("ahk_class Shell_TrayWnd")) {
+            try {
+                if (show_taskbar_final) {
+                    WinShow("ahk_class Shell_TrayWnd")
+                } else {
+                    WinHide("ahk_class Shell_TrayWnd")
+                }
+            }
+        }
+    } else if (WinExist("ahk_class Shell_TrayWnd")) {
+        try {
+            WinShow("ahk_class Shell_TrayWnd")
+        }
+    }
+}
+
+set_visibility_of_taskbar() {
+    global currently_focused_exe
+
+    target_processes := config_get(["process_control", "target_processes"])
+    borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "show_taskbar"])
     window_id := get_window_id(currently_focused_exe)
 
     if (borderless_window && window_id && n(find_i_in_array(currently_focused_exe, target_processes))) {
