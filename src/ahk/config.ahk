@@ -2,30 +2,36 @@
 
 exe_change_polling_rate := 1000
 
+get_config(config_path) {
+    config_json := FileRead(config_path)
+    return Jxon_Load(&config_json)
+}
+
 load_config_json(config_path) {
     config := Map()
 
     try {
-        config_json := FileRead(config_path)
-        config := Jxon_Load(&config_json)
+        config := get_config(config_path)
     }
 
     return config
 }
 
-config_get(keys, accessed := "") {
+config_get(keys, accessed := "", custom_config := "") {
     global config
 
     if (!IsSet(config)) {
         return ""
     }
 
+    config_final := custom_config == "" ? config : custom_config
+
     if (accessed = "") {
-        if (config = "") {
+        if (config_final = "") {
             return ""
         }
 
-        accessed := config
+        accessed := config_final
     }
 
     current := accessed
@@ -47,12 +53,15 @@ config_get(keys, accessed := "") {
     return current
 }
 
-config_write(new_config) {
+config_write(new_config, update_config_in_memory := true) {
     global config
     global config_path
 
     config_json := jxon_dump(new_config, indent := 4)
-    config := new_config
+
+    if (update_config_in_memory) {
+        config := new_config
+    }
 
     file := FileOpen(config_path, "w")
     file.write(config_json)

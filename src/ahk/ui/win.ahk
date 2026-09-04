@@ -39,7 +39,7 @@ win_display_initial(dimensions_obj) {
 }
 
 win_size(gui_obj, min_max, client_width, client_height) {
-    global config
+    global window_was_closed
     global is_maximized
     global previous_is_maximized
     global restored_down_once
@@ -54,6 +54,7 @@ win_size(gui_obj, min_max, client_width, client_height) {
     dimensions_obj := get_dimensions_from_config()
     is_minimized := false
     restored_down := min_max = 0 && is_maximized
+    window_was_closed_copy := window_was_closed
 
     if (restored_down) { ; Restored down - when restoring down from maximized
         is_maximized := false
@@ -62,21 +63,31 @@ win_size(gui_obj, min_max, client_width, client_height) {
             win_move(dimensions_obj)
         }
 
+        set_dimension_to_config("is_maximized", is_maximized)
     } else if (min_max = 1) { ; Maximized
         is_maximized := true
+
+        set_dimension_to_config("is_maximized", is_maximized)
     } else if (min_max = -1) { ; Minimized
         is_maximized := false
         is_minimized := true
-    } else { ; Restored down - when opening settings page in restored down state
+
+        set_dimension_to_config("is_maximized", is_maximized)
+        set_dimension_to_config("is_minimized", is_minimized)
+    } else if (window_was_closed_copy) { ; Restored down - when opening settings page in restored down state
+        window_was_closed := 0
+
         win_move(dimensions_obj)
     }
 
-    if (windows_obj_exists) {
+    if (windows_obj_exists && !window_was_closed_copy) {
         set_dimension_to_config("is_maximized", is_maximized)
 
         if (!is_minimized) {
             if (is_maximized) {
-                config_write(config)
+                config_from_file := get_config(config_path)
+
+                config_write(config_from_file, false)
 
             } else {
                 WinGetPos(, , &win_width, &win_height, "ahk_id " gui_obj.hwnd)
@@ -84,8 +95,6 @@ win_size(gui_obj, min_max, client_width, client_height) {
 
                 set_dimension_to_config("width", win_width)
                 set_dimension_to_config("height", win_height)
-
-                config_write(config)
             }
         }
     }
@@ -116,7 +125,9 @@ win_drag(w_param, l_param, msg, hwnd) {
             set_dimension_to_config("x", win_x)
             set_dimension_to_config("y", win_y)
 
-            config_write(config)
+            config_from_file := get_config(config_path)
+
+            config_write(config_from_file, false)
         }
     }
 }
@@ -147,15 +158,18 @@ win_hide() {
 }
 
 set_dimension_to_config(key, dimension) {
-    global config
+    config_from_file := get_config(config_path)
 
-    config["prefs"]["window"]["dimensions"][key] := dimension
+    config_from_file["prefs"]["window"]["dimensions"][key] := dimension
+
+    config_write(config_from_file, false)
 }
 
 get_dimensions_from_config() {
     global windows_obj_exists
 
-    window_obj := config_get(["prefs", "window"])
+    config_from_file := get_config(config_path)
+    window_obj := config_get(["prefs", "window"], "", config_from_file)
     windows_obj_exists := n(window_obj)
 
     default_dimensions_obj := Map()
@@ -165,17 +179,19 @@ get_dimensions_from_config() {
     default_dimensions_obj["width"] := 1150
     default_dimensions_obj["height"] := 800
 
-    dimensions_obj := config_get(["dimensions"], window_obj)
+    dimensions_obj := config_get(["dimensions"], window_obj, config_from_file)
     dimensions_obj_final := n(dimensions_obj) ? dimensions_obj : default_dimensions_obj
 
     if (windows_obj_exists) {
-        config["prefs"]["window"]["dimensions"] := dimensions_obj_final
+        config_from_file["prefs"]["window"]["dimensions"] := dimensions_obj_final
 
-        config_is_maximized := config_get(["is_maximized"], dimensions_obj_final)
-        config_x := config_get(["x"], dimensions_obj_final)
-        config_y := config_get(["y"], dimensions_obj_final)
-        config_width := config_get(["width"], dimensions_obj_final)
-        config_height := config_get(["height"], dimensions_obj_final)
+        config_write(config_from_file, false)
+
+        config_is_maximized := config_get(["is_maximized"], dimensions_obj_final, config_from_file)
+        config_x := config_get(["x"], dimensions_obj_final, config_from_file)
+        config_y := config_get(["y"], dimensions_obj_final, config_from_file)
+        config_width := config_get(["width"], dimensions_obj_final, config_from_file)
+        config_height := config_get(["height"], dimensions_obj_final, config_from_file)
 
         dimensions_obj_final["is_maximized"] := n(config_is_maximized) ? config_is_maximized :
             default_dimensions_obj["is_maximized"]

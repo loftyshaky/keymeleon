@@ -4,10 +4,12 @@ create_context_menu_items() {
 }
 
 tray_click_action(*) {
+    global window_was_closed
     global win_is_open
     global dimensions_obj_global
 
     if (win_is_open) {
+        window_was_closed := 1
         win_is_open := 0
 
         win_hide()

@@ -5,6 +5,7 @@
 
 dimensions_obj_global := get_dimensions_from_config()
 win_is_open := 0
+window_was_closed := 1
 is_maximized := dimensions_obj_global["is_maximized"]
 previous_is_maximized := false
 is_minimized := 1

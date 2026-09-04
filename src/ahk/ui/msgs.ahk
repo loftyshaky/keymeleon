@@ -17,7 +17,11 @@ on_message(sender, args) {
 
             send_response(jxon_dump(response))
         } else if (msg_str = "write_config") {
-            config_write(msg_obj["config"])
+            config_from_file := get_config(config_path)
+            window_obj := config_get(["prefs", "window"], "", config_from_file)
+            msg_obj["config"]["prefs"]["window"] := window_obj
+
+            config_write(msg_obj["config"], false)
         } else if (msg_str = "reload_config") {
             Reload()
         } else if (msg_str = "get_current_layout_id") {
