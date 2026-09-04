@@ -1,7 +1,9 @@
 bind_context_hotkey(input_binding_i, input_binding, ignore_extra_modifiers, allow_native_function, keys_are_enabled,
     found_exe_hotkey) {
-    Hotkey((allow_native_function ? "~" : "") (ignore_extra_modifiers ? "*" : "") input_binding, (*) => run_hotkey(
-        input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
+    try {
+        Hotkey((allow_native_function ? "~" : "") (ignore_extra_modifiers ? "*" : "") input_binding, (*) => run_hotkey(
+            input_binding, input_binding_i, found_exe_hotkey, allow_native_function), keys_are_enabled)
+    }
 }
 
 bind_unbind_context_hotkeys(current_layout := 'none') {
