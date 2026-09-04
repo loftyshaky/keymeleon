@@ -505,9 +505,9 @@ class Class {
                         default_val: false,
                     },
                     {
-                        name: 'show_taskbar',
+                        name: 'hide_taskbar',
                         type: 'checkbox',
-                        default_val: true,
+                        default_val: false,
                     },
                     {
                         name: 'process_minimize_method',

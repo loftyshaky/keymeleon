@@ -485,20 +485,20 @@ call_set_taskbar_visibility() {
     }
 
     target_processes := config_get(["process_control", "target_processes"])
-    show_taskbar := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "show_taskbar"])
+    hide_taskbar := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "hide_taskbar"])
     window_id := get_window_id(currently_focused_exe)
 
     if (window_id && is_focused[currently_focused_exe] && !is_suspended[
         currently_focused_exe] && n(find_i_in_array(currently_focused_exe, target_processes)) && currently_focused_exe ==
         StrReplace(window_process, ".exe", "")) {
-        show_taskbar_final := IsInteger(show_taskbar) ? show_taskbar : true
+        hide_taskbar_final := IsInteger(hide_taskbar) ? hide_taskbar : false
 
         if (WinExist("ahk_class Shell_TrayWnd")) {
             try {
-                if (show_taskbar_final) {
-                    WinShow("ahk_class Shell_TrayWnd")
-                } else {
+                if (hide_taskbar_final) {
                     WinHide("ahk_class Shell_TrayWnd")
+                } else {
+                    WinShow("ahk_class Shell_TrayWnd")
                 }
             }
         }
