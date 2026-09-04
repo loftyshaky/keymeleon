@@ -1,3 +1,28 @@
+disable_page_refresh(source, args) {
+    is_f5_down := GetKeyState("F5", "P")
+    is_r_down := GetKeyState("r", "P")
+    is_ctrl_down := GetKeyState("Ctrl", "P")
+
+    if ((is_r_down && is_ctrl_down) || is_f5_down) {
+        args.IsBrowserAcceleratorKeyEnabled := false
+        args.Handled := true
+    }
+}
+
+remove_context_menu_items(source, args) {
+    menu_items := args.MenuItems
+    menu_items_length := menu_items.Count
+
+    loop (menu_items_length) {
+        i := menu_items_length - A_Index
+        item := menu_items.GetValueAtIndex(i)
+
+        if (item.Name != "inspectElement") {
+            menu_items.RemoveValueAtIndex(i)
+        }
+    }
+}
+
 navigate_page(page_name) {
     wv.SetVirtualHostNameToFolderMapping("app.localhost", A_ScriptDir, 2)
     wv.Navigate("http://app.localhost/" page_name ".html")
@@ -32,6 +57,8 @@ win_display_initial(dimensions_obj) {
 
     wvc := WebView2.create(win.Hwnd)
     wv := wvc.CoreWebView2
+    wvc.add_AcceleratorKeyPressed(disable_page_refresh)
+    wv.add_ContextMenuRequested(remove_context_menu_items)
     wv.add_WebMessageReceived(on_message)
     wv.add_NewWindowRequested(on_new_window)
 
