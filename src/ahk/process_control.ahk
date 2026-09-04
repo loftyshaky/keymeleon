@@ -513,7 +513,7 @@ set_visibility_of_taskbar() {
     global currently_focused_exe
 
     target_processes := config_get(["process_control", "target_processes"])
-    borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "show_taskbar"])
+    borderless_window := config_get(["hotkeys", "context_remap", "exe", currently_focused_exe, "borderless_window"])
     window_id := get_window_id(currently_focused_exe)
 
     if (borderless_window && window_id && n(find_i_in_array(currently_focused_exe, target_processes))) {
