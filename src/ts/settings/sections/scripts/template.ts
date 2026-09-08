@@ -447,8 +447,7 @@ class Class {
                     },
                     {
                         name: 'dependencies',
-                        type: 'link',
-                        href: app.msg('dependencies_link_href'),
+                        type: 'link_btn',
                     },
                 ],
                 input_bindings: [],

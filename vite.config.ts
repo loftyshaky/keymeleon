@@ -14,6 +14,7 @@ import {
 
 import { Dependencies as DependenciesShared } from '@loftyshaky/shared-app/build/ts/dependencies';
 import { Locales } from '@loftyshaky/shared-app/build/ts/locales';
+import { minify_html } from '@loftyshaky/shared-app/build/ts/minify_html';
 import { generate_shared_config } from '@loftyshaky/shared-app/build/ts/vite.config';
 
 import { Dependencies } from './build/ts/dependencies';
@@ -55,6 +56,12 @@ const config = defineConfig(({ mode }) => {
             rename: { stripBase: true },
         },
         {
+            src: path.posix.join(app_root, 'node_modules', '@loftyshaky', 'shared-app', 'html'),
+            dest: dest_path,
+            rename: { stripBase: true },
+            transform: (contents: string) => minify_html({ mode, contents }),
+        },
+        {
             src: path.posix.join(app_root, 'src', 'ahk', 'lib'),
             dest: dest_path,
             rename: { stripBase: 2 },
@@ -63,6 +70,14 @@ const config = defineConfig(({ mode }) => {
             src: path.posix.join(app_root, 'src', 'ahk', 'ui'),
             dest: dest_path,
             rename: { stripBase: 2 },
+        },
+        {
+            src: path.posix.join(app_root, 'README.md'),
+            dest: dest_path,
+        },
+        {
+            src: path.posix.join(app_root, 'README-RU.md'),
+            dest: dest_path,
         },
         {
             src: path.posix.join(app_root, 'src', 'ahk', 'json'),

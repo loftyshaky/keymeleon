@@ -1,71 +1,58 @@
-disable_page_refresh(source, args) {
-    is_f5_down := GetKeyState("F5", "P")
-    is_r_down := GetKeyState("r", "P")
-    is_ctrl_down := GetKeyState("Ctrl", "P")
-
-    if ((is_r_down && is_ctrl_down) || is_f5_down) {
-        args.IsBrowserAcceleratorKeyEnabled := false
-        args.Handled := true
-    }
-}
-
-remove_context_menu_items(source, args) {
-    menu_items := args.MenuItems
-    menu_items_length := menu_items.Count
-
-    loop (menu_items_length) {
-        i := menu_items_length - A_Index
-        item := menu_items.GetValueAtIndex(i)
-
-        if (item.Name != "inspectElement") {
-            menu_items.RemoveValueAtIndex(i)
-        }
-    }
-}
-
-navigate_page(page_name) {
-    wv.SetVirtualHostNameToFolderMapping("app.localhost", A_ScriptDir, 2)
-    wv.Navigate("http://app.localhost/" page_name ".html")
-}
-
-on_new_window(wv, args) { ; Opens links in default browser.
-    url := args.Uri
-
-    Run(url)
-
-    args.Handled := true
-
-}
-
-win_display_initial(dimensions_obj) {
-    global wvc
-    global wv
+display_main_page(dimensions_obj) {
+    global main_win
+    global main_wvc
+    global main_wv
     global is_maximized
     global is_minimized
 
     if (is_maximized) {
-        win.Maximize()
+        main_win.Maximize()
     } else {
-        win.Show("W" dimensions_obj["width"] " H" dimensions_obj["height"] " X" dimensions_obj[
+        main_win.Show("W" dimensions_obj["width"] " H" dimensions_obj["height"] " X" dimensions_obj[
             "x"] " Y" dimensions_obj["y"])
 
     }
 
-    set_win_icon_w()
+    set_win_icon_w(main_win)
 
-    WinActivate(win.Hwnd)
+    WinActivate(main_win.Hwnd)
 
-    wvc := WebView2.create(win.Hwnd)
-    wv := wvc.CoreWebView2
-    wvc.add_AcceleratorKeyPressed(disable_page_refresh)
-    wv.add_ContextMenuRequested(remove_context_menu_items)
-    wv.add_WebMessageReceived(on_message)
-    wv.add_NewWindowRequested(on_new_window)
+    main_wvc := WebView2.CreateControllerAsync(main_win.Hwnd).await2()
+    main_wv := main_wvc.CoreWebView2
+    main_wvc.add_AcceleratorKeyPressed(disable_page_refresh)
+    main_wv.add_ContextMenuRequested(remove_context_menu_items)
+    main_wv.add_WebMessageReceived(on_message)
+    main_wv.add_NewWindowRequested(on_new_window)
 
-    navigate_page("settings")
+    navigate_page(main_wv, "settings")
 }
 
-win_size(gui_obj, min_max, client_width, client_height) {
+display_dependencies_page() {
+    global dependencies_win
+    global dependencies_wvc
+    global dependencies_wv
+
+    dependencies_win.Show("W1024 H768")
+
+    set_win_icon_w(dependencies_win)
+
+    WinActivate(dependencies_win.Hwnd)
+
+    dependencies_wvc := WebView2.CreateControllerAsync(dependencies_win.Hwnd).await2()
+    dependencies_wv := dependencies_wvc.CoreWebView2
+    dependencies_wvc.add_AcceleratorKeyPressed(disable_page_refresh)
+    dependencies_wv.add_ContextMenuRequested(remove_context_menu_items)
+    dependencies_wv.add_WebMessageReceived(on_message)
+
+    navigate_page(dependencies_wv, "dependencies")
+}
+
+navigate_page(wv, page_name) {
+    wv.SetVirtualHostNameToFolderMapping("app.localhost", A_ScriptDir, 2)
+    wv.Navigate("http://app.localhost/" page_name ".html")
+}
+
+main_win_size(gui_obj, min_max, client_width, client_height) {
     global window_was_closed
     global is_maximized
     global previous_is_maximized
@@ -127,7 +114,7 @@ win_size(gui_obj, min_max, client_width, client_height) {
     }
 
     if (min_max != -1) {
-        try wvc.Fill()
+        try main_wvc.Fill()
     }
 
     if (restored_down) {
@@ -135,7 +122,40 @@ win_size(gui_obj, min_max, client_width, client_height) {
     }
 }
 
-win_drag(w_param, l_param, msg, hwnd) {
+dependencies_win_size(gui_obj, min_max, client_width, client_height) {
+    global dependencies_wvc
+
+    if (min_max != -1) {
+        try dependencies_wvc.Fill()
+    }
+}
+
+win_hide() {
+    global main_win
+    global is_maximized
+    global previous_is_maximized
+
+    restored_down_once := false
+
+    min_max := WinGetMinMax(main_win)
+
+    if (n(previous_is_maximized)) {
+        is_maximized := previous_is_maximized
+    }
+
+    main_win.Hide()
+
+}
+
+win_move(dimensions_obj) { ; set x and y coords as well as width and height of window
+    global main_win
+
+    WinMove(dimensions_obj["x"], dimensions_obj["y"],
+        dimensions_obj["width"], dimensions_obj["height"],
+        main_win)
+}
+
+main_win_drag(w_param, l_param, msg, hwnd) {
     global config
     global windows_obj_exists
 
@@ -147,7 +167,7 @@ win_drag(w_param, l_param, msg, hwnd) {
 
     WinGetPos(&win_x, &win_y, , , "ahk_id " hwnd)
 
-    if (hwnd = win.Hwnd) {
+    if (hwnd = main_win.Hwnd) {
         if (windows_obj_exists) {
             set_dimension_to_config("x", win_x)
             set_dimension_to_config("y", win_y)
@@ -157,31 +177,6 @@ win_drag(w_param, l_param, msg, hwnd) {
             config_write(config_from_file, false)
         }
     }
-}
-
-win_move(dimensions_obj) { ; set x and y coords as well as width and height of window
-    global win
-
-    WinMove(dimensions_obj["x"], dimensions_obj["y"],
-        dimensions_obj["width"], dimensions_obj["height"],
-        win)
-}
-
-win_hide() {
-    global win
-    global is_maximized
-    global previous_is_maximized
-
-    restored_down_once := false
-
-    min_max := WinGetMinMax(win)
-
-    if (n(previous_is_maximized)) {
-        is_maximized := previous_is_maximized
-    }
-
-    win.Hide()
-
 }
 
 set_dimension_to_config(key, dimension) {
@@ -233,4 +228,40 @@ get_dimensions_from_config() {
     }
 
     return dimensions_obj_final
+}
+
+disable_page_refresh(source, args) {
+    is_f5_down := GetKeyState("F5", "P")
+    is_r_down := GetKeyState("r", "P")
+    is_ctrl_down := GetKeyState("Ctrl", "P")
+
+    if ((is_r_down && is_ctrl_down) || is_f5_down) {
+        args.IsBrowserAcceleratorKeyEnabled := false
+        args.Handled := true
+    }
+}
+
+remove_context_menu_items(source, args) {
+    menu_items := args.MenuItems
+    menu_items_length := menu_items.Count
+
+    loop (menu_items_length) {
+        i := menu_items_length - A_Index
+        item := menu_items.GetValueAtIndex(i)
+
+        if (item.Name != "inspectElement") {
+            menu_items.RemoveValueAtIndex(i)
+        }
+    }
+}
+
+on_new_window(wv, args) { ; Opens links in default browser.
+    url := args.Uri
+
+    if (!InStr(url, "app.localhost")) {
+        Run(url)
+
+        args.Handled := true
+    }
+
 }

@@ -145,6 +145,13 @@ class Class {
                 });
             }
 
+            if (section_item.type === 'link_btn') {
+                return new o_inputs.LinkBtn({
+                    name: section_item.name,
+                    event_callback: s_sections.Sections.trigger_link_btn_action,
+                });
+            }
+
             if (section_item.type === 'link') {
                 return new o_inputs.Link({
                     name: section_item.name,

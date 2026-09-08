@@ -1,3 +1,5 @@
+import 'dependencies/msgs/scripts';
+
 misplaced_dependency('dependencies');
 
 export * from 'dependencies/init';

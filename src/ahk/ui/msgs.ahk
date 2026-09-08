@@ -29,6 +29,8 @@ on_message(sender, args) {
             response["current_layout_id"] := get_current_layout_id()
 
             send_response(jxon_dump(response))
+        } else if (msg_str = "display_dependencies_page") {
+            SetTimer(display_dependencies_page, -1) ; Need to be in SetTimer (async), otherwise dependencies page won't open and app will hang.
         }
 
     } catch as e {

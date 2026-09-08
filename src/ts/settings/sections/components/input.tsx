@@ -37,6 +37,10 @@ export const Input: React.FunctionComponent<p_sections.Input> = memo(
                 );
             }
 
+            if (section_item.type === 'link_btn') {
+                return <c_inputs.LinkBtn input={input as o_inputs.LinkBtn} />;
+            }
+
             if (section_item.type === 'textarea') {
                 return (
                     <c_inputs.Textarea

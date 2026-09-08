@@ -1,7 +1,7 @@
-import { init } from 'dependencies/internal';
+import '@loftyshaky/shared-app/app';
+import { d_settings } from 'shared/internal';
+import 'dependencies/internal';
 
 void (async () => {
-    show_unable_to_access_settings_error();
-
-    await init();
+    d_settings.Settings.get();
 })();

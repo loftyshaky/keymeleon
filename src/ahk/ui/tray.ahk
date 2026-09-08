@@ -16,6 +16,6 @@ tray_click_action(*) {
     } else {
         win_is_open := 1
 
-        win_display_initial(dimensions_obj_global)
+        SetTimer(() => display_main_page(dimensions_obj_global), -1)
     }
 }

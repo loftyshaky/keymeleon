@@ -1,4 +1,6 @@
+import type { i_inputs } from '@loftyshaky/shared-app/inputs';
 import type { i_sections } from 'settings/internal';
+import { s_msgs } from 'shared_clean/internal';
 
 class Class {
     private static instance: Class;
@@ -33,6 +35,13 @@ class Class {
                 section_item.name !== 'offers_are_visible',
             'cnt_6565',
         );
+
+    public trigger_link_btn_action = ({ input }: { input: i_inputs.Input }): void =>
+        err(() => {
+            if (input.name === 'dependencies') {
+                s_msgs.Msgs.send({ msg: 'display_dependencies_page' });
+            }
+        }, 'cnt_3465');
 }
 
 export const Sections = Class.get_instance();

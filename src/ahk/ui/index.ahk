@@ -11,13 +11,18 @@ previous_is_maximized := false
 is_minimized := 1
 restored_down_once := false
 windows_obj_exists := false
-wvc := ""
-wv := ""
-win := Gui("+Resize MinSize400x200")
-win.Title := 'Keymeleon - Settings'
+main_win := Gui("+Resize MinSize400x200")
+main_win.Title := 'Keymeleon - Settings'
+main_wvc := ""
+main_wv := ""
+dependencies_win := Gui("+Resize MinSize400x200")
+dependencies_win.Title := "Keymeleon - Dependencies"
+dependencies_wvc := ""
+dependencies_wv := ""
 
 create_context_menu_items()
 
-win.OnEvent("Close", tray_click_action)
-win.OnEvent("Size", win_size) ; Event when resizing window from sides
-OnMessage(0x0232, win_drag) ; Event when dragging window by title bar
+OnMessage(0x0232, main_win_drag) ; Event when dragging window by title bar
+main_win.OnEvent("Close", tray_click_action)
+main_win.OnEvent("Size", main_win_size) ; Event when resizing window from sides
+dependencies_win.OnEvent("Size", dependencies_win_size)

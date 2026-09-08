@@ -14,6 +14,7 @@ get_icon_link() {
 }
 
 set_icons() {
+    global main_win
     enable_windows_api_layout_switching := config_get(["features", "enable_windows_api_layout_switching"])
     icon_file_path_prefix := A_ScriptDir "\icons\change_layout_"
     icon_file_path_type := "win_space"
@@ -28,22 +29,20 @@ set_icons() {
     icon_link := get_icon_link()
 
     set_tray_icon(icon_link)
-    set_win_icon(icon_link)
+    set_win_icon(main_win, icon_link)
 }
 
-set_win_icon_w() {
+set_win_icon_w(win) {
     icon_link := get_icon_link()
 
-    set_win_icon(icon_link)
+    set_win_icon(win, icon_link)
 }
 
 set_tray_icon(icon_link) {
     TraySetIcon(icon_link)
 }
 
-set_win_icon(icon_link) {
-    global win
-
+set_win_icon(win, icon_link) {
     if (!win.Hwnd) {
         return
     }

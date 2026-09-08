@@ -206,6 +206,9 @@
     "scroll_to_top_edge_link_text": {
         "message": "⚗️ Scroll to Top for Edge"
     },
+    "dependencies_link_btn_text": {
+        "message": "🧩 Dependencies"
+    },
     "features_help_text": {
         "message": "@docs_features@\n@docs_features_object@"
     },
