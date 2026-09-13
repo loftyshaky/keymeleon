@@ -1,6 +1,6 @@
 create_context_menu_items() {
     A_TrayMenu.Add()
-    A_TrayMenu.Add("Settings", tray_click_action)
+    A_TrayMenu.Add(window_title["settings"] , tray_click_action)
 }
 
 tray_click_action(*) {

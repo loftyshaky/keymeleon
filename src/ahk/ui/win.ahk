@@ -1,3 +1,16 @@
+window_title := Map("settings", "Settings", "dependencies", "Dependencies")
+
+set_window_title() {
+    global window_title
+
+    locale := config_get(["prefs", "locale"])
+
+    if (locale == 'ru') {
+        window_title["settings"] := "Настройки"
+        window_title["dependencies"] := "Зависимости"
+    }
+}
+
 display_main_page(dimensions_obj) {
     global main_win
     global main_wvc

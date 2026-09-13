@@ -3,6 +3,8 @@
 #Include %A_ScriptDir%\ui\msgs.ahk
 #Include %A_ScriptDir%\ui\tray.ahk
 
+set_window_title()
+
 dimensions_obj_global := get_dimensions_from_config()
 win_is_open := 0
 window_was_closed := 1
@@ -12,11 +14,11 @@ is_minimized := 1
 restored_down_once := false
 windows_obj_exists := false
 main_win := Gui("+Resize MinSize400x200")
-main_win.Title := 'Keymeleon - Settings'
+main_win.Title := "Keymeleon - " window_title["settings"]
 main_wvc := ""
 main_wv := ""
 dependencies_win := Gui("+Resize MinSize400x200")
-dependencies_win.Title := "Keymeleon - Dependencies"
+dependencies_win.Title := "Keymeleon - " window_title["dependencies"]
 dependencies_wvc := ""
 dependencies_wv := ""
 
