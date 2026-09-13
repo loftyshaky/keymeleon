@@ -14,12 +14,12 @@ class Class {
     public reload_config = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'reload_config' });
-        }, 'kmn_1727');
+        }, 'kmn_1062');
 
     public copy_current_layout_id_to_clipboard = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'get_current_layout_id' });
-        }, 'kmn_1727');
+        }, 'kmn_1063');
 
     public collapse_all = (): void =>
         err(() => {
@@ -27,7 +27,7 @@ class Class {
                 val_setter: 'settings.ui.window.section_visibility_state',
                 val: {},
             });
-        }, 'kmn_1727');
+        }, 'kmn_1064');
 
     public copy_current_layout_id_to_clipboard_responder = ({
         current_layout_id,
@@ -50,7 +50,7 @@ class Class {
                     hide_delay: 2000,
                 });
             }
-        }, 'kmn_1727');
+        }, 'kmn_1065');
 }
 
 export const BtnBar = Class.get_instance();

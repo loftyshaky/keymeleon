@@ -30,7 +30,7 @@ class Class {
                     event_callback: s_sections.BtnBar.collapse_all,
                 }),
             ];
-        }, 'kmn_1127');
+        }, 'kmn_1020');
 }
 
 export const BtnBar = Class.get_instance();

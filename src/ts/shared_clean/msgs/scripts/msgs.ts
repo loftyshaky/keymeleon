@@ -14,7 +14,7 @@ class Class {
             if (window.chrome && window.chrome.webview) {
                 window.chrome.webview.postMessage(JSON.stringify(msg));
             }
-        }, 'kmn_1224');
+        }, 'kmn_1078');
 }
 
 export const Msgs = Class.get_instance();

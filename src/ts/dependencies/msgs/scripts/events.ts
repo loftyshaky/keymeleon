@@ -17,5 +17,5 @@ window.chrome.webview.addEventListener('message', (e: t.Any) =>
             init_shared();
             await init();
         }
-    }, 'kmn_1224'),
+    }, 'kmn_1002'),
 );

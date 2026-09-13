@@ -45,7 +45,7 @@ export const Section: React.FunctionComponent = observer(() => {
                             input={input}
                         />
                     );
-                }, 'kmn_5464');
+                }, 'kmn_1005');
 
             const genearate_input_bindings_input = ({
                 input_name,
@@ -76,7 +76,7 @@ export const Section: React.FunctionComponent = observer(() => {
                             }
                         />
                     );
-                }, 'kmn_3246');
+                }, 'kmn_1006');
 
             const genearate_exe_input = ({
                 section_name,
@@ -109,7 +109,7 @@ export const Section: React.FunctionComponent = observer(() => {
                             collapse_group_reaction_id={d_sections.Val.collapse_group_reaction_id}
                         />
                     );
-                }, 'kmn_3246');
+                }, 'kmn_1007');
 
             const genearate_static_section_input = ({
                 section_name,
@@ -139,7 +139,7 @@ export const Section: React.FunctionComponent = observer(() => {
                     }
 
                     return [];
-                }, 'kmn_3246');
+                }, 'kmn_1008');
 
             const generate_audio_input = ({
                 i,
@@ -173,7 +173,7 @@ export const Section: React.FunctionComponent = observer(() => {
                             input={input}
                         />
                     );
-                }, 'kmn_7238');
+                }, 'kmn_1009');
 
             const all_layouts_ordered: string[] = get(
                 d_settings.Settings.data_raw,
@@ -202,9 +202,9 @@ export const Section: React.FunctionComponent = observer(() => {
                                             ? `${section_item.placeholder}.mp3`
                                             : '',
                                     });
-                                }, 'kmn_4363'),
+                                }, 'kmn_1010'),
                         ),
-                    'kmn_4245',
+                    'kmn_1011',
                 );
 
             const generate_language_inputs = (): void =>
@@ -225,12 +225,12 @@ export const Section: React.FunctionComponent = observer(() => {
                                                         placeholder: `DVORAK_${object_name}.mp3`,
                                                     }),
                                                 );
-                                            }, 'kmn_9388'),
+                                            }, 'kmn_1012'),
                                     );
                                 }
-                            }, 'kmn_4363'),
+                            }, 'kmn_1013'),
                         ),
-                    'kmn_4245',
+                    'kmn_1014',
                 );
 
             let generated_sections: JSX.Element[] | undefined;
@@ -253,7 +253,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                     input_name,
                                                     i,
                                                 }),
-                                            'kmn_4363',
+                                            'kmn_1015',
                                         ),
                                 );
 
@@ -276,7 +276,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                     exe_name,
                                                     i,
                                                 }),
-                                            'kmn_4363',
+                                            'kmn_1016',
                                         ),
                                 );
 
@@ -304,7 +304,7 @@ export const Section: React.FunctionComponent = observer(() => {
                                                           section_item,
                                                           i,
                                                       }),
-                                                  'kmn_4363',
+                                                  'kmn_1017',
                                               ),
                                       )
                                     : [];
@@ -325,11 +325,11 @@ export const Section: React.FunctionComponent = observer(() => {
                                 }
                             }
                         }
-                    }, 'kmn_4363'),
+                    }, 'kmn_1018'),
             );
 
             return generated_sections;
-        }, 'kmn_4245');
+        }, 'kmn_1019');
 
     const sections: JSX.Element[] | undefined = generate_sections();
     const section: o_inputs.Section = d_sections.Sections.create_current_section();

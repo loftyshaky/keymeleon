@@ -183,7 +183,7 @@ class Class {
                 warn_state_checker: d_sections.Validation.validate_input,
                 ...(n(side_btns) && { side_btns }),
             });
-        }, 'kmn_2212');
+        }, 'kmn_1022');
 
     public generate_add_new_setting_input = ({
         name_prefix,
@@ -203,7 +203,7 @@ class Class {
                 val_accessor,
                 label_is_visible: true,
             });
-        }, 'kmn_5464');
+        }, 'kmn_1023');
 
     public create_current_section = (): o_inputs.Section =>
         err(
@@ -216,7 +216,7 @@ class Class {
                     include_help: true,
                     inputs: [],
                 }),
-            'kmn_5629',
+            'kmn_1024',
         );
 
     private generate_exe_group_level_2_inner = ({
@@ -273,7 +273,7 @@ class Class {
             }
 
             return [];
-        }, 'kmn_4363');
+        }, 'kmn_1025');
 
     private generate_exe_group_level_3_inner = ({
         exe_name,
@@ -316,7 +316,7 @@ class Class {
             });
 
             return input;
-        }, 'kmn_4363');
+        }, 'kmn_1026');
 
     private generate_exe_group_level_3_inputs_inner = ({
         exe_name,
@@ -367,7 +367,7 @@ class Class {
             });
 
             return input;
-        }, 'kmn_4363');
+        }, 'kmn_1027');
 
     private generate_exe_group_level_2 = ({
         exe_name,
@@ -387,13 +387,13 @@ class Class {
                                       section_name,
                                       section_item,
                                   }),
-                              'kmn_4363',
+                              'kmn_1028',
                           ),
                   )
                 : [];
             const key_bindings_input_is_present: boolean = inputs.some(
                 (input: i_inputs.InputAndLink): boolean =>
-                    err(() => input.name === 'key_bindings_exe_group_level_2', 'kmn_5437'),
+                    err(() => input.name === 'key_bindings_exe_group_level_2', 'kmn_1029'),
             );
 
             if (!key_bindings_input_is_present) {
@@ -406,7 +406,7 @@ class Class {
             }
 
             return inputs;
-        }, 'kmn_4256');
+        }, 'kmn_1030');
 
     private generate_exe_group_level_3 = ({
         exe_name,
@@ -425,7 +425,7 @@ class Class {
                                       exe_name,
                                       input_name,
                                   }),
-                              'kmn_8195',
+                              'kmn_1031',
                           ),
                   )
                 : [];
@@ -438,7 +438,7 @@ class Class {
             );
 
             return inputs;
-        }, 'kmn_8195');
+        }, 'kmn_1032');
 
     private generate_exe_group_level_3_inputs = ({
         exe_name,
@@ -463,14 +463,14 @@ class Class {
                             section_item,
                             key_bindings_item_type,
                         }),
-                    'kmn_4356',
+                    'kmn_1033',
                 );
 
             return s_sections.Template[`custom_binding_name_${key_bindings_item_type}`].map(
                 (section_item: i_sections.SectionTemplateItem): i_inputs.InputAndLink =>
-                    err(() => generate_input({ section_item }), 'kmn_8195'),
+                    err(() => generate_input({ section_item }), 'kmn_1034'),
             );
-        }, 'kmn_8195');
+        }, 'kmn_1035');
 
     public generate_input_bindings_input = ({
         input_name,
@@ -500,7 +500,7 @@ class Class {
                     }),
                 ],
             });
-        }, 'kmn_6367');
+        }, 'kmn_1036');
 
     public generate_exe_input = ({
         section_name,
@@ -531,7 +531,7 @@ class Class {
                       })
                     : [],
             });
-        }, 'kmn_6367');
+        }, 'kmn_1037');
 
     public generate_static_section_input = ({
         section_name,
@@ -546,7 +546,7 @@ class Class {
                     section_item,
                     val_accessor: `settings.${section_name}.${section_item.name}`,
                 }),
-            'kmn_7439',
+            'kmn_1038',
         );
 
     public generate_audio_input = ({
@@ -564,7 +564,7 @@ class Class {
                     section_item,
                     val_accessor: `settings.audio.${object_name}.${key_name}`,
                 }),
-            'kmn_7439',
+            'kmn_1039',
         );
 
     public generate_side_btns = ({
@@ -617,9 +617,9 @@ class Class {
                                 event_callback: d_sections.Val.collapse_group,
                             };
                             // }
-                        }, 'kmn_3832'),
+                        }, 'kmn_1040'),
                 ),
-            'kmn_3574',
+            'kmn_1041',
         );
 
     public generate_input_bindings_side_btns = ({
@@ -633,7 +633,7 @@ class Class {
                     side_btns_to_generate: ['remove_property', 'edit_group_label'],
                     val_type: section_item.val_type,
                 }),
-            'kmn_6367',
+            'kmn_1042',
         );
 
     public generate_exe_side_btns = ({
@@ -651,7 +651,7 @@ class Class {
                     ],
                     val_type: section_item.val_type,
                 }),
-            'kmn_6367',
+            'kmn_1043',
         );
 }
 

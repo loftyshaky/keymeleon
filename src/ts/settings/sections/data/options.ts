@@ -53,7 +53,7 @@ class Class {
                     new o_inputs.Option({ name: 'ruby' }),
                 ],
             };
-        }, 'kmn_1127');
+        }, 'kmn_1021');
 }
 
 export const Options = Class.get_instance();

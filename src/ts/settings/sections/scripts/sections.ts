@@ -20,7 +20,7 @@ class Class {
             }
 
             this.scroll_sections_to_bottom = false;
-        }, 'kmn_3478');
+        }, 'kmn_1066');
 
     public create_static_inputs_cond = ({
         section_item,
@@ -33,7 +33,7 @@ class Class {
             () =>
                 (section_item.name === 'offers_are_visible' && found_offers_for_current_locale) ||
                 section_item.name !== 'offers_are_visible',
-            'kmn_6565',
+            'kmn_1067',
         );
 
     public trigger_link_btn_action = ({ input }: { input: i_inputs.Input }): void =>
@@ -41,7 +41,7 @@ class Class {
             if (input.name === 'dependencies') {
                 s_msgs.Msgs.send({ msg: 'display_dependencies_page' });
             }
-        }, 'kmn_3465');
+        }, 'kmn_1068');
 }
 
 export const Sections = Class.get_instance();

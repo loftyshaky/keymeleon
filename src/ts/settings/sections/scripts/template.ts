@@ -13,7 +13,7 @@ class Class {
     [key: string]: t.Any;
 
     public ensure_sections = (): i_sections.Sections | t.AnyRecord =>
-        err(() => (n(this.sections) ? this.sections : {}), 'kmn_5346');
+        err(() => (n(this.sections) ? this.sections : {}), 'kmn_1069');
 
     public static_sections: string[] = [
         'docs',
@@ -687,10 +687,10 @@ class Class {
                 { name: '0', placeholder: 'feature_off' },
                 { name: '1', placeholder: 'feature_on' },
             ];
-        }, 'kmn_3478');
+        }, 'kmn_1070');
 
     public sanitize_text_for_class = ({ text }: { text: string }): string =>
-        err(() => text.replace(/[^A-Za-z0-9]+/g, '_').replace(/^-|-$/g, ''), 'kmn_3478');
+        err(() => text.replace(/[^A-Za-z0-9]+/g, '_').replace(/^-|-$/g, ''), 'kmn_1071');
 
     public generate_add_new_setting_input_section_item = ({
         name_prefix,
@@ -702,7 +702,7 @@ class Class {
                 name: `${name_prefix}_add_new_setting`,
                 type: 'icon_btn',
             }),
-            'kmn_5464',
+            'kmn_1072',
         );
 
     public generate_input_bindings_section_item = ({
@@ -718,7 +718,7 @@ class Class {
                 placeholder: '^+F2',
                 input_errors: ['invalid_ahk_hotkey'],
             }),
-            'kmn_6367',
+            'kmn_1073',
         );
 
     public generate_input_bindings_group_section_item = ({
@@ -731,7 +731,7 @@ class Class {
                 name: input_name,
                 type: 'group',
             }),
-            'kmn_6367',
+            'kmn_1074',
         );
 
     public generate_exe_group_section_item = ({
@@ -744,7 +744,7 @@ class Class {
                 name: `${this.sanitize_text_for_class({ text: exe_name })}_exe_group_level_1`,
                 type: 'group',
             }),
-            'kmn_6367',
+            'kmn_1075',
         );
 
     public generate_audio_section_item = ({
@@ -762,7 +762,7 @@ class Class {
                 placeholder,
                 input_errors: ['invalid_filename'],
             }),
-            'kmn_7423',
+            'kmn_1076',
         );
 }
 

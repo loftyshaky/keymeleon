@@ -44,12 +44,12 @@ class Class {
             data.settings = settings_final;
 
             d_error.Error.set_detect_infinite_loops_val();
-        }, 'kmn_1124');
+        }, 'kmn_1094');
 
     public get = (): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'get_config' });
-        }, 'kmn_1125');
+        }, 'kmn_1095');
 
     private set_val = ({
         val_setter,
@@ -69,7 +69,7 @@ class Class {
             data.settings = (
                 sort ? this.deep_obj_sort_by_key<t.Any>({ obj: updated_data }) : updated_data
             ).settings;
-        }, 'kmn_1127');
+        }, 'kmn_1096');
 
     private unset_val = ({ val_setter }: { val_setter: string }): void =>
         err(() => {
@@ -79,7 +79,7 @@ class Class {
             unset(updated_data, val_setter);
 
             data.settings = updated_data.settings;
-        }, 'kmn_1107');
+        }, 'kmn_1097');
 
     public set_key = ({
         val_unsetter,
@@ -95,12 +95,12 @@ class Class {
         err(() => {
             this.unset_val({ val_setter: val_unsetter });
             this.set_val({ val_setter, val, sort });
-        }, 'kmn_1127');
+        }, 'kmn_1098');
 
     private write = ({ config }: { config: t.AnyRecord }): void =>
         err(() => {
             s_msgs.Msgs.send({ msg: 'write_config', config });
-        }, 'kmn_1128');
+        }, 'kmn_1099');
 
     public write_change_val = ({
         val_setter,
@@ -127,7 +127,7 @@ class Class {
 
                 this.write({ config: this.data_raw.settings });
             }
-        }, 'kmn_1129');
+        }, 'kmn_1100');
 
     public write_unset = ({ val_setter }: { val_setter: string | undefined }): void =>
         err(() => {
@@ -137,7 +137,7 @@ class Class {
                 });
                 this.write({ config: this.data_raw.settings });
             }
-        }, 'kmn_1130');
+        }, 'kmn_1101');
 
     public write_change_key = ({
         val_unsetter,
@@ -160,7 +160,7 @@ class Class {
                 });
             }
             this.write({ config: this.data_raw.settings });
-        }, 'kmn_1129');
+        }, 'kmn_1102');
 
     private deep_obj_sort_by_key = <T>({ obj }: { obj: T }): T =>
         err(() => {
@@ -174,7 +174,7 @@ class Class {
                     this.deep_obj_sort_by_key({ obj: val }),
                 ]),
             ) as T;
-        }, 'kmn_1129');
+        }, 'kmn_1103');
 
     private transform_val = ({
         val,
@@ -201,7 +201,7 @@ class Class {
             }
 
             return val_final;
-        }, 'kmn_1288');
+        }, 'kmn_1104');
 
     public set_transformed = ({
         val_type,
@@ -228,7 +228,7 @@ class Class {
                     }
                 }
             }
-        }, 'kmn_1082');
+        }, 'kmn_1105');
 
     private transform = ({ settings }: { settings: t.AnyRecord }): t.AnyRecord =>
         err_async(async () => {
@@ -253,7 +253,7 @@ class Class {
             settings.prefs = updated_prefs;
 
             return settings;
-        }, 'kmn_1085');
+        }, 'kmn_1106');
 
     public transform_on_render = (): void =>
         err(() => {
@@ -262,7 +262,7 @@ class Class {
             }
 
             this.set_once = true;
-        }, 'kmn_1728');
+        }, 'kmn_1107');
 }
 
 export const Settings = Class.get_instance();

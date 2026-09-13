@@ -21,5 +21,5 @@ window.chrome.webview.addEventListener('message', (e: t.Any) =>
                 current_layout_id: msg_obj.current_layout_id,
             });
         }
-    }, 'kmn_1224'),
+    }, 'kmn_1004'),
 );

@@ -17,7 +17,7 @@ class Class {
                 roots,
                 transition_duration: data.settings.prefs.transition_duration,
             });
-        }, 'kmn_1065');
+        }, 'kmn_1077');
 }
 
 export const CssVars = Class.get_instance();

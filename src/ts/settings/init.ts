@@ -9,4 +9,4 @@ export const init = (): Promise<void> =>
         await InitAll.init();
 
         void InitAll.render_settings();
-    }, 'kmn_1221');
+    }, 'kmn_1003');
