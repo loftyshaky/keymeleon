@@ -30,6 +30,7 @@ set_icons() {
 
     set_tray_icon(icon_link)
     set_win_icon(main_win, icon_link)
+    set_win_icon(dependencies_win, icon_link)
 }
 
 set_win_icon_w(win) {
