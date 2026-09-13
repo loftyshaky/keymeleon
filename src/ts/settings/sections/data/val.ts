@@ -132,7 +132,7 @@ class Class {
                         val_type: section_item.val_type,
                     });
                 }
-            }, 'cnt_1288'),
+            }, 'kmn_1288'),
     );
 
     public add_new_item = action(({ input }: { input: i_inputs.Input }): void =>
@@ -169,7 +169,7 @@ class Class {
 
             this.val_type_reaction_id = x.unique_id();
             this.add_new_setting = x.unique_id();
-        }, 'cnt_1287'),
+        }, 'kmn_1287'),
     );
 
     public compute_val_type_initial_val = ({
@@ -197,7 +197,7 @@ class Class {
             }
 
             return 'string_key';
-        }, 'cnt_1291');
+        }, 'kmn_1291');
 
     public remove_val = ({
         input,
@@ -212,7 +212,7 @@ class Class {
                 val: '',
                 val_type: section_item.val_type,
             });
-        }, 'cnt_1290');
+        }, 'kmn_1290');
 
     public remove_property = ({
         input,
@@ -237,7 +237,7 @@ class Class {
                 ];
                 const confirm_input_i: number = confirm_input_names.findIndex(
                     (confirm_input_name): boolean =>
-                        err(() => input.name.includes(confirm_input_name), 'cnt_5364'),
+                        err(() => input.name.includes(confirm_input_name), 'kmn_5364'),
                 );
 
                 const confirmed: boolean =
@@ -252,7 +252,7 @@ class Class {
                 if (confirmed) {
                     const side_btn_2: i_inputs.SideBtn | undefined = input.side_btns.find(
                         (side_btn: i_inputs.SideBtn): boolean =>
-                            err(() => side_btn.name === 'remove_property', 'cnt_4637'),
+                            err(() => side_btn.name === 'remove_property', 'kmn_4637'),
                     );
 
                     if (n(side_btn_2)) {
@@ -270,7 +270,7 @@ class Class {
                     }
                 }
             }
-        }, 'cnt_1291');
+        }, 'kmn_1291');
 
     public remove_property_side_btn_is_enabled_cond = ({
         input,
@@ -285,7 +285,7 @@ class Class {
             }
 
             return false;
-        }, 'cnt_4897');
+        }, 'kmn_4897');
 
     public collapse_group_side_btn_is_enabled_cond = ({
         input,
@@ -309,7 +309,7 @@ class Class {
             }
 
             return Boolean(side_btn_is_enabled_cond);
-        }, 'cnt_7844');
+        }, 'kmn_7844');
 
     public collapse_group = ({ input }: { input: i_inputs.Input }): void =>
         err(() => {
@@ -334,7 +334,7 @@ class Class {
 
                 this.collapse_group_reaction_id = x.unique_id();
             }
-        }, 'cnt_7844');
+        }, 'kmn_7844');
 
     public toggle_edit_label_state = ({
         input,
@@ -372,7 +372,7 @@ class Class {
                 this.previous_editing_label_input = input;
                 this.previous_editing_label_input_label_val = input.label_val;
             }
-        }, 'cnt_5168');
+        }, 'kmn_5168');
 
     private toggle_edit_label_state_callback = ({ input }: { input: i_inputs.Input }): void =>
         err(() => {
@@ -415,7 +415,7 @@ class Class {
                     });
                 }
             }
-        }, 'cnt_4834');
+        }, 'kmn_4834');
 
     public editing_group_label_side_btn_is_enabled_cond = ({
         input,
@@ -426,7 +426,7 @@ class Class {
             const { editing_label } = input as o_inputs.Group;
 
             return n(editing_label) && !editing_label;
-        }, 'cnt_7844');
+        }, 'kmn_7844');
 
     public handle_keyboard_on_edit_label = (
         { parent_input }: { parent_input: i_inputs.Input },
@@ -438,7 +438,7 @@ class Class {
             } else if (e.code === 'Escape') {
                 this.toggle_edit_label_state({ input: parent_input, update_val: false });
             }
-        }, 'cnt_1315');
+        }, 'kmn_1315');
 }
 
 export const Val = Class.get_instance();

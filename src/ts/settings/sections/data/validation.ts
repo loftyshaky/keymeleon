@@ -74,7 +74,7 @@ class Class {
 
                     return false;
                 } catch (error_obj: unknown) {
-                    show_err_ribbon(error_obj as i_error.ErrorObj, 'aer_1060', { silent: true });
+                    show_err_ribbon(error_obj as i_error.ErrorObj, 'kmn_1060', { silent: true });
                 }
             } else if (n(regex)) {
                 return (
@@ -84,7 +84,7 @@ class Class {
             }
 
             return true;
-        }, 'aer_1061');
+        }, 'kmn_1061');
 }
 
 export const Validation = Class.get_instance();

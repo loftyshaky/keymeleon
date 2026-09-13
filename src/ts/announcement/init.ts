@@ -5,4 +5,4 @@ export const init = (): Promise<void> =>
         await InitAll.init();
 
         await InitAll.render_announcement();
-    }, 'seg_1000');
+    }, 'kmn_1000');

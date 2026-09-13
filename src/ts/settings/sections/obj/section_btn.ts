@@ -23,7 +23,7 @@ export class SectionBtn {
             () =>
                 app.msg(`${this.section_name}_section_text`) ||
                 x.underscore_to_readable(this.section_name),
-            'cnt_4835',
+            'kmn_4835',
         );
 
     public change_current_section_val? = (): void =>
@@ -43,5 +43,5 @@ export class SectionBtn {
                         }),
                 });
             }
-        }, 'cnt_1129');
+        }, 'kmn_1129');
 }

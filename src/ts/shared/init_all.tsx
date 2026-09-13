@@ -50,11 +50,11 @@ class Class {
                                         void d_loading_screen.Visibility.show();
 
                                         reslove();
-                                    }, 'cnt_1350'),
+                                    }, 'kmn_1350'),
                                 );
                             }
                         }
-                    }, 'cnt_1351');
+                    }, 'kmn_1351');
 
                 s_css_vars.CssVars.set();
 
@@ -97,11 +97,11 @@ class Class {
                                         </c_crash_handler.Body>,
                                     );
                                 }
-                            }, 'cnt_1372')
+                            }, 'kmn_1372')
                         }
                     />,
                 );
-            }, 'cnt_1352');
+            }, 'kmn_1352');
         });
 
     private create_root = ({
@@ -124,7 +124,7 @@ class Class {
             }
 
             return root;
-        }, 'cnt_1353');
+        }, 'kmn_1353');
 
     public render_announcement = (): Promise<void> =>
         err_async(async () => {
@@ -133,7 +133,7 @@ class Class {
             const on_css_load = (): Promise<void> =>
                 err_async(async () => {
                     await d_loading_screen.Visibility.hide({ app_id: s_suffix.app_id });
-                }, 'seg_1254');
+                }, 'kmn_1254');
 
             if (n(this.announcement_root)) {
                 ReactDOM.createRoot(this.announcement_root).render(
@@ -154,13 +154,13 @@ class Class {
                                     if (n(announcement_css)) {
                                         x.bind(announcement_css, 'load', on_css_load);
                                     }
-                                }, 'seg_1252')
+                                }, 'kmn_1252')
                             }
                         />
                     </c_crash_handler.Body>,
                 );
             }
-        }, 'seg_1253');
+        }, 'kmn_1253');
 
     public render_settings = (): Promise<void> =>
         err_async(async () => {
@@ -170,7 +170,7 @@ class Class {
                 err_async(async () => {
                     s_tab_index.TabIndex.bind_set_input_type_f();
                     void d_loading_screen.Visibility.hide({ app_id: s_suffix.app_id });
-                }, 'cnt_1357');
+                }, 'kmn_1357');
 
             if (n(this.settings_root)) {
                 ReactDOM.createRoot(this.settings_root).render(
@@ -187,12 +187,12 @@ class Class {
                                 if (n(settings_css)) {
                                     x.bind(settings_css, 'load', on_css_load);
                                 }
-                            }, 'cnt_1358')
+                            }, 'kmn_1358')
                         }
                     />,
                 );
             }
-        }, 'cnt_1359');
+        }, 'kmn_1359');
 
     public render_dependencies = (): Promise<void> =>
         err_async(async () => {
@@ -201,7 +201,7 @@ class Class {
             const on_css_load = (): Promise<void> =>
                 err_async(async () => {
                     void d_loading_screen.Visibility.hide({ app_id: s_suffix.app_id });
-                }, 'cnt_1516');
+                }, 'kmn_1516');
 
             if (n(this.dependencies_root)) {
                 ReactDOM.createRoot(this.dependencies_root).render(
@@ -222,13 +222,13 @@ class Class {
                                     if (n(dependencies_css)) {
                                         x.bind(dependencies_css, 'load', on_css_load);
                                     }
-                                }, 'cnt_1518')
+                                }, 'kmn_1518')
                             }
                         />
                     </c_crash_handler.Body>,
                 );
             }
-        }, 'cnt_1517');
+        }, 'kmn_1517');
 }
 
 export const InitAll = Class.get_instance();
