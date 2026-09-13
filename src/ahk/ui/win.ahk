@@ -43,6 +43,7 @@ display_dependencies_page() {
     dependencies_wvc.add_AcceleratorKeyPressed(disable_page_refresh)
     dependencies_wv.add_ContextMenuRequested(remove_context_menu_items)
     dependencies_wv.add_WebMessageReceived(on_message)
+    dependencies_wv.add_NewWindowRequested(on_new_window)
 
     navigate_page(dependencies_wv, "dependencies")
 }
