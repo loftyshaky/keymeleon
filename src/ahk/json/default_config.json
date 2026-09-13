@@ -54,9 +54,9 @@
     },
     "prefs": {
         "current_section": "features",
-        "developer_mode": 0,
-        "enable_cut_features": 0,
         "detect_infinite_loops": 0,
+        "developer_mode": 1,
+        "enable_cut_features": 0,
         "locale": "en",
         "offers_are_visible": 1,
         "options_page_theme": "blaze",
@@ -64,11 +64,7 @@
         "version": "0.0.1",
         "window": {
             "dimensions": {
-                "height": 800,
-                "is_maximized": 1,
-                "width": 1150,
-                "x": 50,
-                "y": 50
+                "is_maximized": 1
             }
         }
     },
