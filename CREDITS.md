@@ -1,12 +1,14 @@
 # Libraries
-
+[WebView2](https://github.com/thqby/ahk2_lib/tree/master/WebView2)<br>
+[ComVar](https://github.com/thqby/ahk2_lib/blob/master/ComVar.ahk)<br>
+[Promise](https://github.com/thqby/ahk2_lib/blob/master/Promise.ahk)<br>
 [JXON_ahk2](https://github.com/TheArkive/JXON_ahk2)
 
 # Assets
 
 ## Tray icon
 
-[Keyboard icon](https://www.iconfinder.com/icons/3028576/keyboard_keyboard_layout_type_icon)
+[Keyboard icon](https://fonts.google.com/icons?selected=Material+Icons:keyboard_alt:&icon.query=keyboa&icon.size=24&icon.color=%231f1f1f)
 
 ## Audio feedback
 
