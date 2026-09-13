@@ -1,6 +1,6 @@
 {
     "name": "keymeleon",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "scripts": {
         "dev": "cross-env env=app browser=chrome test=true vite build --mode development",
         "prod": "cross-env env=app browser=chrome test=false vite build --mode production",
