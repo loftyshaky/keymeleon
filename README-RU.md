@@ -235,6 +235,22 @@ Keymeleon использует два отдельных JSON файла кон�
         "primary_layout": "en-DVORAK",
         "secondary_layouts": ["en-US", "es-ES", "de-DE"]
     },
+    "prefs": {
+        "current_section": "features",
+        "detect_infinite_loops": 0,
+        "developer_mode": 0,
+        "enable_cut_features": 0,
+        "locale": "en",
+        "offers_are_visible": 1,
+        "options_page_theme": "blaze",
+        "transition_duration": 200,
+        "version": "0.0.1",
+        "window": {
+            "dimensions": {
+                "is_maximized": 1
+            }
+        }
+    },
     "process_control": {
         "target_processes": ["Fallout4", "KingdomCome"],
         "suspend_post_minimize_delay": 10,
