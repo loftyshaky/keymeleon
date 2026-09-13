@@ -31,10 +31,13 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
 
 **Borderless window** – Remove borders from any window, making it borderless.
 
+![settings_window](screenshots/settings_window_en.png)
+
 ## Table of Contents
 
 - [System requirements](#system-requirements)
 - [Quick Start](#quick-start)
+- [Settings UI](#settings-ui)
 - [User directory and configuration files](#user-directory-and-configuration-files)
     - [User directory structure](#user-directory-structure)
     - [User directory location config](#user-directory-location-config)
@@ -131,6 +134,12 @@ Keymeleon is a powerful AutoHotkey script that revolutionizes Windows keyboard l
 2. Download the [latest release](https://github.com/loftyshaky/keymeleon/releases/latest) and extract it to your preferred location.
 
 3. Run `keymeleon.ahk` as an administrator to start the script.
+
+## Settings UI
+
+You can adjust all the settings described below through the Settings UI page. To open it, right-click Keymeleon's tray icon and select `Settings` from the context menu.
+
+After changing settings on the Settings page, click the `⟳` button at the top of the window to apply them.
 
 ## User directory and configuration files
 
