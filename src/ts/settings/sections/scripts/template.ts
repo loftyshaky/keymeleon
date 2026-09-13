@@ -381,19 +381,9 @@ class Class {
                         href: app.msg('offer_clear_new_tab_chrome_link_href'),
                     },
                     {
-                        name: 'clear_new_tab_edge',
-                        type: 'link',
-                        href: app.msg('offer_clear_new_tab_edge_link_href'),
-                    },
-                    {
                         name: 'empty_new_tab_page_chrome',
                         type: 'link',
                         href: app.msg('offer_empty_new_tab_page_chrome_link_href'),
-                    },
-                    {
-                        name: 'empty_new_tab_page_edge',
-                        type: 'link',
-                        href: app.msg('offer_empty_new_tab_page_edge_link_href'),
                     },
                     {
                         name: 'close_other_tabs_chrome',
@@ -401,19 +391,9 @@ class Class {
                         href: app.msg('offer_close_other_tabs_plus_chrome_link_href'),
                     },
                     {
-                        name: 'close_other_tabs_edge',
-                        type: 'link',
-                        href: app.msg('offer_close_other_tabs_plus_edge_link_href'),
-                    },
-                    {
                         name: 'search_enhancer_for_google_chrome',
                         type: 'link',
                         href: app.msg('offer_search_enhancer_for_google_chrome_link_href'),
-                    },
-                    {
-                        name: 'search_enhancer_for_google_edge',
-                        type: 'link',
-                        href: app.msg('offer_search_enhancer_for_google_edge_link_href'),
                     },
                     {
                         name: 'advanced_extension_reloader_chrome',
@@ -421,19 +401,14 @@ class Class {
                         href: app.msg('offer_advanced_extension_reloader_chrome_link_href'),
                     },
                     {
-                        name: 'advanced_extension_reloader_edge',
-                        type: 'link',
-                        href: app.msg('offer_advanced_extension_reloader_edge_link_href'),
-                    },
-                    {
                         name: 'scroll_to_top_chrome',
                         type: 'link',
                         href: app.msg('offer_scroll_to_top_chrome_link_href'),
                     },
                     {
-                        name: 'scroll_to_top_edge',
+                        name: 'website',
                         type: 'link',
-                        href: app.msg('offer_scroll_to_top_edge_link_href'),
+                        href: app.msg('website_link_href'),
                     },
                     {
                         name: 'facebook_page',
