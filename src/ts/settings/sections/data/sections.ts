@@ -293,7 +293,7 @@ class Class {
                 });
 
             const section_item: i_sections.SectionTemplateItem = {
-                name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_exe_group_level_3`,
+                name: `${s_sections.Template.sanitize_text_for_class({ text: exe_name })}_${input_name}_exe_group_level_3`,
                 type: 'group',
             };
             const side_btns: i_inputs.SideBtn[] = d_sections.Sections.generate_side_btns({
