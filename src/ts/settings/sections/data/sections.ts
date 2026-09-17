@@ -339,7 +339,7 @@ class Class {
             );
 
             const generate_remove_property_side_btn: boolean =
-                typeof input_bindings_item_val !== 'string' &&
+                !['string', 'number'].includes(typeof input_bindings_item_val) &&
                 ((isObject(input_bindings_item_val) && !isArray(input_bindings_item_val)) ||
                     !isArray(input_bindings_item_val));
 
