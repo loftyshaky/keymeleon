@@ -3,11 +3,20 @@ layout_change_step := 0
 switching_layout_with_dedicated_hotkey := false
 last_window_class := ""
 last_exe := ""
+last_exe_on_exe_change := ""
 last_exe_was_present_in_conditional_exe_list := false
 all_layouts_in_switch_order := n(config_get(["layouts", "secondary_layouts"])) ? config_get(["layouts",
     "secondary_layouts"]).clone() : false
 taskbar_was_clicked := false ; For example: start menu button
 switch_layout_on_exe_change_run_times := 0
+
+set_last_exe_on_exe_change() {
+    global last_exe_on_exe_change
+
+    try {
+        last_exe_on_exe_change := WinGetProcessName("A")
+    }
+}
 
 generate_all_layouts_in_switch_order_arr() {
     global all_layouts_in_switch_order
@@ -416,13 +425,19 @@ switch_layout_on_exe_change(recursive := false) {
 on_exe_change() {
     global EVENT_SYSTEM_FOREGROUND
     global taskbar_was_clicked
+    global last_exe_on_exe_change
 
     exe_change_handler(h_hook := 0, event := 0, hwnd := 0, id_object := 0, id_child := 0, dw_event_thread := 0,
         dwms_event_time := 0) {
         if (check_if_changed_active_window(event) || !event) {
             global last_switched_layout
 
+            new_exe := ""
             taskbar_was_clicked := false
+
+            try {
+                new_exe := WinGetProcessName("A")
+            }
 
             try {
                 window_class := hwnd ? WinGetProcessName("ahk_id " hwnd) : WinGetClass("A")
@@ -433,7 +448,12 @@ on_exe_change() {
             }
 
             switch_layout_on_exe_change()
-            bind_unbind_context_hotkeys(last_switched_layout)
+
+            if (last_exe_on_exe_change != new_exe) {
+                bind_unbind_context_hotkeys(last_switched_layout)
+            }
+
+            last_exe_on_exe_change := new_exe
         }
     }
 

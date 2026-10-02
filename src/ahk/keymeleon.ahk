@@ -28,6 +28,7 @@ set_up_user_dir()
 
 last_switched_layout := get_current_layout()
 
+set_last_exe_on_exe_change()
 bind_play_audio_on_key_press()
 set_icons()
 generate_all_layouts_in_switch_order_arr()
