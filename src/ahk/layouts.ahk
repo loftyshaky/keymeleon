@@ -56,7 +56,9 @@ switch_layout(new_layout, is_automatic_layout_switching) {
                 set_layout_by_simulating_key_pressess(new_layout, is_automatic_layout_switching)
             }
 
-            last_switched_layout := new_layout
+            if (new_layout != "") {
+                last_switched_layout := new_layout
+            }
 
             if (!is_automatic_layout_switching) {
                 bind_unbind_context_hotkeys(last_switched_layout)
